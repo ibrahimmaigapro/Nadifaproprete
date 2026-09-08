@@ -799,17 +799,16 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 @media (max-width:560px){.steps{grid-template-columns:1fr}}
 
 /* compare (avant / après, canapé / voiture) */
-.compare{position:relative;aspect-ratio:1;overflow:hidden;border-radius:var(--radius);user-select:none;-webkit-user-select:none;background:var(--bg-alt)}
-.compare img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;margin:0;border-radius:0;box-shadow:none;aspect-ratio:auto}
+.compare{position:relative;aspect-ratio:1;overflow:hidden;border-radius:var(--radius);user-select:none;-webkit-user-select:none;background:var(--bg-alt);touch-action:pan-y;cursor:ew-resize}
+.compare.dragging{cursor:grabbing}
+.compare img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;margin:0;border-radius:0;box-shadow:none;aspect-ratio:auto;pointer-events:none;-webkit-user-drag:none}
 .compare .cmp-left{clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
-.cmp-line{position:absolute;top:0;bottom:0;left:var(--pos);width:3px;background:#fff;transform:translateX(-50%);box-shadow:0 0 0 1px rgba(11,31,51,.25);pointer-events:none}
+.cmp-line{position:absolute;top:0;bottom:0;left:var(--pos);width:3px;background:#fff;transform:translateX(-50%);box-shadow:0 0 0 1px rgba(11,31,51,.25);pointer-events:none;will-change:left}
 .cmp-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:#fff;color:var(--navy);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(11,31,51,.35)}
 .cmp-handle svg{width:26px;height:26px}
 .cmp-label{position:absolute;top:.8rem;background:rgba(11,31,51,.8);color:#fff;font-weight:700;font-size:.8rem;padding:.35em .7em;border-radius:999px;pointer-events:none;letter-spacing:.03em}
 .cmp-label-l{left:.8rem}.cmp-label-r{right:.8rem}
-.cmp-range{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;opacity:0;cursor:ew-resize;-webkit-appearance:none;appearance:none;background:transparent;border:0;touch-action:pan-y}
-.cmp-range::-webkit-slider-thumb{-webkit-appearance:none;width:46px;height:100%}
-.cmp-range::-moz-range-thumb{width:46px;height:100%;border:0;background:transparent}
+.cmp-range{position:absolute;left:0;bottom:0;width:100%;height:2px;margin:0;padding:0;opacity:0;pointer-events:none}
 .cmp-range:focus-visible + .cmp-line,.compare:has(.cmp-range:focus-visible) .cmp-handle{outline:3px solid var(--accent)}
 .hero-media .compare{border-radius:24px;box-shadow:0 25px 60px rgba(11,31,51,.2)}
 .results .result .compare{border-radius:0}
@@ -926,9 +925,15 @@ JS = r'''
   if(t&&n){t.addEventListener('click',function(){var o=n.classList.toggle('open');t.setAttribute('aria-expanded',o?'true':'false');});
     document.addEventListener('click',function(e){if(!n.contains(e.target)&&!t.contains(e.target)&&n.classList.contains('open')){n.classList.remove('open');t.setAttribute('aria-expanded','false');}});}
   document.querySelectorAll('.compare').forEach(function(c){
-    var r=c.querySelector('.cmp-range'); if(!r)return;
-    var set=function(){c.style.setProperty('--pos',r.value+'%');};
-    r.addEventListener('input',set); r.addEventListener('change',set); set();
+    var r=c.querySelector('.cmp-range'), active=false;
+    function setPct(p){p=Math.max(0,Math.min(100,p));c.style.setProperty('--pos',p+'%');if(r)r.value=Math.round(p);}
+    function pct(e){var b=c.getBoundingClientRect();return (e.clientX-b.left)/b.width*100;}
+    c.addEventListener('pointerdown',function(e){if(e.pointerType==='mouse'&&e.button!==0)return;active=true;c.classList.add('dragging');try{c.setPointerCapture(e.pointerId);}catch(x){}setPct(pct(e));e.preventDefault();});
+    c.addEventListener('pointermove',function(e){if(!active)return;setPct(pct(e));e.preventDefault();});
+    function end(){active=false;c.classList.remove('dragging');}
+    c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);c.addEventListener('lostpointercapture',end);
+    if(r){r.addEventListener('input',function(){setPct(+r.value);});}
+    setPct(50);
   });
   var f=document.getElementById('booking');
   if(!f)return;

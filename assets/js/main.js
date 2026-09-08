@@ -3,9 +3,15 @@
   if(t&&n){t.addEventListener('click',function(){var o=n.classList.toggle('open');t.setAttribute('aria-expanded',o?'true':'false');});
     document.addEventListener('click',function(e){if(!n.contains(e.target)&&!t.contains(e.target)&&n.classList.contains('open')){n.classList.remove('open');t.setAttribute('aria-expanded','false');}});}
   document.querySelectorAll('.compare').forEach(function(c){
-    var r=c.querySelector('.cmp-range'); if(!r)return;
-    var set=function(){c.style.setProperty('--pos',r.value+'%');};
-    r.addEventListener('input',set); r.addEventListener('change',set); set();
+    var r=c.querySelector('.cmp-range'), active=false;
+    function setPct(p){p=Math.max(0,Math.min(100,p));c.style.setProperty('--pos',p+'%');if(r)r.value=Math.round(p);}
+    function pct(e){var b=c.getBoundingClientRect();return (e.clientX-b.left)/b.width*100;}
+    c.addEventListener('pointerdown',function(e){if(e.pointerType==='mouse'&&e.button!==0)return;active=true;c.classList.add('dragging');try{c.setPointerCapture(e.pointerId);}catch(x){}setPct(pct(e));e.preventDefault();});
+    c.addEventListener('pointermove',function(e){if(!active)return;setPct(pct(e));e.preventDefault();});
+    function end(){active=false;c.classList.remove('dragging');}
+    c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);c.addEventListener('lostpointercapture',end);
+    if(r){r.addEventListener('input',function(){setPct(+r.value);});}
+    setPct(50);
   });
   var f=document.getElementById('booking');
   if(!f)return;
