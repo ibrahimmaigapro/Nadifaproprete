@@ -2,9 +2,14 @@
   var t=document.querySelector('.nav-toggle'),n=document.getElementById('nav');
   if(t&&n){t.addEventListener('click',function(){var o=n.classList.toggle('open');t.setAttribute('aria-expanded',o?'true':'false');});
     document.addEventListener('click',function(e){if(!n.contains(e.target)&&!t.contains(e.target)&&n.classList.contains('open')){n.classList.remove('open');t.setAttribute('aria-expanded','false');}});}
+  document.querySelectorAll('.compare').forEach(function(c){
+    var r=c.querySelector('.cmp-range'); if(!r)return;
+    var set=function(){c.style.setProperty('--pos',r.value+'%');};
+    r.addEventListener('input',set); r.addEventListener('change',set); set();
+  });
   var f=document.getElementById('booking');
   if(!f)return;
-  var WA='33647271062', MAIL='contact@nadifaproprete.fr';
+  var WA='33647271062', MAIL='nadifa.proprete@gmail.com';
   function v(id){var el=document.getElementById(id);return el?el.value.trim():'';}
   function build(){
     var d=v('f-date'), dd='';

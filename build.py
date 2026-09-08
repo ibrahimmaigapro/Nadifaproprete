@@ -3,7 +3,7 @@ import os, html, datetime, hashlib
 OUT = os.path.dirname(os.path.abspath(__file__))
 BASE = "https://nadifaproprete.fr"
 PHONE_H = "06 47 27 10 62"; PHONE_T = "+33647271062"; WA = "33647271062"
-EMAIL = "contact@nadifaproprete.fr"
+EMAIL = "nadifa.proprete@gmail.com"
 GBP = "https://share.google/19td8ZPjC2HE1T8S3"
 YEAR = 2026
 
@@ -42,7 +42,9 @@ ICON = {
 
 MARK = '<svg class="brand-mark" viewBox="0 0 64 64" width="44" height="44" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0cc0df"/><path d="M18 46V18h7l14 18V18h7v28h-7L25 28v18z" fill="#fff"/><path d="M48 10l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="#fff" fill-opacity=".92"/></svg>'
 
-NAV = [("index.html","Accueil"),("services.html","Services & tarifs"),("reservation.html","Réserver"),("contact.html","Contact")]
+LOGO_IMG = '<img class="brand-logo" src="assets/img/logo-nadifa-600.png" srcset="assets/img/logo-nadifa-600.png 600w, assets/img/logo-nadifa.png 1426w" sizes="220px" width="600" height="180" alt="Nadifa Propreté">'
+
+NAV = [("index.html","Accueil"),("services.html","Services"),("reservation.html","Réserver"),("contact.html","Contact")]
 
 def head(title, desc, path, og_type="website", extra=""):
     canonical = BASE + ("/" if path=="index.html" else "/"+path)
@@ -80,8 +82,7 @@ def header(active):
     return f'''<header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="index.html" aria-label="Nadifa Propreté, accueil">
-      {MARK}
-      <span class="brand-name">Nadifa <span>Propreté</span></span>
+      {LOGO_IMG}
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
       <svg class="ico-burger" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
@@ -101,14 +102,13 @@ def footer():
 <footer class="site-footer">
   <div class="wrap footer-grid">
     <div>
-      <a class="brand brand-light" href="index.html">{MARK}<span class="brand-name">Nadifa <span>Propreté</span></span></a>
+      <a class="brand brand-plate" href="index.html">{LOGO_IMG}</a>
       <p class="muted">Nettoyage à domicile de canapés, matelas, tapis et intérieurs de voiture. Toulouse et 40 km alentour.</p>
-      <p class="muted small">« Nadifa » signifie « propre » en arabe. C'est la promesse.</p>
     </div>
     <div>
       <h2 class="footer-title">Navigation</h2>
       <ul class="footer-links">
-        <li><a href="services.html">Services & tarifs</a></li>
+        <li><a href="services.html">Services</a></li>
         <li><a href="reservation.html">Réserver une intervention</a></li>
         <li><a href="contact.html">Contact & zone desservie</a></li>
         <li><a href="{GBP}" target="_blank" rel="noopener">Avis Google</a></li>
@@ -121,7 +121,7 @@ def footer():
         <li><a href="tel:{PHONE_T}">{ICON["phone"]} {PHONE_H}</a></li>
         <li><a href="{WA_DEVIS}" target="_blank" rel="noopener">{ICON["wa"]} WhatsApp</a></li>
         <li><a href="mailto:{EMAIL}">{ICON["mail"]} {EMAIL}</a></li>
-        <li>{ICON["clock"]} Lundi – samedi, 8 h – 19 h</li>
+        <li>{ICON["clock"]} Tous les jours sauf le vendredi, 7 h – 22 h 30</li>
       </ul>
     </div>
   </div>
@@ -159,18 +159,19 @@ LD_BUSINESS = f'''<script type="application/ld+json">
     {{ "@type": "City", "name": "Toulouse" }},
     {{ "@type": "GeoCircle", "geoMidpoint": {{ "@type": "GeoCoordinates", "latitude": 43.6045, "longitude": 1.4442 }}, "geoRadius": "40000" }}
   ],
-  "openingHoursSpecification": [{{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "08:00", "closes": "19:00" }}],
+  "openingHoursSpecification": [{{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Saturday","Sunday"], "opens": "07:00", "closes": "22:30" }}],
   "sameAs": ["{GBP}"],
   "founder": {{ "@type": "Person", "name": "Ibrahim Maiga" }},
   "hasOfferCatalog": {{
     "@type": "OfferCatalog", "name": "Prestations de nettoyage",
     "itemListElement": [
-      {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage intérieur de voiture", "serviceType": "Nettoyage automobile intérieur" }} }},
+      {{ "@type": "Offer", "priceSpecification": {{ "@type": "PriceSpecification", "minPrice": "50", "priceCurrency": "EUR" }}, "itemOffered": {{ "@type": "Service", "name": "Nettoyage intérieur de voiture – Formule Basique", "serviceType": "Nettoyage automobile intérieur" }} }},
+      {{ "@type": "Offer", "priceSpecification": {{ "@type": "PriceSpecification", "minPrice": "70", "priceCurrency": "EUR" }}, "itemOffered": {{ "@type": "Service", "name": "Nettoyage intérieur de voiture – Formule Premium", "serviceType": "Nettoyage automobile intérieur" }} }},
       {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de canapé et fauteuil", "serviceType": "Nettoyage de textile d'ameublement" }} }},
       {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de matelas", "serviceType": "Nettoyage de literie" }} }},
-      {{ "@type": "Offer", "price": "40", "priceCurrency": "EUR", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de tapis à domicile" }} }},
+      {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de tapis à domicile" }} }},
       {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de moquette" }} }},
-      {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Vitres, après travaux, ménage" }} }}
+      {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Ménage ponctuel ou régulier, logements de location courte durée" }} }}
     ]
   }}
 }}
@@ -202,17 +203,32 @@ def cta_band():
 '''
 
 SERVICES = [
- ("car","Intérieur de voiture","siege-auto","Sièges, tapis de sol, plastiques, vitres intérieures. Formule Entretien ou Rénovation selon l'état.","services.html#voiture","Nettoyage d'un siège de voiture par injection-extraction"),
+ ("car","Intérieur de voiture","siege-auto","Aspiration complète, plastiques, sièges et tapis de sol. Formule Basique ou Premium selon l'état.","services.html#voiture","Nettoyage d'un siège de voiture par injection-extraction"),
  ("sofa","Canapés & fauteuils","canape","Tissu, microfibre ou velours : taches, auréoles et odeurs traitées en profondeur, sans abîmer les fibres.","services.html#canapes","Nettoyage d'un canapé en tissu à domicile"),
  ("bed","Matelas","matelas","Poussière, acariens et traces. Un matelas assaini, sec en quelques heures.","services.html#matelas","Nettoyage d'un matelas par injection-extraction"),
- ("rug","Tapis & moquettes","tapis","Tapis nettoyé chez vous en 45 minutes. Moquettes de chambre, salon ou bureau.","services.html#tapis","Nettoyage d'un tapis à domicile"),
+ ("rug","Tapis & moquettes","tapis","Tapis nettoyé chez vous, sans l'emporter. Moquettes de chambre, salon ou bureau.","services.html#tapis","Tapis de salon nettoyé à domicile"),
 ]
+
+def compare(left, right, alt_left, alt_right, label_left="Avant", label_right="Après", sizes="(max-width: 760px) 100vw, 50vw", eager=False):
+    """Deux images superposées, une poignée à glisser : à gauche `left`, à droite `right`."""
+    load = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
+    def img(name, alt, cls):
+        return (f'<img class="{cls}" src="assets/img/{name}-800.webp" '
+                f'srcset="assets/img/{name}-480.webp 480w, assets/img/{name}-800.webp 800w, assets/img/{name}-1400.webp 1400w" '
+                f'sizes="{sizes}" width="1400" height="1400" alt="{html.escape(alt)}" {load} draggable="false">')
+    return f'''<div class="compare" style="--pos:50%">
+        {img(right, alt_right, "cmp-right")}
+        {img(left, alt_left, "cmp-left")}
+        <span class="cmp-label cmp-label-l">{label_left}</span><span class="cmp-label cmp-label-r">{label_right}</span>
+        <div class="cmp-line" aria-hidden="true"><span class="cmp-handle"><svg viewBox="0 0 24 24"><path d="M9 6l-5 6 5 6M15 6l5 6-5 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Faire glisser pour comparer : {html.escape(label_left)} / {html.escape(label_right)}">
+      </div>'''
 
 # ---------- INDEX ----------
 def page_index():
     h = head("Nettoyage canapé, matelas, tapis et voiture à Toulouse | Nadifa Propreté",
              "Nadifa Propreté nettoie à domicile vos canapés, matelas, tapis et intérieurs de voiture par injection-extraction. Toulouse et 40 km. Devis fixe avant intervention, sous 48 h.",
-             "index.html", extra=LD_BUSINESS + '<link rel="preload" as="image" href="assets/img/hero-dacia-800.webp" imagesrcset="assets/img/hero-dacia-480.webp 480w, assets/img/hero-dacia-800.webp 800w, assets/img/hero-dacia-1400.webp 1400w" imagesizes="(max-width: 900px) 100vw, 50vw">\n')
+             "index.html", extra=LD_BUSINESS + '<link rel="preload" as="image" href="assets/img/hero-canape-800.webp" imagesrcset="assets/img/hero-canape-480.webp 480w, assets/img/hero-canape-800.webp 800w, assets/img/hero-canape-1400.webp 1400w" imagesizes="(max-width: 900px) 100vw, 45vw">\n<link rel="preload" as="image" href="assets/img/hero-voiture-800.webp" imagesrcset="assets/img/hero-voiture-480.webp 480w, assets/img/hero-voiture-800.webp 800w, assets/img/hero-voiture-1400.webp 1400w" imagesizes="(max-width: 900px) 100vw, 45vw">\n')
     cards = "".join(f'''<a class="card service-card" href="{link}">
       <div class="card-media">{picture(img, alt, sizes="(max-width: 700px) 100vw, 25vw", w=1024, h=1024)}</div>
       <div class="card-body">
@@ -228,7 +244,7 @@ def page_index():
     <div class="hero-text">
       <p class="eyebrow">Nettoyage à domicile · Toulouse et agglomération</p>
       <h1>Canapés, matelas, tapis et intérieurs de voiture&nbsp;: propres en profondeur, chez vous.</h1>
-      <p class="lead">Injection-extraction professionnelle, produits adaptés à chaque textile et un tarif fixe annoncé avant de commencer. Intervention sous 48&nbsp;h à Toulouse et dans un rayon de 40&nbsp;km.</p>
+      <p class="lead">Nettoyage professionnel avec du matériel de pro et des produits adaptés à chaque textile, et un tarif annoncé avant de commencer. Intervention sous 48&nbsp;h à Toulouse et dans un rayon de 40&nbsp;km.</p>
       <div class="hero-actions">
         <a class="btn btn-primary btn-lg" href="{WA_DEVIS}" target="_blank" rel="noopener">{ICON["wa"]} Devis gratuit sur WhatsApp</a>
         <a class="btn btn-ghost btn-lg" href="tel:{PHONE_T}">{ICON["phone"]} {PHONE_H}</a>
@@ -241,8 +257,8 @@ def page_index():
       </ul>
     </div>
     <figure class="hero-media">
-      {picture("hero-dacia", "Intérieur d'une Dacia Sandero après nettoyage par Nadifa Propreté à Toulouse : tableau de bord, console et moquettes impeccables", sizes="(max-width: 900px) 100vw, 50vw", eager=True, w=1400, h=1867)}
-      <figcaption><span class="badge">{ICON["camera"]} Résultat réel · Sandero de chantier, Toulouse</span></figcaption>
+      {compare("hero-canape", "hero-voiture", "Nettoyage d'un canapé en tissu clair par injection-extraction", "Intérieur d'une voiture après nettoyage par Nadifa Propreté à Toulouse", label_left="Canapés", label_right="Voitures", sizes="(max-width: 900px) 100vw, 45vw", eager=True)}
+      <figcaption><span class="badge">{ICON["camera"]} Faites glisser : canapés, matelas, tapis et voitures</span></figcaption>
     </figure>
   </div>
 </section>
@@ -267,7 +283,7 @@ def page_index():
     </div>
     <ol class="steps">
       <li><span class="step-num">1</span><h3>Vous envoyez une photo</h3><p>Sur WhatsApp ou par téléphone, décrivez ce qu'il faut nettoyer. Vous recevez un prix fixe dans la foulée.</p></li>
-      <li><span class="step-num">2</span><h3>On fixe un créneau</h3><p>Généralement sous 48 h, du lundi au samedi, à l'heure qui vous arrange.</p></li>
+      <li><span class="step-num">2</span><h3>On fixe un créneau</h3><p>Généralement sous 48 h, tous les jours sauf le vendredi, de 7 h à 22 h 30, à l'heure qui vous arrange.</p></li>
       <li><span class="step-num">3</span><h3>Nettoyage à domicile</h3><p>Pré-traitement des taches, injection-extraction, finitions. Comptez 45 min à 2 h selon la prestation.</p></li>
       <li><span class="step-num">4</span><h3>Vous profitez</h3><p>Le textile est sec en 3 h environ. Vous vérifiez le résultat avec nous avant de régler.</p></li>
     </ol>
@@ -280,17 +296,21 @@ def page_index():
       <p class="eyebrow">Avant / après</p>
       <h2>Des résultats visibles, pas des promesses</h2>
     </div>
-    <div class="grid-3 results">
+    <div class="grid-2 results">
       <figure class="result">
-        {picture("avant-apres-yaris", "Toyota Yaris avant et après nettoyage intérieur : tapis de sol pleins de débris puis console et moquettes propres", sizes="(max-width: 760px) 100vw, 33vw", w=1400, h=934)}
-        <figcaption>Citadine de tous les jours : tapis de sol, console et rangements, avant / après.</figcaption>
+        {compare("yaris-avant", "yaris-apres", "Toyota Yaris avant nettoyage : tableau de bord poussiéreux, tapis de sol pleins de débris", "Toyota Yaris après nettoyage par Nadifa Propreté : console, plastiques et moquettes propres")}
+        <figcaption>Citadine de tous les jours : tableau de bord, console et tapis de sol. Faites glisser pour comparer.</figcaption>
       </figure>
       <figure class="result">
-        {picture("avant-apres-canape", "Canapé noir en tissu avant et après nettoyage par injection-extraction : traces et auréoles disparues", sizes="(max-width: 760px) 100vw, 33vw", w=1024, h=1024)}
+        {compare("207-avant", "207-apres", "Peugeot 207 avant nettoyage : miettes et poussière sur les tapis de sol et les sièges", "Peugeot 207 après nettoyage par Nadifa Propreté : sièges, moquettes et plastiques nets")}
+        <figcaption>Berline compacte : sièges en tissu, moquettes et plastiques. Faites glisser pour comparer.</figcaption>
+      </figure>
+      <figure class="result">
+        {picture("avant-apres-canape", "Canapé noir en tissu avant et après nettoyage par injection-extraction : traces et auréoles disparues", sizes="(max-width: 760px) 100vw, 50vw", w=1024, h=1024)}
         <figcaption>Canapé d'angle en tissu : auréoles et traces d'usage éliminées.</figcaption>
       </figure>
       <figure class="result">
-        {picture("injection-canape", "Buse d'injection-extraction sur un canapé en tissu clair pendant le nettoyage", sizes="(max-width: 760px) 100vw, 33vw", w=1024, h=1024)}
+        {picture("injection-canape", "Buse d'injection-extraction sur un canapé en tissu clair pendant le nettoyage", sizes="(max-width: 760px) 100vw, 50vw", w=1024, h=1024)}
         <figcaption>L'injection-extraction : l'eau et le produit sont injectés dans la fibre puis aspirés avec la saleté.</figcaption>
       </figure>
     </div>
@@ -303,12 +323,10 @@ def page_index():
       <p class="eyebrow">Pourquoi Nadifa</p>
       <h2>Ce qui fait la différence</h2>
     </div>
-    <div class="grid-3 features">
-      <div class="feature"><span class="icon">{ICON["spark"]}</span><h3>Injection-extraction pro</h3><p>Une machine professionnelle qui nettoie dans la fibre, pas seulement en surface. Les taches partent, les odeurs aussi.</p></div>
-      <div class="feature"><span class="icon">{ICON["shield"]}</span><h3>Produits adaptés au textile</h3><p>Chaque matière (tissu, microfibre, velours, cuir de siège auto) a son produit. Rien d'agressif, rien qui décolore.</p></div>
+    <div class="grid-2 features">
+      <div class="feature"><span class="icon">{ICON["spark"]}</span><h3>Injection-extraction professionnelle</h3><p>Une machine professionnelle qui nettoie dans la fibre, pas seulement en surface. Les taches incrustées partent.</p></div>
       <div class="feature"><span class="icon">{ICON["tag"]}</span><h3>Prix fixe annoncé avant</h3><p>Le tarif est donné sur photo, avant l'intervention. Pas de supplément découvert sur place.</p></div>
       <div class="feature"><span class="icon">{ICON["clock"]}</span><h3>Réactif</h3><p>Réponse rapide sur WhatsApp, intervention sous 48 h dans la plupart des cas.</p></div>
-      <div class="feature"><span class="icon">{ICON["wind"]}</span><h3>Séchage rapide</h3><p>Grâce à l'extraction, le textile est sec en 3 h environ. Vous retrouvez votre canapé le soir même.</p></div>
       <div class="feature"><span class="icon">{ICON["pin"]}</span><h3>Local et indépendant</h3><p>Une entreprise toulousaine à taille humaine : c'est la même personne qui répond, qui vient et qui nettoie.</p></div>
     </div>
   </div>
@@ -358,13 +376,13 @@ def price_row(name, detail, price, note=""):
     return f'<li><div><strong>{name}</strong><span class="muted">{detail}</span></div>{p}{f"<em>{note}</em>" if note else ""}</li>'
 
 def page_services():
-    h = head("Services et tarifs : voiture, canapé, matelas, tapis à Toulouse | Nadifa Propreté",
-             "Toutes les prestations Nadifa Propreté à Toulouse : formules voiture Entretien et Rénovation, canapés 2 à 4 places, fauteuils, matelas, tapis à domicile dès 40 €, moquettes, vitres, après travaux.",
-             "services.html", extra=breadcrumb("Services et tarifs","services.html"))
+    h = head("Services : voiture, canapé, matelas, tapis à Toulouse | Nadifa Propreté",
+             "Toutes les prestations Nadifa Propreté à Toulouse : voiture (Formule Basique dès 50 €, Premium dès 70 €), canapés et fauteuils, matelas, tapis et moquettes à domicile, ménage et logements Airbnb. Prix fixe sur photo.",
+             "services.html", extra=breadcrumb("Services","services.html"))
     body = f'''
 <section class="page-head">
   <div class="wrap">
-    <p class="eyebrow">Services & tarifs</p>
+    <p class="eyebrow">Services</p>
     <h1>Des prestations claires, un prix fixe annoncé avant</h1>
     <p class="lead">Envoyez une photo sur WhatsApp, vous recevez le tarif exact en quelques minutes. Le déplacement dans Toulouse et l'agglomération est compris.</p>
     <div class="hero-actions">
@@ -382,10 +400,10 @@ def page_services():
       <h2>Intérieur de voiture</h2>
       <p>Voiture personnelle, voiture pro qui tourne sur les chantiers, véhicule de famille : nous intervenons sur votre parking, chez vous ou au travail.</p>
       <ul class="pricelist">
-        {price_row("Formule Entretien","Aspiration complète, dépoussiérage des plastiques et aérateurs, vitres intérieures, shampoing des sièges et tapis de sol.","")}
-        {price_row("Formule Rénovation","Formule Entretien + traitement des taches incrustées, moquettes et coffre en injection-extraction, rénovation des plastiques, désodorisation.","")}
+        {price_row("Formule Basique","Aspiration complète de l'habitacle, dépoussiérage des plastiques, du tableau de bord et des aérateurs.","À partir de 50 €")}
+        {price_row("Formule Premium","Formule Basique + shampoing des sièges, tapis de sol et moquettes par injection-extraction.","À partir de 70 €")}
       </ul>
-      <p class="small muted">Le tarif dépend de la taille du véhicule (citadine, berline, SUV, utilitaire) et de son état. Il est confirmé sur photo avant l'intervention.</p>
+      <p class="small muted">Le tarif dépend de la taille du véhicule (citadine, berline, SUV, utilitaire) et de son état. Il est fixé sur photo avant l'intervention.</p>
     </div>
   </div>
 </section>
@@ -425,13 +443,13 @@ def page_services():
 
 <section class="section section-alt" id="tapis">
   <div class="wrap service-block reverse">
-    <div class="service-media">{picture("tapis","Nettoyage d'un tapis à domicile avec une brosse et une bassine", sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
+    <div class="service-media">{picture("tapis","Tapis de salon nettoyé à domicile", sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
     <div class="service-text">
       <span class="icon">{ICON["rug"]}</span>
       <h2>Tapis et moquettes</h2>
       <p>Le tapis est nettoyé chez vous, sans l'emporter : dépoussiérage, injection-extraction, remise en forme des fibres. Pour les moquettes, comptez une pièce en une heure environ.</p>
       <ul class="pricelist">
-        {price_row("Tapis à domicile","Jusqu'à 2 × 3 m environ. Durée : 45 min.","40 €")}
+        {price_row("Tapis à domicile","Jusqu'à 2 × 3 m environ. Durée : 45 min.","")}
         {price_row("Moquette","Chambre, salon, bureau, escalier. Tarif au m².","")}
       </ul>
     </div>
@@ -442,12 +460,11 @@ def page_services():
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">Également</p>
-      <h2>Vitres, après travaux et ménage</h2>
+      <h2>Ménage et locations courte durée</h2>
     </div>
-    <div class="grid-3 features features-light">
-      <div class="feature"><span class="icon">{ICON["window"]}</span><h3>Vitres et baies vitrées</h3><p>Intérieur et extérieur accessibles depuis le sol, encadrements compris.</p></div>
-      <div class="feature"><span class="icon">{ICON["spark"]}</span><h3>Nettoyage après travaux</h3><p>Poussière de plâtre, traces de peinture, sols et vitres : remise au propre avant d'emménager.</p></div>
-      <div class="feature"><span class="icon">{ICON["check"]}</span><h3>Ménage ponctuel ou régulier</h3><p>Appartement, maison, bureau ou logement de location entre deux locataires.</p></div>
+    <div class="grid-2 features features-light">
+      <div class="feature"><span class="icon">{ICON["check"]}</span><h3>Ménage ponctuel ou régulier</h3><p>Appartement, maison ou bureau : un passage occasionnel ou un entretien régulier, avec facture.</p></div>
+      <div class="feature"><span class="icon">{ICON["spark"]}</span><h3>Logements Airbnb et locations saisonnières</h3><p>Remise au propre entre deux locataires : sols, sanitaires, cuisine, literie et textiles si besoin.</p></div>
     </div>
     <p class="center small muted">Ces prestations sont chiffrées sur devis, après échange de photos ou visite rapide.</p>
   </div>
@@ -475,7 +492,7 @@ def page_reservation():
     <form class="form" id="booking" novalidate>
       <div class="field">
         <label for="f-name">Votre prénom / nom</label>
-        <input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Ex. : Sarah D.">
+        <input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Ex. : Karim B.">
       </div>
       <div class="field">
         <label for="f-phone">Téléphone</label>
@@ -486,8 +503,8 @@ def page_reservation():
         <select id="f-service" name="service" required>
           <option value="">Choisir…</option>
           <optgroup label="Voiture">
-            <option>Voiture – Formule Entretien</option>
-            <option>Voiture – Formule Rénovation</option>
+            <option>Voiture – Formule Basique</option>
+            <option>Voiture – Formule Premium</option>
           </optgroup>
           <optgroup label="Canapés et fauteuils">
             <option>Canapé 2 places</option>
@@ -504,9 +521,8 @@ def page_reservation():
             <option>Moquette</option>
           </optgroup>
           <optgroup label="Autres">
-            <option>Vitres</option>
-            <option>Nettoyage après travaux</option>
-            <option>Ménage</option>
+            <option>Ménage ponctuel ou régulier</option>
+            <option>Logement Airbnb / location courte durée</option>
             <option>Autre demande</option>
           </optgroup>
         </select>
@@ -537,7 +553,7 @@ def page_reservation():
       <div class="aside-card">
         <h2>Vous préférez appeler ?</h2>
         <p><a class="big-link" href="tel:{PHONE_T}">{ICON["phone"]} {PHONE_H}</a></p>
-        <p class="muted">Du lundi au samedi, 8 h – 19 h. Si nous sommes en intervention, laissez un message ou écrivez sur WhatsApp : nous rappelons dans la journée.</p>
+        <p class="muted">Tous les jours sauf le vendredi, de 7 h à 22 h 30. Si nous sommes en intervention, laissez un message ou écrivez sur WhatsApp : nous rappelons dans la journée.</p>
       </div>
       <div class="aside-card">
         <h2>Le jour de l'intervention</h2>
@@ -587,7 +603,7 @@ def page_contact():
       <span class="icon">{ICON["phone"]}</span>
       <h2>Téléphone</h2>
       <p class="big">{PHONE_H}</p>
-      <p class="muted">Lundi – samedi, 8 h – 19 h</p>
+      <p class="muted">Tous les jours sauf le vendredi, 7 h – 22 h 30</p>
     </a>
     <a class="contact-card" href="mailto:{EMAIL}">
       <span class="icon">{ICON["mail"]}</span>
@@ -642,7 +658,7 @@ def page_mentions():
     <p>Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience. Le formulaire de réservation ne stocke rien sur le site : il prépare un message que vous envoyez vous-même via WhatsApp ou votre messagerie. Les informations transmises (nom, téléphone, adresse d'intervention) servent uniquement à établir le devis et à réaliser la prestation. Elles sont conservées le temps de la relation commerciale et des obligations comptables. Vous pouvez demander leur consultation, rectification ou suppression à l'adresse e-mail ci-dessus.</p>
 
     <h2>Propriété intellectuelle</h2>
-    <p>Le nom, le logo, les textes et les photographies de réalisations sont la propriété de Nadifa Propreté. Certaines illustrations de prestations sont des images génériques utilisées à titre d'exemple.</p>
+    <p>Le nom, le logo, les textes et les photographies de réalisations sont la propriété de Nadifa Propreté. Certaines illustrations de prestations sont des images génériques utilisées à titre d'exemple. Photo du tapis : Famartin, Wikimedia Commons, licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license noopener" target="_blank">CC BY-SA 4.0</a>, recadrée.</p>
 
     <h2>Assurance et responsabilité</h2>
     <p>Les prestations sont réalisées avec des produits et un matériel adaptés aux textiles traités. Un test de tenue de couleur est effectué sur une zone discrète avant tout nettoyage lorsque la matière le justifie.</p>
@@ -709,8 +725,9 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 .brand .brand-mark{width:44px;height:44px;flex:none;border-radius:12px;box-shadow:0 4px 12px rgba(12,192,223,.35)}
 .brand-name{font-weight:800;font-size:1.2rem;letter-spacing:-.01em}
 .brand-name span{color:var(--accent-2)}
-.brand-light{color:#fff}
-.brand-light .brand-name span{color:var(--accent)}
+.brand-logo{height:46px;width:auto;display:block}
+.brand-plate{background:#fff;border-radius:12px;padding:.45rem .8rem;display:inline-flex;margin-bottom:1rem}
+.brand-plate .brand-logo{height:40px}
 .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1.4rem;align-items:center}
 .nav{display:flex;align-items:center;gap:1.4rem}
 .nav a:not(.btn){color:var(--ink);text-decoration:none;font-weight:600;padding:.4em 0;border-bottom:2px solid transparent}
@@ -737,13 +754,13 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 .hero-proof li{display:inline-flex;align-items:center;gap:.4em}
 .hero-proof svg{color:var(--accent-2)}
 .hero-media{margin:0;position:relative}
-.hero-media img{border-radius:24px;box-shadow:0 25px 60px rgba(11,31,51,.2);aspect-ratio:3/4;object-fit:cover;width:100%}
+.hero-media > img{border-radius:24px;box-shadow:0 25px 60px rgba(11,31,51,.2);aspect-ratio:3/4;object-fit:cover;width:100%}
 .hero-media figcaption{position:absolute;left:1rem;bottom:1rem}
 .badge{display:inline-flex;align-items:center;gap:.5em;background:rgba(11,31,51,.85);color:#fff;padding:.5em .9em;border-radius:999px;font-size:.85rem;font-weight:600;backdrop-filter:blur(6px)}
 @media (max-width:900px){
   .hero{padding:2.2rem 0 2.5rem}
   .hero-grid{grid-template-columns:1fr;gap:2rem}
-  .hero-media img{aspect-ratio:4/3}
+  .hero-media > img{aspect-ratio:4/3}
 }
 
 /* sections */
@@ -781,9 +798,25 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 @media (max-width:980px){.steps{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){.steps{grid-template-columns:1fr}}
 
+/* compare (avant / après, canapé / voiture) */
+.compare{position:relative;aspect-ratio:1;overflow:hidden;border-radius:var(--radius);user-select:none;-webkit-user-select:none;background:var(--bg-alt)}
+.compare img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;margin:0;border-radius:0;box-shadow:none;aspect-ratio:auto}
+.compare .cmp-left{clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.cmp-line{position:absolute;top:0;bottom:0;left:var(--pos);width:3px;background:#fff;transform:translateX(-50%);box-shadow:0 0 0 1px rgba(11,31,51,.25);pointer-events:none}
+.cmp-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:#fff;color:var(--navy);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(11,31,51,.35)}
+.cmp-handle svg{width:26px;height:26px}
+.cmp-label{position:absolute;top:.8rem;background:rgba(11,31,51,.8);color:#fff;font-weight:700;font-size:.8rem;padding:.35em .7em;border-radius:999px;pointer-events:none;letter-spacing:.03em}
+.cmp-label-l{left:.8rem}.cmp-label-r{right:.8rem}
+.cmp-range{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;opacity:0;cursor:ew-resize;-webkit-appearance:none;appearance:none;background:transparent;border:0;touch-action:pan-y}
+.cmp-range::-webkit-slider-thumb{-webkit-appearance:none;width:46px;height:100%}
+.cmp-range::-moz-range-thumb{width:46px;height:100%;border:0;background:transparent}
+.cmp-range:focus-visible + .cmp-line,.compare:has(.cmp-range:focus-visible) .cmp-handle{outline:3px solid var(--accent)}
+.hero-media .compare{border-radius:24px;box-shadow:0 25px 60px rgba(11,31,51,.2)}
+.results .result .compare{border-radius:0}
+
 /* results */
 .result{margin:0;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.result img{aspect-ratio:4/3;object-fit:cover;width:100%}
+.result > img{aspect-ratio:1;object-fit:cover;width:100%}
 .result figcaption{padding:1rem 1.2rem;color:var(--muted);font-size:.95rem}
 
 /* features */
@@ -892,9 +925,14 @@ JS = r'''
   var t=document.querySelector('.nav-toggle'),n=document.getElementById('nav');
   if(t&&n){t.addEventListener('click',function(){var o=n.classList.toggle('open');t.setAttribute('aria-expanded',o?'true':'false');});
     document.addEventListener('click',function(e){if(!n.contains(e.target)&&!t.contains(e.target)&&n.classList.contains('open')){n.classList.remove('open');t.setAttribute('aria-expanded','false');}});}
+  document.querySelectorAll('.compare').forEach(function(c){
+    var r=c.querySelector('.cmp-range'); if(!r)return;
+    var set=function(){c.style.setProperty('--pos',r.value+'%');};
+    r.addEventListener('input',set); r.addEventListener('change',set); set();
+  });
   var f=document.getElementById('booking');
   if(!f)return;
-  var WA='33647271062', MAIL='contact@nadifaproprete.fr';
+  var WA='33647271062', MAIL='nadifa.proprete@gmail.com';
   function v(id){var el=document.getElementById(id);return el?el.value.trim():'';}
   function build(){
     var d=v('f-date'), dd='';
