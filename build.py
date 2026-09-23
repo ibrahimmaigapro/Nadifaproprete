@@ -42,9 +42,9 @@ ICON = {
 
 MARK = '<svg class="brand-mark" viewBox="0 0 64 64" width="44" height="44" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0cc0df"/><path d="M18 46V18h7l14 18V18h7v28h-7L25 28v18z" fill="#fff"/><path d="M48 10l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="#fff" fill-opacity=".92"/></svg>'
 
-LOGO_IMG = '<img class="brand-logo" src="assets/img/logo-nadifa-600.png" srcset="assets/img/logo-nadifa-600.png 600w, assets/img/logo-nadifa.png 1426w" sizes="220px" width="600" height="180" alt="Nadifa Propreté">'
+LOGO_IMG = '<img class="brand-logo" src="assets/img/logo-nadifa-600.webp" srcset="assets/img/logo-nadifa-600.webp 600w, assets/img/logo-nadifa.webp 1426w" sizes="220px" width="600" height="180" alt="Nadifa Propreté">'
 
-NAV = [("index.html","Accueil"),("services.html","Services"),("reservation.html","Réserver"),("contact.html","Contact")]
+NAV = [("./","Accueil"),("services.html","Services"),("reservation.html","Réserver"),("contact.html","Contact")]
 
 def head(title, desc, path, og_type="website", extra=""):
     canonical = BASE + ("/" if path=="index.html" else "/"+path)
@@ -67,9 +67,10 @@ def head(title, desc, path, og_type="website", extra=""):
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="assets/img/icon-192.png" sizes="192x192" type="image/png">
-<link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <link rel="stylesheet" href="assets/css/style.css?v={ASSET_V}">
 {extra}</head>
@@ -81,7 +82,7 @@ def header(active):
     links = "".join(f'<li><a href="{h}"{" aria-current=\"page\"" if h==active else ""}>{t}</a></li>' for h,t in NAV)
     return f'''<header class="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="index.html" aria-label="Nadifa Propreté, accueil">
+    <a class="brand" href="./" aria-label="Nadifa Propreté, accueil">
       {LOGO_IMG}
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
@@ -102,13 +103,17 @@ def footer():
 <footer class="site-footer">
   <div class="wrap footer-grid">
     <div>
-      <a class="brand brand-plate" href="index.html">{LOGO_IMG}</a>
+      <a class="brand brand-plate" href="./">{LOGO_IMG}</a>
       <p class="muted">Nettoyage à domicile de canapés, matelas, tapis et intérieurs de voiture. Toulouse et 40 km alentour.</p>
     </div>
     <div>
       <h2 class="footer-title">Navigation</h2>
       <ul class="footer-links">
         <li><a href="services.html">Services</a></li>
+        <li><a href="nettoyage-canape-toulouse.html">Nettoyage canapé</a></li>
+        <li><a href="nettoyage-matelas-toulouse.html">Nettoyage matelas</a></li>
+        <li><a href="nettoyage-tapis-moquette-toulouse.html">Nettoyage tapis et moquette</a></li>
+        <li><a href="nettoyage-interieur-voiture-toulouse.html">Nettoyage intérieur voiture</a></li>
         <li><a href="reservation.html">Réserver une intervention</a></li>
         <li><a href="contact.html">Contact & zone desservie</a></li>
         <li><a href="{GBP}" target="_blank" rel="noopener">Avis Google</a></li>
@@ -203,10 +208,10 @@ def cta_band():
 '''
 
 SERVICES = [
- ("car","Intérieur de voiture","siege-auto","Aspiration complète, plastiques, sièges et tapis de sol. Formule Basique ou Premium selon l'état.","services.html#voiture","Nettoyage d'un siège de voiture par injection-extraction"),
- ("sofa","Canapés & fauteuils","canape","Tissu, microfibre ou velours : taches, auréoles et odeurs traitées en profondeur, sans abîmer les fibres.","services.html#canapes","Nettoyage d'un canapé en tissu à domicile"),
- ("bed","Matelas","matelas","Poussière, acariens et traces. Un matelas assaini, sec en quelques heures.","services.html#matelas","Nettoyage d'un matelas par injection-extraction"),
- ("rug","Tapis & moquettes","tapis","Tapis nettoyé chez vous, sans l'emporter. Moquettes de chambre, salon ou bureau.","services.html#tapis","Tapis de salon nettoyé à domicile"),
+ ("car","Intérieur de voiture","voiture-interieur","Aspiration complète, plastiques, sièges et tapis de sol. Formule Basique ou Premium selon l'état.","nettoyage-interieur-voiture-toulouse.html","Intérieur d'un utilitaire Renault Kangoo nettoyé par Nadifa Propreté : tableau de bord, siège et tapis de sol"),
+ ("sofa","Canapés & fauteuils","canape","Tissu, microfibre ou velours : taches, auréoles et odeurs traitées en profondeur, sans abîmer les fibres.","nettoyage-canape-toulouse.html","Nettoyage d'un canapé en tissu à domicile"),
+ ("bed","Matelas","matelas","Poussière, acariens et traces. Un matelas assaini, sec en quelques heures.","nettoyage-matelas-toulouse.html","Nettoyage d'un matelas par injection-extraction"),
+ ("rug","Tapis & moquettes","tapis","Tapis nettoyé chez vous, sans l'emporter. Moquettes de chambre, salon ou bureau.","nettoyage-tapis-moquette-toulouse.html","Tapis de salon bleu à médaillon nettoyé à domicile par Nadifa Propreté"),
 ]
 
 def compare(left, right, alt_left, alt_right, label_left="Avant", label_right="Après", sizes="(max-width: 760px) 100vw, 50vw", eager=False):
@@ -368,7 +373,7 @@ def page_index():
 </section>
 {cta_band()}
 '''
-    return h + header("index.html") + body + footer()
+    return h + header("./") + body + footer()
 
 # ---------- SERVICES ----------
 def price_row(name, detail, price, note=""):
@@ -377,13 +382,13 @@ def price_row(name, detail, price, note=""):
 
 def page_services():
     h = head("Services : voiture, canapé, matelas, tapis à Toulouse | Nadifa Propreté",
-             "Toutes les prestations Nadifa Propreté à Toulouse : voiture (Formule Basique dès 50 €, Premium dès 70 €), canapés et fauteuils, matelas, tapis et moquettes à domicile, ménage et logements Airbnb. Prix fixe sur photo.",
+             "Nettoyage à domicile à Toulouse : intérieur de voiture dès 50 €, canapés, matelas, tapis, moquettes, ménage et Airbnb. Prix fixe annoncé sur photo.",
              "services.html", extra=breadcrumb("Services","services.html"))
     body = f'''
 <section class="page-head">
   <div class="wrap">
     <p class="eyebrow">Services</p>
-    <h1>Des prestations claires, un prix fixe annoncé avant</h1>
+    <h1>Nos services de nettoyage à domicile à Toulouse</h1>
     <p class="lead">Envoyez une photo sur WhatsApp, vous recevez le tarif exact en quelques minutes. Le déplacement dans Toulouse et l'agglomération est compris.</p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="{WA_DEVIS}" target="_blank" rel="noopener">{ICON["wa"]} Obtenir mon tarif</a>
@@ -394,7 +399,7 @@ def page_services():
 
 <section class="section" id="voiture">
   <div class="wrap service-block">
-    <div class="service-media">{picture("siege-auto","Nettoyage d'un siège de voiture en tissu par injection-extraction", sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
+    <div class="service-media">{picture("voiture-interieur","Intérieur d'un utilitaire Renault Kangoo nettoyé par Nadifa Propreté : tableau de bord, siège et tapis de sol", sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
     <div class="service-text">
       <span class="icon">{ICON["car"]}</span>
       <h2>Intérieur de voiture</h2>
@@ -404,6 +409,7 @@ def page_services():
         {price_row("Formule Premium","Formule Basique + shampoing des sièges, tapis de sol et moquettes par injection-extraction.","À partir de 70 €")}
       </ul>
       <p class="small muted">Le tarif dépend de la taille du véhicule (citadine, berline, SUV, utilitaire) et de son état. Il est fixé sur photo avant l'intervention.</p>
+      <p><a class="link-more" href="nettoyage-interieur-voiture-toulouse.html">Tout savoir sur cette prestation</a></p>
     </div>
   </div>
 </section>
@@ -421,6 +427,7 @@ def page_services():
         {price_row("Canapé 4 places ou d'angle","Méridienne comprise.","")}
         {price_row("Fauteuil","Fauteuil de salon, chaise en tissu, tête de lit.","")}
       </ul>
+      <p><a class="link-more" href="nettoyage-canape-toulouse.html">Tout savoir sur cette prestation</a></p>
     </div>
   </div>
 </section>
@@ -437,13 +444,14 @@ def page_services():
         {price_row("Matelas king size","180 × 200 cm et plus, une face.","")}
       </ul>
       <p class="small muted">Deuxième face ou sommier tapissier : sur demande.</p>
+      <p><a class="link-more" href="nettoyage-matelas-toulouse.html">Tout savoir sur cette prestation</a></p>
     </div>
   </div>
 </section>
 
 <section class="section section-alt" id="tapis">
   <div class="wrap service-block reverse">
-    <div class="service-media">{picture("tapis","Tapis de salon nettoyé à domicile", sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
+    <div class="service-media">{picture("tapis","Tapis de salon bleu à médaillon nettoyé à domicile par Nadifa Propreté", sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
     <div class="service-text">
       <span class="icon">{ICON["rug"]}</span>
       <h2>Tapis et moquettes</h2>
@@ -452,6 +460,7 @@ def page_services():
         {price_row("Tapis à domicile","Jusqu'à 2 × 3 m environ. Durée : 45 min.","")}
         {price_row("Moquette","Chambre, salon, bureau, escalier. Tarif au m².","")}
       </ul>
+      <p><a class="link-more" href="nettoyage-tapis-moquette-toulouse.html">Tout savoir sur cette prestation</a></p>
     </div>
   </div>
 </section>
@@ -482,7 +491,7 @@ def page_reservation():
 <section class="page-head">
   <div class="wrap">
     <p class="eyebrow">Réservation</p>
-    <h1>Réserver une intervention</h1>
+    <h1>Réserver un nettoyage à domicile à Toulouse</h1>
     <p class="lead">Remplissez le formulaire : votre demande s'ouvre dans WhatsApp, prête à envoyer. Nous confirmons le tarif et le créneau rapidement. Rien n'est enregistré sur ce site.</p>
   </div>
 </section>
@@ -492,7 +501,7 @@ def page_reservation():
     <form class="form" id="booking" novalidate>
       <div class="field">
         <label for="f-name">Votre prénom / nom</label>
-        <input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Ex. : Karim B.">
+        <input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Ex. : Monsieur X">
       </div>
       <div class="field">
         <label for="f-phone">Téléphone</label>
@@ -637,6 +646,175 @@ def page_contact():
 '''
     return h + header("contact.html") + body + footer()
 
+# ---------- PAGES SERVICE DÉDIÉES (SEO) ----------
+def breadcrumb3(name, path):
+    return f'''<script type="application/ld+json">
+{{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+{{"@type":"ListItem","position":1,"name":"Accueil","item":"{BASE}/"}},
+{{"@type":"ListItem","position":2,"name":"Services","item":"{BASE}/services.html"}},
+{{"@type":"ListItem","position":3,"name":"{name}","item":"{BASE}/{path}"}}]}}
+</script>
+'''
+
+def ld_service(name, service_type, desc, path, min_price=None):
+    offer = (f''',
+  "offers": {{ "@type": "Offer", "priceCurrency": "EUR", "priceSpecification": {{ "@type": "PriceSpecification", "minPrice": "{min_price}", "priceCurrency": "EUR" }} }}''' if min_price else "")
+    return f'''<script type="application/ld+json">
+{{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "{name}",
+  "serviceType": "{service_type}",
+  "description": "{desc}",
+  "url": "{BASE}/{path}",
+  "provider": {{ "@type": "LocalBusiness", "@id": "{BASE}/#business", "name": "Nadifa Propreté", "telephone": "{PHONE_T}", "url": "{BASE}/" }},
+  "areaServed": [{{ "@type": "City", "name": "Toulouse" }}, {{ "@type": "AdministrativeArea", "name": "Haute-Garonne" }}]{offer}
+}}
+</script>
+'''
+
+SVC_PAGES = [
+ dict(path="nettoyage-canape-toulouse.html", crumb="Nettoyage de canapé", icon="sofa", img="canape",
+      img_alt="Nettoyage d'un canapé en tissu gris avec une machine à injection-extraction à Toulouse",
+      title="Nettoyage canapé à domicile à Toulouse | Nadifa Propreté",
+      desc="Nettoyage de canapé et fauteuil à domicile à Toulouse par injection-extraction : taches, auréoles, odeurs. Prix fixe sur photo, sec en 3 h environ.",
+      h1="Nettoyage de canapé à domicile à Toulouse",
+      lead="Tissu, microfibre, velours ou lin : votre canapé est nettoyé en profondeur chez vous, par injection-extraction. Vous envoyez une photo, vous recevez un prix fixe, nous venons sous 48 h.",
+      stype="Nettoyage de textile d'ameublement", min_price=None,
+      intro=["Un canapé en tissu accumule au fil des mois poussière, sueur, traces de boisson et odeurs. Un coup d'aspirateur ne touche que la surface : la saleté reste dans la mousse et dans la fibre.",
+             "L'injection-extraction injecte de l'eau et un produit adapté au textile au cœur de la fibre, puis aspire immédiatement le tout avec la saleté dissoute. Le canapé est nettoyé en profondeur, sans être détrempé."],
+      included=["Aspiration de l'assise, du dossier, des accoudoirs et des coussins","Pré-traitement des taches et auréoles","Test de tenue de couleur sur une zone discrète quand la matière le demande","Injection-extraction sur toutes les faces visibles","Finition et remise en place des coussins"],
+      prices=[("Canapé 2 places","Assise, dossier, accoudoirs et coussins.",""),("Canapé 3 places","Assise, dossier, accoudoirs et coussins.",""),("Canapé 4 places ou d'angle","Méridienne comprise.",""),("Fauteuil","Fauteuil de salon, chaise en tissu, tête de lit.","")],
+      price_note="Le tarif est fixé sur photo avant l'intervention, déplacement compris à Toulouse et en première couronne.",
+      faq=[("Combien de temps faut-il pour que le canapé sèche ?","Environ 3 heures. L'extraction retire la majeure partie de l'eau ; une pièce aérée accélère encore le séchage."),
+           ("Faut-il déplacer le canapé ?","Non. Nous intervenons dans la pièce où il se trouve. Il nous faut seulement une prise électrique à proximité."),
+           ("Les vieilles taches partent-elles ?","La plupart, oui : boissons, sueur, auréoles, poussière incrustée. Certaines teintures (encre, colorant) peuvent laisser une marque atténuée. Envoyez une photo, nous vous disons franchement ce qu'il est possible d'obtenir."),
+           ("Et les canapés en cuir ?","Le cuir ne se nettoie pas par injection-extraction. Envoyez-nous une photo pour savoir si nous pouvons intervenir.")]),
+ dict(path="nettoyage-matelas-toulouse.html", crumb="Nettoyage de matelas", icon="bed", img="matelas",
+      img_alt="Nettoyage d'un matelas blanc par injection-extraction à domicile à Toulouse",
+      title="Nettoyage matelas à domicile à Toulouse | Nadifa Propreté",
+      desc="Nettoyage de matelas à domicile à Toulouse : traces, auréoles, poussière et acariens retirés par injection-extraction. Prix fixe sur photo, sec le soir même.",
+      h1="Nettoyage de matelas à domicile à Toulouse",
+      lead="Traces de transpiration, auréoles, poussière et acariens : le matelas est nettoyé chez vous, sur la face de couchage, puis séché par extraction. Vous dormez dessus le soir même.",
+      stype="Nettoyage de literie", min_price=None,
+      intro=["On passe environ un tiers de sa vie sur son matelas. Il absorbe transpiration, peaux mortes et poussière, qui nourrissent les acariens et laissent des auréoles jaunes.",
+             "Le nettoyage par injection-extraction va chercher la saleté dans l'épaisseur du garnissage, là où l'aspirateur ne va pas. Le matelas reste chez vous, il n'y a rien à transporter."],
+      included=["Aspiration minutieuse de la face de couchage et des bords","Pré-traitement des auréoles et des taches","Injection-extraction sur toute la face","Séchage accéléré par extraction : sec en 3 h environ"],
+      prices=[("Matelas standard","90 × 190 à 160 × 200 cm, une face.",""),("Matelas king size","180 × 200 cm et plus, une face.","")],
+      price_note="Deuxième face ou sommier tapissier : sur demande. Tarif fixé sur photo avant l'intervention.",
+      faq=[("Peut-on dormir dessus le soir même ?","Oui. Comptez environ 3 heures de séchage ; en aérant la chambre, le matelas est sec avant le coucher."),
+           ("Faut-il retourner le matelas ?","Nous nettoyons la face de couchage. La deuxième face se fait sur demande, si le matelas est réversible."),
+           ("Les taches d'urine ou de transpiration partent-elles ?","Elles sont très nettement atténuées, souvent complètement. Envoyez une photo pour un avis honnête avant de réserver.")]),
+ dict(path="nettoyage-tapis-moquette-toulouse.html", crumb="Nettoyage de tapis et moquette", icon="rug", img="tapis",
+      img_alt="Tapis de salon bleu à médaillon nettoyé à domicile par Nadifa Propreté à Toulouse",
+      title="Nettoyage tapis et moquette à domicile à Toulouse | Nadifa Propreté",
+      desc="Nettoyage de tapis et moquette à domicile à Toulouse, sans emporter le tapis : dépoussiérage et injection-extraction. Prix fixe sur photo.",
+      h1="Nettoyage de tapis et moquette à domicile à Toulouse",
+      lead="Votre tapis est nettoyé chez vous, sans l'emporter : dépoussiérage, injection-extraction, remise en forme des fibres. Pour les moquettes, comptez environ une heure par pièce.",
+      stype="Nettoyage de tapis et moquettes", min_price=None,
+      intro=["Un tapis de salon retient la poussière, les miettes, les poils d'animaux et les taches du quotidien. Avec le temps, les couleurs se ternissent et les fibres se tassent.",
+             "Pas besoin de le rouler ni de le déposer au pressing : nous le nettoyons sur place. Même chose pour les moquettes de chambre, de salon, de bureau ou d'escalier."],
+      included=["Dépoussiérage en profondeur","Pré-traitement des taches","Injection-extraction avec un produit adapté à la fibre","Remise en forme des fibres","Tapis jusqu'à 2 × 3 m environ en 45 min"],
+      prices=[("Tapis à domicile","Jusqu'à 2 × 3 m environ. Durée : 45 min.",""),("Moquette","Chambre, salon, bureau, escalier. Tarif au m².","")],
+      price_note="Tarif fixé sur photo avant l'intervention (indiquez les dimensions du tapis ou la surface de moquette).",
+      faq=[("Faut-il emporter le tapis ?","Non, il est nettoyé chez vous. Il suffit de libérer la surface et d'avoir une prise électrique."),
+           ("Combien de temps pour une moquette ?","Environ une heure par pièce, puis 3 heures de séchage."),
+           ("Tous les tapis peuvent-ils être nettoyés ?","La plupart des tapis en fibres synthétiques, laine ou coton, oui. Pour un tapis ancien ou fragile, envoyez une photo : nous vous dirons s'il vaut mieux le confier à un spécialiste.")]),
+ dict(path="nettoyage-interieur-voiture-toulouse.html", crumb="Nettoyage intérieur de voiture", icon="car", img="voiture-interieur",
+      img_alt="Intérieur d'un utilitaire Renault Kangoo nettoyé par Nadifa Propreté à Toulouse : tableau de bord, siège et tapis de sol",
+      title="Nettoyage intérieur voiture à Toulouse dès 50 € | Nadifa Propreté",
+      desc="Nettoyage intérieur de voiture à Toulouse, chez vous ou au travail : Formule Basique dès 50 €, Premium avec shampoing des sièges dès 70 €. Prix fixe sur photo.",
+      h1="Nettoyage intérieur de voiture à Toulouse",
+      lead="Voiture personnelle, utilitaire qui tourne sur les chantiers, véhicule de famille : nous nettoyons l'habitacle sur votre parking, chez vous ou au travail. Formule Basique dès 50 €, Premium dès 70 €.",
+      stype="Nettoyage automobile intérieur", min_price="50",
+      intro=["Miettes, sable, poussière sur le tableau de bord, taches sur les sièges, tapis de sol pleins de débris : l'intérieur d'une voiture se salit vite, surtout avec des enfants ou un usage professionnel.",
+             "Nous venons avec le matériel : aspirateur professionnel, produits pour plastiques et machine d'injection-extraction pour les sièges et moquettes. Vous n'avez pas à vous déplacer en station."],
+      included=["Aspiration complète de l'habitacle et du coffre","Dépoussiérage des plastiques, du tableau de bord, de la console et des aérateurs","Nettoyage des tapis de sol","Formule Premium : shampoing des sièges, tapis et moquettes par injection-extraction"],
+      prices=[("Formule Basique","Aspiration complète de l'habitacle, dépoussiérage des plastiques, du tableau de bord et des aérateurs.","À partir de 50 €"),("Formule Premium","Formule Basique + shampoing des sièges, tapis de sol et moquettes par injection-extraction.","À partir de 70 €")],
+      price_note="Le tarif dépend de la taille du véhicule (citadine, berline, SUV, utilitaire) et de son état. Il est fixé sur photo avant l'intervention.",
+      faq=[("Où se fait le nettoyage ?","Là où la voiture est garée : devant chez vous, sur votre lieu de travail ou sur un parking, à Toulouse et dans un rayon de 40 km."),
+           ("Combien de temps ça prend ?","Entre 45 minutes et 2 heures selon la formule, la taille du véhicule et son état."),
+           ("Nettoyez-vous les véhicules professionnels ?","Oui : utilitaires d'artisans, VTC, véhicules de société. Pour un entretien régulier de plusieurs véhicules, écrivez-nous pour un tarif adapté."),
+           ("Que dois-je préparer ?","Sortez vos objets personnels de l'habitacle et du coffre. Nous avons besoin d'une place pour stationner à côté du véhicule.")]),
+]
+
+def page_service(d):
+    others = "".join(f'<a class="btn btn-secondary" href="{o["path"]}">{o["crumb"]}</a>' for o in SVC_PAGES if o is not d)
+    h = head(d["title"], d["desc"], d["path"], extra=breadcrumb3(d["crumb"], d["path"]) + ld_service(d["crumb"], d["stype"], d["desc"], d["path"], d["min_price"]))
+    intro = "".join(f"<p>{x}</p>" for x in d["intro"])
+    included = "".join(f'<li>{ICON["check"]} {x}</li>' for x in d["included"])
+    prices = "".join(price_row(*x) for x in d["prices"])
+    faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q,a in d["faq"])
+    zones = ", ".join(ZONES[1:12])
+    body = f'''
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow"><a href="services.html">Services</a> · {d["crumb"]}</p>
+    <h1>{d["h1"]}</h1>
+    <p class="lead">{d["lead"]}</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{WA_DEVIS}" target="_blank" rel="noopener">{ICON["wa"]} Obtenir mon prix sur WhatsApp</a>
+      <a class="btn btn-ghost" href="tel:{PHONE_T}">{ICON["phone"]} {PHONE_H}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap service-block">
+    <div class="service-media">{picture(d["img"], d["img_alt"], sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
+    <div class="service-text">
+      <span class="icon">{ICON[d["icon"]]}</span>
+      <h2>Pourquoi un nettoyage professionnel</h2>
+      {intro}
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap grid-2">
+    <div>
+      <h2>Ce qui est compris</h2>
+      <ul class="checklist">{included}</ul>
+    </div>
+    <div>
+      <h2>Tarifs</h2>
+      <ul class="pricelist">{prices}</ul>
+      <p class="small muted">{d["price_note"]}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><h2>Comment ça se passe</h2></div>
+    <ol class="steps">
+      <li><span class="step-num">1</span><h3>Vous envoyez une photo</h3><p>Sur WhatsApp ou par téléphone. Vous recevez un prix fixe dans la foulée.</p></li>
+      <li><span class="step-num">2</span><h3>On fixe un créneau</h3><p>Généralement sous 48 h, tous les jours sauf le vendredi, de 7 h à 22 h 30.</p></li>
+      <li><span class="step-num">3</span><h3>Nettoyage sur place</h3><p>Chez vous ou là où est garé le véhicule. Il suffit d'une prise électrique.</p></li>
+      <li><span class="step-num">4</span><h3>Vous vérifiez, vous réglez</h3><p>Vous réglez une fois le résultat vérifié ensemble. Une facture vous est remise.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap narrow">
+    <div class="section-head"><h2>Questions fréquentes</h2></div>
+    {faq}
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap narrow">
+    <h2>Zone d'intervention</h2>
+    <p>Nous intervenons à Toulouse (tous quartiers) et dans un rayon d'environ 40 km : {zones}… <a href="contact.html#zone">Voir toute la zone</a>.</p>
+    <h2>Nos autres prestations</h2>
+    <div class="hero-actions">{others}</div>
+  </div>
+</section>
+{cta_band()}
+'''
+    return h + header("services.html") + body + footer()
+
 # ---------- MENTIONS LEGALES ----------
 def page_mentions():
     h = head("Mentions légales | Nadifa Propreté",
@@ -658,7 +836,7 @@ def page_mentions():
     <p>Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience. Le formulaire de réservation ne stocke rien sur le site : il prépare un message que vous envoyez vous-même via WhatsApp ou votre messagerie. Les informations transmises (nom, téléphone, adresse d'intervention) servent uniquement à établir le devis et à réaliser la prestation. Elles sont conservées le temps de la relation commerciale et des obligations comptables. Vous pouvez demander leur consultation, rectification ou suppression à l'adresse e-mail ci-dessus.</p>
 
     <h2>Propriété intellectuelle</h2>
-    <p>Le nom, le logo, les textes et les photographies de réalisations sont la propriété de Nadifa Propreté. Certaines illustrations de prestations sont des images génériques utilisées à titre d'exemple. Photo du tapis : Famartin, Wikimedia Commons, licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="license noopener" target="_blank">CC BY-SA 4.0</a>, recadrée.</p>
+    <p>Le nom, le logo, les textes et les photographies de réalisations sont la propriété de Nadifa Propreté. Certaines illustrations de prestations sont des images génériques utilisées à titre d'exemple.</p>
 
     <h2>Assurance et responsabilité</h2>
     <p>Les prestations sont réalisées avec des produits et un matériel adaptés aux textiles traités. Un test de tenue de couleur est effectué sur une zone discrète avant tout nettoyage lorsque la matière le justifie.</p>
@@ -671,7 +849,7 @@ def page_404():
     h = head("Page introuvable | Nadifa Propreté", "Cette page n'existe pas ou plus.", "404.html", extra='<meta name="robots" content="noindex">\n')
     body = f'''
 <section class="page-head"><div class="wrap"><p class="eyebrow">Erreur 404</p><h1>Cette page n'existe pas</h1><p class="lead">Elle a peut-être été déplacée. Retrouvez nos prestations ou contactez-nous directement.</p>
-<div class="hero-actions"><a class="btn btn-primary" href="index.html">Retour à l'accueil</a><a class="btn btn-ghost" href="services.html">Voir les services</a></div></div></section>
+<div class="hero-actions"><a class="btn btn-primary" href="./">Retour à l'accueil</a><a class="btn btn-ghost" href="services.html">Voir les services</a></div></div></section>
 '''
     return h + header("") + body + footer()
 
@@ -982,10 +1160,11 @@ ROBOTS = f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap.xml\n"
 today = datetime.date.today().isoformat()
 SITEMAP = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
     f'  <url><loc>{BASE}/{p}</loc><lastmod>{today}</lastmod><changefreq>{f}</changefreq><priority>{pr}</priority></url>\n'
-    for p,f,pr in [("","weekly","1.0"),("services.html","monthly","0.9"),("reservation.html","monthly","0.8"),("contact.html","monthly","0.7")]) + "</urlset>\n"
+    for p,f,pr in [("","weekly","1.0"),("services.html","monthly","0.9")] + [(d["path"],"monthly","0.9") for d in SVC_PAGES] + [("reservation.html","monthly","0.8"),("contact.html","monthly","0.7")]) + "</urlset>\n"
 
 ASSET_V = hashlib.md5((CSS+JS).encode()).hexdigest()[:8]
 pages = {"index.html":page_index(),"services.html":page_services(),"reservation.html":page_reservation(),"contact.html":page_contact(),"mentions-legales.html":page_mentions(),"404.html":page_404()}
+pages.update({d["path"]:page_service(d) for d in SVC_PAGES})
 for name,content in pages.items():
     open(os.path.join(OUT,name),"w",encoding="utf-8").write(content)
 open(os.path.join(OUT,"assets/css/style.css"),"w").write(CSS.strip()+"\n")
