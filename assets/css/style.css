@@ -87,6 +87,7 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 
 /* sections */
 .section{padding:4.5rem 0}
+.section-tight{padding:2.5rem 0}
 .section-alt{background:var(--bg-alt)}
 .section-dark{background:linear-gradient(160deg,var(--navy),#0e2a46);color:#d7e3ee}
 .section-dark h2,.section-dark h3{color:#fff}
