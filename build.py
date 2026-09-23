@@ -4,7 +4,7 @@ OUT = os.path.dirname(os.path.abspath(__file__))
 BASE = "https://nadifaproprete.fr"
 PHONE_H = "06 47 27 10 62"; PHONE_T = "+33647271062"; WA = "33647271062"
 EMAIL = "nadifa.proprete@gmail.com"
-GBP = "https://share.google/19td8ZPjC2HE1T8S3"
+GBP = "https://www.google.com/maps?cid=6909362966415409349"
 YEAR = 2026
 
 def wa(text):
