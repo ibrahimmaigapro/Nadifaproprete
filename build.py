@@ -5,6 +5,8 @@ BASE = "https://nadifaproprete.fr"
 PHONE_H = "06 47 27 10 62"; PHONE_T = "+33647271062"; WA = "33647271062"
 EMAIL = "nadifa.proprete@gmail.com"
 GBP = "https://www.google.com/maps?cid=6909362966415409349"
+# Médiateur de la consommation : à remplir après adhésion (nom, adresse postale, site). Tant que None, rien n'est affiché.
+MEDIATEUR = None  # ex. {"nom": "...", "adresse": "...", "site": "https://..."}
 YEAR = 2026
 # Zone mise en avant : Toulouse + communes proches (concentration SEO locale). Rayon réel ~40 km, sur demande.
 ZONES = ["Toulouse (tous quartiers)","Blagnac","Colomiers","Tournefeuille","Cugnaux","Portet-sur-Garonne","Muret"]
@@ -122,6 +124,7 @@ def footer():
         <li><a href="contact.html">Contact & zone desservie</a></li>
         <li><a href="{GBP}" target="_blank" rel="noopener">Avis Google</a></li>
         <li><a href="mentions-legales.html">Mentions légales</a></li>
+        <li><a href="politique-confidentialite.html">Politique de confidentialité</a></li>
       </ul>
     </div>
     <div>
@@ -822,14 +825,71 @@ def page_mentions():
     <h2>Hébergement</h2>
     <p>GitHub Pages, GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</p>
 
-    <h2>Données personnelles</h2>
-    <p>Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience. Le formulaire de réservation ne stocke rien sur le site : il prépare un message que vous envoyez vous-même via WhatsApp ou votre messagerie. Les informations transmises (nom, téléphone, adresse d'intervention) servent uniquement à établir le devis et à réaliser la prestation. Elles sont conservées le temps de la relation commerciale et des obligations comptables. Vous pouvez demander leur consultation, rectification ou suppression à l'adresse e-mail ci-dessus.</p>
+    <h2>Données personnelles et cookies</h2>
+    <p>Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience. Le traitement des informations que vous nous transmettez (devis, prestation, facturation) est détaillé dans la <a href="politique-confidentialite.html">politique de confidentialité</a>.</p>
 
-    <h2>Propriété intellectuelle</h2>
+{mediation_html()}    <h2>Propriété intellectuelle</h2>
     <p>Le nom, le logo, les textes et les photographies de réalisations sont la propriété de Nadifa Propreté. Certaines illustrations de prestations sont des images génériques utilisées à titre d'exemple.</p>
 
     <h2>Assurance et responsabilité</h2>
     <p>Les prestations sont réalisées avec des produits et un matériel adaptés aux textiles traités. Un test de tenue de couleur est effectué sur une zone discrète avant tout nettoyage lorsque la matière le justifie.</p>
+  </div>
+</section>
+'''
+    return h + header("") + body + footer()
+
+def mediation_html():
+    if not MEDIATEUR:
+        return ""
+    m = MEDIATEUR
+    return f"""    <h2>Médiation de la consommation</h2>
+    <p>Conformément aux articles L612-1 et suivants du Code de la consommation, après une réclamation écrite adressée à Nadifa Propreté restée sans solution satisfaisante, vous pouvez saisir gratuitement le médiateur de la consommation dont nous relevons : {m["nom"]}, {m["adresse"]}, <a href="{m["site"]}" target="_blank" rel="noopener">{m["site"].split("//")[-1].rstrip("/")}</a>.</p>
+
+"""
+
+# ---------- POLITIQUE DE CONFIDENTIALITE ----------
+def page_confidentialite():
+    h = head("Politique de confidentialité | Nadifa Propreté",
+             "Comment Nadifa Propreté utilise et protège les informations transmises pour un devis ou une prestation de nettoyage à Toulouse.",
+             "politique-confidentialite.html", extra='<meta name="robots" content="noindex, follow">\n')
+    body = f'''
+<section class="page-head">
+  <div class="wrap"><p class="eyebrow">Informations</p><h1>Politique de confidentialité</h1><p class="lead">Mise à jour le 27 septembre 2026.</p></div>
+</section>
+<section class="section">
+  <div class="wrap narrow legal">
+    <h2>Qui est responsable de vos données ?</h2>
+    <p>Ibrahim Maiga, entrepreneur individuel exerçant sous le nom Nadifa Propreté, SIRET 989 023 213 00014, 7 place de Milan, 31100 Toulouse. Contact : <a href="mailto:{EMAIL}">{EMAIL}</a> ou <a href="tel:{PHONE_T}">{PHONE_H}</a>.</p>
+
+    <h2>Quelles données, et d'où viennent-elles ?</h2>
+    <ul>
+      <li>Les informations que vous nous envoyez vous-même, par WhatsApp, téléphone, e-mail ou via le formulaire de réservation : nom, téléphone, commune et adresse d'intervention, prestation souhaitée, date, photos des éléments à nettoyer et contenu de vos messages.</li>
+      <li>Si vous nous contactez après avoir vu une de nos publicités sur Facebook, Instagram ou WhatsApp, ou si vous remplissez un formulaire publicitaire Meta : les informations que vous y saisissez, que Meta nous transmet.</li>
+      <li>Les informations nécessaires à la facturation de la prestation.</li>
+    </ul>
+    <p>Le formulaire de réservation de ce site ne stocke rien : il prépare un message que vous envoyez vous-même depuis WhatsApp ou votre messagerie. Ce site ne dépose aucun cookie et n'utilise ni outil de mesure d'audience ni pixel publicitaire.</p>
+
+    <h2>Pourquoi, et sur quelle base ?</h2>
+    <ul>
+      <li>Vous répondre, établir un devis et organiser l'intervention : mesures précontractuelles et exécution du contrat (article 6.1.b du RGPD).</li>
+      <li>Établir et conserver les factures : obligation légale (article 6.1.c du RGPD).</li>
+      <li>Vous demander votre avis après une prestation et vous recontacter au sujet d'une demande en cours : intérêt légitime (article 6.1.f du RGPD). Vous pouvez vous y opposer à tout moment.</li>
+      <li>Utiliser des photos avant/après de vos éléments nettoyés dans nos publications ou publicités : uniquement avec votre accord explicite, et sans aucune information permettant de vous identifier. Vous pouvez retirer cet accord à tout moment.</li>
+    </ul>
+
+    <h2>Qui y a accès ?</h2>
+    <p>Uniquement Ibrahim Maiga. Aucune donnée n'est vendue ni cédée. Les services techniques utilisés pour échanger avec vous traitent ces données pour notre compte ou en tant que responsables distincts : WhatsApp et Meta Platforms Ireland (messagerie, publicités et formulaires publicitaires), Google (messagerie e-mail) et GitHub (hébergement du site, qui peut conserver des journaux techniques de connexion). Certains de ces prestataires peuvent transférer des données hors de l'Union européenne, notamment aux États-Unis, dans le cadre des garanties prévues par le RGPD (décision d'adéquation EU-US Data Privacy Framework ou clauses contractuelles types).</p>
+
+    <h2>Combien de temps ?</h2>
+    <ul>
+      <li>Demandes de devis sans suite : au plus 3 ans après le dernier contact.</li>
+      <li>Clients : le temps de la relation commerciale, puis 3 ans après la dernière prestation.</li>
+      <li>Factures et pièces comptables : 10 ans, comme l'impose le Code de commerce.</li>
+      <li>Photos envoyées pour un devis : supprimées une fois la prestation réalisée ou le devis refusé, sauf accord de votre part pour leur réutilisation.</li>
+    </ul>
+
+    <h2>Vos droits</h2>
+    <p>Vous pouvez demander l'accès à vos données, leur rectification, leur suppression, leur portabilité, la limitation de leur traitement, ou vous opposer à leur utilisation, en écrivant à <a href="mailto:{EMAIL}">{EMAIL}</a>. Nous répondons dans un délai d'un mois. Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL (<a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener">cnil.fr/fr/plaintes</a>).</p>
   </div>
 </section>
 '''
@@ -1154,7 +1214,7 @@ SITEMAP = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sit
     for p,f,pr in [("","weekly","1.0"),("services.html","monthly","0.9")] + [(d["path"],"monthly","0.9") for d in SVC_PAGES] + [("reservation.html","monthly","0.8"),("contact.html","monthly","0.7")]) + "</urlset>\n"
 
 ASSET_V = hashlib.md5((CSS+JS).encode()).hexdigest()[:8]
-pages = {"index.html":page_index(),"services.html":page_services(),"reservation.html":page_reservation(),"contact.html":page_contact(),"mentions-legales.html":page_mentions(),"404.html":page_404()}
+pages = {"index.html":page_index(),"services.html":page_services(),"reservation.html":page_reservation(),"contact.html":page_contact(),"mentions-legales.html":page_mentions(),"politique-confidentialite.html":page_confidentialite(),"404.html":page_404()}
 pages.update({d["path"]:page_service(d) for d in SVC_PAGES})
 for name,content in pages.items():
     open(os.path.join(OUT,name),"w",encoding="utf-8").write(content)
