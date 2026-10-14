@@ -212,18 +212,18 @@ def cta_band():
 
 SERVICES = [
  ("car","Intérieur de voiture","voiture-207","Aspiration complète, plastiques, sièges et tapis de sol. Formule Basique ou Premium selon l'état.","nettoyage-interieur-voiture-toulouse.html","Intérieur d'une Peugeot 207 après nettoyage par Nadifa Propreté : tableau de bord, siège et moquette"),
- ("sofa","Canapés & fauteuils","canape","Tissu, microfibre ou velours : taches, auréoles et odeurs traitées en profondeur, sans abîmer les fibres.","nettoyage-canape-toulouse.html","Nettoyage d'un canapé en tissu à domicile"),
+ ("sofa","Canapés & fauteuils",("canape-avant","canape-apres"),"Tissu, microfibre ou velours : taches, auréoles et odeurs traitées en profondeur, sans abîmer les fibres.","nettoyage-canape-toulouse.html",("Accoudoir d'un canapé en tissu gris clair taché, avant nettoyage","Le même accoudoir après nettoyage par Nadifa Propreté : la tache a disparu")),
  ("bed","Matelas","matelas","Poussière, acariens et traces. Un matelas assaini, sec en quelques heures.","nettoyage-matelas-toulouse.html","Nettoyage d'un matelas par injection-extraction"),
  ("rug","Tapis & moquettes","tapis","Tapis nettoyé chez vous, sans l'emporter. Moquettes de chambre, salon ou bureau.","nettoyage-tapis-moquette-toulouse.html","Tapis de salon bleu à médaillon nettoyé à domicile par Nadifa Propreté"),
 ]
 
-def compare(left, right, alt_left, alt_right, label_left="Avant", label_right="Après", sizes="(max-width: 760px) 100vw, 50vw", eager=False):
+def compare(left, right, alt_left, alt_right, label_left="Avant", label_right="Après", sizes="(max-width: 760px) 100vw, 50vw", eager=False, w=1400, h=1400):
     """Deux images superposées, une poignée à glisser : à gauche `left`, à droite `right`."""
     load = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
     def img(name, alt, cls):
         return (f'<img class="{cls}" src="assets/img/{name}-800.webp" '
                 f'srcset="assets/img/{name}-480.webp 480w, assets/img/{name}-800.webp 800w, assets/img/{name}-1400.webp 1400w" '
-                f'sizes="{sizes}" width="1400" height="1400" alt="{html.escape(alt)}" {load} draggable="false">')
+                f'sizes="{sizes}" width="{w}" height="{h}" alt="{html.escape(alt)}" {load} draggable="false">')
     return f'''<div class="compare" style="--pos:50%">
         {img(right, alt_right, "cmp-right")}
         {img(left, alt_left, "cmp-left")}
@@ -237,15 +237,26 @@ def page_index():
     h = head("Nettoyage canapé, matelas, tapis et voiture à Toulouse | Nadifa Propreté",
              "Nettoyage à domicile de canapés, matelas, tapis et intérieurs de voiture à Toulouse, par injection-extraction. Prix fixe sur photo, intervention sous 48 h.",
              "index.html", extra=LD_BUSINESS + '<link rel="preload" as="image" href="assets/img/hero-canape-800.webp" imagesrcset="assets/img/hero-canape-480.webp 480w, assets/img/hero-canape-800.webp 800w, assets/img/hero-canape-1400.webp 1400w" imagesizes="(max-width: 900px) 100vw, 45vw">\n<link rel="preload" as="image" href="assets/img/hero-voiture-800.webp" imagesrcset="assets/img/hero-voiture-480.webp 480w, assets/img/hero-voiture-800.webp 800w, assets/img/hero-voiture-1400.webp 1400w" imagesizes="(max-width: 900px) 100vw, 45vw">\n')
-    cards = "".join(f'''<a class="card service-card" href="{link}">
-      <div class="card-media">{picture(img, alt, sizes="(max-width: 700px) 100vw, 25vw", w=1024, h=1024)}</div>
-      <div class="card-body">
-        <span class="icon">{ICON[ic]}</span>
+    def card(ic, t, img, d, link, alt):
+        body = f'''<span class="icon">{ICON[ic]}</span>
         <h3>{t}</h3>
         <p>{d}</p>
-        <span class="link-more">Voir la prestation</span>
+        <span class="link-more">Voir la prestation</span>'''
+        if isinstance(img, tuple):
+            # Avant / après à glisser : la photo reste hors du lien, sinon la toucher ouvrirait la page
+            return f'''<div class="card service-card">
+      <div class="card-media">{compare(img[0], img[1], alt[0], alt[1], sizes="(max-width: 700px) 100vw, 25vw", w=1400, h=1050)}</div>
+      <a class="card-body" href="{link}">
+        {body}
+      </a>
+    </div>'''
+        return f'''<a class="card service-card" href="{link}">
+      <div class="card-media">{picture(img, alt, sizes="(max-width: 700px) 100vw, 25vw", w=1024, h=1024)}</div>
+      <div class="card-body">
+        {body}
       </div>
-    </a>''' for ic,t,img,d,link,alt in SERVICES)
+    </a>'''
+    cards = "".join(card(*s) for s in SERVICES)
     body = f'''
 <section class="hero">
   <div class="wrap hero-grid">
@@ -265,7 +276,7 @@ def page_index():
       </ul>
     </div>
     <figure class="hero-media">
-      {compare("hero-canape", "hero-voiture", "Nettoyage d'un canapé en tissu clair par injection-extraction", "Intérieur d'une voiture après nettoyage par Nadifa Propreté à Toulouse", label_left="Canapés", label_right="Voitures", sizes="(max-width: 900px) 100vw, 45vw", eager=True)}
+      {compare("hero-canape", "hero-voiture", "Canapé en tissu gris clair après nettoyage par Nadifa Propreté : assise, dossier et accoudoir propres", "Intérieur d'une voiture après nettoyage par Nadifa Propreté à Toulouse", label_left="Canapés", label_right="Voitures", sizes="(max-width: 900px) 100vw, 45vw", eager=True)}
       <figcaption><span class="badge">{ICON["camera"]} Faites glisser : canapés, matelas, tapis et voitures</span></figcaption>
     </figure>
   </div>
@@ -419,7 +430,7 @@ def page_services():
 
 <section class="section section-alt" id="canapes">
   <div class="wrap service-block reverse">
-    <div class="service-media">{picture("canape","Nettoyage d'un canapé en tissu gris avec une machine à injection-extraction", sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
+    <div class="service-media">{picture("canape","Canapé en tissu gris clair après nettoyage à domicile par injection-extraction", sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
     <div class="service-text">
       <span class="icon">{ICON["sofa"]}</span>
       <h2>Canapés et fauteuils</h2>
@@ -669,7 +680,7 @@ def ld_service(name, service_type, desc, path, min_price=None):
 
 SVC_PAGES = [
  dict(path="nettoyage-canape-toulouse.html", crumb="Nettoyage de canapé", icon="sofa", img="canape",
-      img_alt="Nettoyage d'un canapé en tissu gris avec une machine à injection-extraction à Toulouse",
+      img_alt="Canapé en tissu gris clair nettoyé à domicile par Nadifa Propreté à Toulouse",
       title="Nettoyage canapé à domicile à Toulouse | Nadifa Propreté",
       desc="Nettoyage de canapé et fauteuil à domicile à Toulouse par injection-extraction : taches, auréoles, odeurs. Prix fixe sur photo, sec en 3 h environ.",
       h1="Nettoyage de canapé à domicile à Toulouse",
@@ -1041,6 +1052,8 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 .cmp-range:focus-visible + .cmp-line,.compare:has(.cmp-range:focus-visible) .cmp-handle{outline:3px solid var(--accent)}
 .hero-media .compare{border-radius:24px;box-shadow:0 25px 60px rgba(11,31,51,.2)}
 .results .result .compare{border-radius:0}
+.card-media .compare{aspect-ratio:4/3;border-radius:0}
+a.card-body{text-decoration:none;color:inherit}
 
 /* results */
 .result{margin:0;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
