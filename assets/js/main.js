@@ -11,7 +11,7 @@
     function end(){active=false;c.classList.remove('dragging');}
     c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);c.addEventListener('lostpointercapture',end);
     if(r){r.addEventListener('input',function(){setPct(+r.value);});}
-    setPct(50);
+    setPct(+c.dataset.start||50);
   });
   var f=document.getElementById('booking');
   if(!f)return;

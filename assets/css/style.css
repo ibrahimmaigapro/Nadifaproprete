@@ -180,6 +180,7 @@ details p{margin:0 0 1.1rem;color:var(--muted)}
 .service-block{display:grid;grid-template-columns:.9fr 1.1fr;gap:3rem;align-items:center}
 .service-block.reverse .service-media{order:2}
 .service-media img{border-radius:var(--radius);aspect-ratio:1;object-fit:cover;box-shadow:var(--shadow)}
+.service-media img.portrait{aspect-ratio:3/4;width:min(100%,450px);margin-inline:auto}
 .pricelist{list-style:none;padding:0;margin:1.2rem 0}
 .pricelist li{display:grid;grid-template-columns:1fr auto;gap:.5rem 1rem;align-items:center;padding:.9rem 0;border-top:1px solid var(--line)}
 .pricelist li:last-child{border-bottom:1px solid var(--line)}
