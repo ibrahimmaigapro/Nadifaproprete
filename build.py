@@ -127,7 +127,7 @@ def footer():
         <li><a href="nettoyage-tapis-moquette-toulouse.html">Nettoyage tapis et moquette</a></li>
         <li><a href="nettoyage-interieur-voiture-toulouse.html">Nettoyage intérieur voiture</a></li>
         <li><a href="reservation.html">Réserver une intervention</a></li>
-        <li><a href="contact.html">Contact & zone desservie</a></li>
+        <li><a href="contact.html">Contact et zone d'intervention</a></li>
         <li><a href="{GBP}" target="_blank" rel="noopener">Avis Google</a></li>
         <li><a href="mentions-legales.html">Mentions légales</a></li>
         <li><a href="politique-confidentialite.html">Politique de confidentialité</a></li>
