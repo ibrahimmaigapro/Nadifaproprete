@@ -166,7 +166,7 @@ PRIX_MATELAS = [("Matelas 1 place","Une face.","45 €"),
                 ("Matelas 2 places","Une face.","55 €"),
                 ("Matelas king size","180 × 200 cm et plus, une face.","65 €")]
 PRIX_TAPIS = [("Petit tapis","Jusqu'à 2 × 2 m.","35 €"),
-              ("Grand tapis","Jusqu'à 2 × 3 m. Durée : 45 min.","45 €"),
+              ("Grand tapis","Jusqu'à 2 × 3 m.","45 €"),
               ("Tapis plus grand que 2 × 3 m","Prix selon les dimensions.","Sur devis"),
               ("Moquette","Chambre, salon, bureau, escalier.","8 €/m²")]
 
@@ -754,7 +754,7 @@ SVC_PAGES = [
       stype="Nettoyage de tapis et moquettes", min_price=None,
       intro=["Un tapis de salon retient la poussière, les miettes, les poils d'animaux et les taches du quotidien. Avec le temps, les couleurs se ternissent et les fibres se tassent.",
              "Pas besoin de le rouler ni de le déposer au pressing : nous le nettoyons sur place. Même chose pour les moquettes de chambre, de salon, de bureau ou d'escalier."],
-      included=["Dépoussiérage en profondeur","Pré-traitement des taches","Injection-extraction avec un produit adapté à la fibre","Remise en forme des fibres","Tapis jusqu'à 2 × 3 m environ en 45 min"],
+      included=["Dépoussiérage en profondeur","Pré-traitement des taches","Injection-extraction avec un produit adapté à la fibre","Remise en forme des fibres"],
       prices=PRIX_TAPIS,
       price_note="Devis sur photo : le prix total vous est annoncé avant l'intervention (indiquez les dimensions du tapis ou la surface de moquette).",
       faq=[("Faut-il emporter le tapis ?","Non, il est nettoyé chez vous. Il suffit de libérer la surface et d'avoir une prise électrique."),
