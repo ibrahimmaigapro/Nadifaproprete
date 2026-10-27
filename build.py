@@ -165,6 +165,10 @@ PRIX_CANAPE = [("Canapé 2 ou 3 places","Assise, dossier, accoudoirs et coussins
 PRIX_MATELAS = [("Matelas 1 place","Une face.","45 €"),
                 ("Matelas 2 places","Une face.","55 €"),
                 ("Matelas king size","180 × 200 cm et plus, une face.","65 €")]
+PRIX_TAPIS = [("Petit tapis","Jusqu'à 2 × 2 m.","35 €"),
+              ("Grand tapis","Jusqu'à 2 × 3 m. Durée : 45 min.","45 €"),
+              ("Tapis plus grand que 2 × 3 m","Prix selon les dimensions.","Sur devis"),
+              ("Moquette","Chambre, salon, bureau, escalier.","8 €/m²")]
 
 def ld_offers(prices, service_type):
     """Offres lues par Google, une par ligne de prix : « 69 € », ou « 8 €/m² » (prix au m²). Une ligne sans montant (sur devis) reste sans prix."""
@@ -181,7 +185,8 @@ def ld_offers(prices, service_type):
     return out
 
 LD_GRILLE = ",\n      ".join(ld_offers(PRIX_CANAPE, "Nettoyage de textile d'ameublement")
-                              + ld_offers(PRIX_MATELAS, "Nettoyage de literie"))
+                              + ld_offers(PRIX_MATELAS, "Nettoyage de literie")
+                              + ld_offers(PRIX_TAPIS, "Nettoyage de tapis et moquettes"))
 
 # ---------- JSON-LD ----------
 LD_BUSINESS = f'''<script type="application/ld+json">
@@ -209,9 +214,7 @@ LD_BUSINESS = f'''<script type="application/ld+json">
     "itemListElement": [
       {{ "@type": "Offer", "priceSpecification": {{ "@type": "PriceSpecification", "minPrice": "50", "priceCurrency": "EUR" }}, "itemOffered": {{ "@type": "Service", "name": "Nettoyage intérieur de voiture – Formule Basique", "serviceType": "Nettoyage automobile intérieur" }} }},
       {{ "@type": "Offer", "priceSpecification": {{ "@type": "PriceSpecification", "minPrice": "70", "priceCurrency": "EUR" }}, "itemOffered": {{ "@type": "Service", "name": "Nettoyage intérieur de voiture – Formule Premium", "serviceType": "Nettoyage automobile intérieur" }} }},
-      {LD_GRILLE},
-      {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de tapis à domicile" }} }},
-      {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de moquette" }} }}
+      {LD_GRILLE}
     ]
   }}
 }}
@@ -500,8 +503,7 @@ def page_services():
       <h2>Tapis et moquettes</h2>
       <p>Le tapis est nettoyé chez vous, sans l'emporter : dépoussiérage, injection-extraction, remise en forme des fibres. Pour les moquettes, comptez une pièce en une heure environ.</p>
       <ul class="pricelist">
-        {price_row("Tapis à domicile","Jusqu'à 2 × 3 m environ. Durée : 45 min.","")}
-        {price_row("Moquette","Chambre, salon, bureau, escalier. Tarif au m².","")}
+        {"".join(price_row(*x) for x in PRIX_TAPIS)}
       </ul>
       <p><a class="link-more" href="nettoyage-tapis-moquette-toulouse.html">Tout savoir sur cette prestation</a></p>
     </div>
@@ -561,7 +563,9 @@ def page_reservation():
             <option>Matelas king size</option>
           </optgroup>
           <optgroup label="Tapis et moquettes">
-            <option>Tapis à domicile</option>
+            <option>Petit tapis (jusqu'à 2 × 2 m)</option>
+            <option>Grand tapis (jusqu'à 2 × 3 m)</option>
+            <option>Tapis plus grand que 2 × 3 m</option>
             <option>Moquette</option>
           </optgroup>
           <optgroup label="Autres">
@@ -742,15 +746,15 @@ SVC_PAGES = [
  dict(path="nettoyage-tapis-moquette-toulouse.html", crumb="Nettoyage de tapis et moquette", icon="rug", img="tapis",
       img_alt="Tapis de salon bleu à médaillon nettoyé à domicile par Nadifa Propreté à Toulouse",
       title="Nettoyage tapis et moquette à domicile à Toulouse | Nadifa Propreté",
-      desc="Nettoyage de tapis et moquette à domicile à Toulouse, sans emporter le tapis : dépoussiérage et injection-extraction. Prix fixe sur photo.",
+      desc="Nettoyage de tapis et moquette à domicile à Toulouse par injection-extraction, sans emporter le tapis : petit tapis 35 €, grand tapis 45 €, moquette 8 €/m².",
       h1="Nettoyage de tapis et moquette à domicile à Toulouse",
       lead="Votre tapis est nettoyé chez vous, sans l'emporter : dépoussiérage, injection-extraction, remise en forme des fibres. Pour les moquettes, comptez environ une heure par pièce.",
       stype="Nettoyage de tapis et moquettes", min_price=None,
       intro=["Un tapis de salon retient la poussière, les miettes, les poils d'animaux et les taches du quotidien. Avec le temps, les couleurs se ternissent et les fibres se tassent.",
              "Pas besoin de le rouler ni de le déposer au pressing : nous le nettoyons sur place. Même chose pour les moquettes de chambre, de salon, de bureau ou d'escalier."],
       included=["Dépoussiérage en profondeur","Pré-traitement des taches","Injection-extraction avec un produit adapté à la fibre","Remise en forme des fibres","Tapis jusqu'à 2 × 3 m environ en 45 min"],
-      prices=[("Tapis à domicile","Jusqu'à 2 × 3 m environ. Durée : 45 min.",""),("Moquette","Chambre, salon, bureau, escalier. Tarif au m².","")],
-      price_note="Tarif fixé sur photo avant l'intervention (indiquez les dimensions du tapis ou la surface de moquette).",
+      prices=PRIX_TAPIS,
+      price_note="Devis sur photo : le prix total vous est annoncé avant l'intervention (indiquez les dimensions du tapis ou la surface de moquette).",
       faq=[("Faut-il emporter le tapis ?","Non, il est nettoyé chez vous. Il suffit de libérer la surface et d'avoir une prise électrique."),
            ("Combien de temps pour une moquette ?","Environ une heure par pièce, puis 3 heures de séchage."),
            ("Tous les tapis peuvent-ils être nettoyés ?","La plupart des tapis en fibres synthétiques, laine ou coton, oui. Pour un tapis ancien ou fragile, envoyez une photo : nous vous dirons s'il vaut mieux le confier à un spécialiste.")]),
