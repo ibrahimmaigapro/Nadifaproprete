@@ -143,7 +143,7 @@ def footer():
     </div>
   </div>
   <div class="wrap footer-bottom">
-    <p>© {YEAR} Nadifa Propreté · Ibrahim Maiga, micro-entrepreneur · SIRET 989 023 213 00014 · Toulouse</p>
+    <p>© {YEAR} Nadifa Propreté · SIRET 989 023 213 00014</p>
   </div>
 </footer>
 <div class="mobile-bar" aria-label="Actions rapides">
