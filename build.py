@@ -162,6 +162,9 @@ def footer():
 PRIX_CANAPE = [("Canapé 2 ou 3 places","Assise, dossier, accoudoirs et coussins. Tissu ou cuir.","69 €"),
                ("Canapé 4 ou 5 places ou d'angle","Méridienne comprise. Tissu ou cuir.","79 €"),
                ("Fauteuil","Fauteuil de salon, chaise en tissu, tête de lit.","25 €")]
+PRIX_MATELAS = [("Matelas 1 place","Une face.","45 €"),
+                ("Matelas 2 places","Une face.","55 €"),
+                ("Matelas king size","180 × 200 cm et plus, une face.","65 €")]
 
 def ld_offers(prices, service_type):
     """Offres lues par Google, une par ligne de prix : « 69 € », ou « 8 €/m² » (prix au m²). Une ligne sans montant (sur devis) reste sans prix."""
@@ -177,7 +180,8 @@ def ld_offers(prices, service_type):
         out.append(f'{{ "@type": "Offer", {spec}"itemOffered": {{ "@type": "Service", "name": "{name}", "serviceType": "{service_type}" }} }}')
     return out
 
-LD_GRILLE = ",\n      ".join(ld_offers(PRIX_CANAPE, "Nettoyage de textile d'ameublement"))
+LD_GRILLE = ",\n      ".join(ld_offers(PRIX_CANAPE, "Nettoyage de textile d'ameublement")
+                              + ld_offers(PRIX_MATELAS, "Nettoyage de literie"))
 
 # ---------- JSON-LD ----------
 LD_BUSINESS = f'''<script type="application/ld+json">
@@ -206,7 +210,6 @@ LD_BUSINESS = f'''<script type="application/ld+json">
       {{ "@type": "Offer", "priceSpecification": {{ "@type": "PriceSpecification", "minPrice": "50", "priceCurrency": "EUR" }}, "itemOffered": {{ "@type": "Service", "name": "Nettoyage intérieur de voiture – Formule Basique", "serviceType": "Nettoyage automobile intérieur" }} }},
       {{ "@type": "Offer", "priceSpecification": {{ "@type": "PriceSpecification", "minPrice": "70", "priceCurrency": "EUR" }}, "itemOffered": {{ "@type": "Service", "name": "Nettoyage intérieur de voiture – Formule Premium", "serviceType": "Nettoyage automobile intérieur" }} }},
       {LD_GRILLE},
-      {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de matelas", "serviceType": "Nettoyage de literie" }} }},
       {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de tapis à domicile" }} }},
       {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de moquette" }} }}
     ]
@@ -481,8 +484,7 @@ def page_services():
       <h2>Matelas</h2>
       <p>Traces de transpiration, auréoles, poussière et acariens : le matelas est nettoyé sur la face de couchage, puis séché par extraction. Vous dormez dessus le soir même.</p>
       <ul class="pricelist">
-        {price_row("Matelas standard","90 × 190 à 160 × 200 cm, une face.","")}
-        {price_row("Matelas king size","180 × 200 cm et plus, une face.","")}
+        {"".join(price_row(*x) for x in PRIX_MATELAS)}
       </ul>
       <p class="small muted">Deuxième face ou sommier tapissier : sur demande.</p>
       <p><a class="link-more" href="nettoyage-matelas-toulouse.html">Tout savoir sur cette prestation</a></p>
@@ -554,7 +556,8 @@ def page_reservation():
             <option>Fauteuil</option>
           </optgroup>
           <optgroup label="Matelas">
-            <option>Matelas standard</option>
+            <option>Matelas 1 place</option>
+            <option>Matelas 2 places</option>
             <option>Matelas king size</option>
           </optgroup>
           <optgroup label="Tapis et moquettes">
@@ -724,15 +727,15 @@ SVC_PAGES = [
  dict(path="nettoyage-matelas-toulouse.html", crumb="Nettoyage de matelas", icon="bed", img="matelas",
       img_alt="Illustration : aspirateur sur un matelas blanc",
       title="Nettoyage matelas à domicile à Toulouse | Nadifa Propreté",
-      desc="Nettoyage de matelas à domicile à Toulouse : traces, auréoles, poussière et acariens retirés par injection-extraction. Prix fixe sur photo, sec le soir même.",
+      desc="Nettoyage de matelas à domicile à Toulouse par injection-extraction : 1 place 45 €, 2 places 55 €, king size 65 €. Sec le soir même.",
       h1="Nettoyage de matelas à domicile à Toulouse",
       lead="Traces de transpiration, auréoles, poussière et acariens : le matelas est nettoyé chez vous, sur la face de couchage, puis séché par extraction. Vous dormez dessus le soir même.",
       stype="Nettoyage de literie", min_price=None,
       intro=["On passe environ un tiers de sa vie sur son matelas. Il absorbe transpiration, peaux mortes et poussière, qui nourrissent les acariens et laissent des auréoles jaunes.",
              "Le nettoyage par injection-extraction va chercher la saleté dans l'épaisseur du garnissage, là où l'aspirateur ne va pas. Le matelas reste chez vous, il n'y a rien à transporter."],
       included=["Aspiration minutieuse de la face de couchage et des bords","Pré-traitement des auréoles et des taches","Injection-extraction sur toute la face","Séchage accéléré par extraction : sec en 3 h environ"],
-      prices=[("Matelas standard","90 × 190 à 160 × 200 cm, une face.",""),("Matelas king size","180 × 200 cm et plus, une face.","")],
-      price_note="Deuxième face ou sommier tapissier : sur demande. Tarif fixé sur photo avant l'intervention.",
+      prices=PRIX_MATELAS,
+      price_note="Deuxième face ou sommier tapissier : sur demande. Devis sur photo : le prix total vous est annoncé avant l'intervention.",
       faq=[("Peut-on dormir dessus le soir même ?","Oui. Comptez environ 3 heures de séchage ; en aérant la chambre, le matelas est sec avant le coucher."),
            ("Faut-il retourner le matelas ?","Nous nettoyons la face de couchage. La deuxième face se fait sur demande, si le matelas est réversible."),
            ("Les taches d'urine ou de transpiration partent-elles ?","Elles sont très nettement atténuées, souvent complètement. Envoyez une photo pour un avis honnête avant de réserver.")]),
