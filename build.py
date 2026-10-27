@@ -8,9 +8,13 @@ GBP = "https://www.google.com/maps?cid=6909362966415409349"
 # Médiateur de la consommation : à remplir après adhésion (nom, adresse postale, site). Tant que None, rien n'est affiché.
 MEDIATEUR = None  # ex. {"nom": "...", "adresse": "...", "site": "https://..."}
 YEAR = 2026
-# Zone mise en avant : Toulouse + communes proches (concentration SEO locale). Rayon réel ~40 km, sur demande.
+# Zone mise en avant : Toulouse + communes proches (concentration SEO locale).
 ZONES = ["Toulouse (tous quartiers)","Blagnac","Colomiers","Tournefeuille","Cugnaux","Portet-sur-Garonne","Muret"]
 ZONES_TXT = ", ".join(ZONES[1:-1]) + " et " + ZONES[-1]
+# Règle de déplacement, reprise telle quelle partout où le site en parle (zone d'intervention et hors zone).
+DEPLACEMENT = ("Le déplacement est gratuit dans cette zone et jusqu'à 10 km autour. De 10 à 20 km autour, "
+               "il est facturé et annoncé dans le devis sur photo. Au-delà de 20 km, nous n'intervenons pas.")
+DEPLACEMENT_COURT = "Déplacement gratuit à Toulouse, dans les communes proches et jusqu'à 10 km autour."
 AREA_LD = ", ".join('{ "@type": "City", "name": "%s" }' % z.split(" (")[0] for z in ZONES)
 
 def wa(text):
@@ -263,7 +267,7 @@ def page_index():
 <section class="hero">
   <div class="wrap hero-grid">
     <div class="hero-text">
-      <p class="eyebrow">Nettoyage à domicile · Toulouse et agglomération</p>
+      <p class="eyebrow">Nettoyage à domicile · Toulouse et communes proches</p>
       <h1>Canapés, matelas, tapis et intérieurs de voiture&nbsp;: propres en profondeur, chez vous.</h1>
       <p class="lead">Nettoyage professionnel avec du matériel de pro et des produits adaptés à chaque textile, et un tarif annoncé avant de commencer. Intervention sous 48&nbsp;h à Toulouse et dans les communes proches.</p>
       <div class="hero-actions">
@@ -383,7 +387,7 @@ def page_index():
     <details><summary>Combien de temps faut-il pour que ça sèche ?</summary><p>Environ 3 heures pour un canapé ou un matelas, grâce à l'extraction qui retire la majeure partie de l'eau. Une pièce aérée accélère encore le séchage.</p></details>
     <details><summary>Dois-je déplacer mon canapé ou mon matelas ?</summary><p>Non. Nous intervenons à domicile, dans la pièce où se trouve le meuble. Nous avons seulement besoin d'une prise électrique.</p></details>
     <details><summary>Les taches anciennes partent-elles ?</summary><p>La plupart, oui : traces de boisson, sueur, auréoles, poussière incrustée. Certaines teintures (encre, colorant) peuvent laisser une marque atténuée. Envoyez une photo, nous vous dirons franchement ce qu'il est possible d'obtenir.</p></details>
-    <details><summary>Où intervenez-vous ?</summary><p>À Toulouse (tous quartiers) et dans les communes proches : {ZONES_TXT}. Le déplacement y est compris dans le tarif annoncé. Plus loin, jusqu'à 40 km environ, il est précisé dans le devis.</p></details>
+    <details><summary>Où intervenez-vous ?</summary><p>À Toulouse (tous quartiers) et dans les communes proches : {ZONES_TXT}. {DEPLACEMENT}</p></details>
     <details><summary>Comment se passe le paiement ?</summary><p>Vous réglez une fois l'intervention terminée et le résultat vérifié ensemble. Une facture vous est remise.</p></details>
   </div>
 </section>
@@ -405,7 +409,7 @@ def page_services():
   <div class="wrap">
     <p class="eyebrow">Services</p>
     <h1>Nos services de nettoyage à domicile à Toulouse</h1>
-    <p class="lead">Envoyez une photo sur WhatsApp, vous recevez le tarif exact en quelques minutes. Le déplacement dans Toulouse et l'agglomération est compris.</p>
+    <p class="lead">Envoyez une photo sur WhatsApp, vous recevez le tarif exact en quelques minutes. {DEPLACEMENT_COURT}</p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="{WA_DEVIS}" target="_blank" rel="noopener">{ICON["wa"]} Obtenir mon tarif</a>
       <a class="btn btn-ghost" href="reservation.html">Réserver un créneau</a>
@@ -633,7 +637,7 @@ def page_contact():
     <div>
       <p class="eyebrow">Zone d'intervention</p>
       <h2>Toulouse et communes proches</h2>
-      <p>Nous nous déplaçons à domicile, sur votre lieu de travail ou sur votre parking. Le déplacement est compris dans le tarif à Toulouse et dans les communes listées ; au-delà, jusqu'à 40 km environ, il est précisé dans le devis.</p>
+      <p>Nous nous déplaçons à domicile, sur votre lieu de travail ou sur votre parking, à Toulouse et dans les communes listées. {DEPLACEMENT}</p>
       <p><a class="btn btn-secondary" href="{GBP}" target="_blank" rel="noopener">{ICON["pin"]} Nous trouver sur Google Maps</a></p>
     </div>
     <ul class="zones">{zones}</ul>
@@ -690,7 +694,7 @@ SVC_PAGES = [
              "L'injection-extraction injecte de l'eau et un produit adapté au textile au cœur de la fibre, puis aspire immédiatement le tout avec la saleté dissoute. Le canapé est nettoyé en profondeur, sans être détrempé."],
       included=["Aspiration de l'assise, du dossier, des accoudoirs et des coussins","Pré-traitement des taches et auréoles","Test de tenue de couleur sur une zone discrète quand la matière le demande","Injection-extraction sur toutes les faces visibles","Finition et remise en place des coussins"],
       prices=[("Canapé 2 places","Assise, dossier, accoudoirs et coussins.",""),("Canapé 3 places","Assise, dossier, accoudoirs et coussins.",""),("Canapé 4 places ou d'angle","Méridienne comprise.",""),("Fauteuil","Fauteuil de salon, chaise en tissu, tête de lit.","")],
-      price_note="Le tarif est fixé sur photo avant l'intervention, déplacement compris à Toulouse et en première couronne.",
+      price_note="Le tarif est fixé sur photo avant l'intervention. " + DEPLACEMENT_COURT,
       faq=[("Combien de temps faut-il pour que le canapé sèche ?","Environ 3 heures. L'extraction retire la majeure partie de l'eau ; une pièce aérée accélère encore le séchage."),
            ("Faut-il déplacer le canapé ?","Non. Nous intervenons dans la pièce où il se trouve. Il nous faut seulement une prise électrique à proximité."),
            ("Les vieilles taches partent-elles ?","La plupart, oui : boissons, sueur, auréoles, poussière incrustée. Certaines teintures (encre, colorant) peuvent laisser une marque atténuée. Envoyez une photo, nous vous disons franchement ce qu'il est possible d'obtenir."),
@@ -810,7 +814,7 @@ def page_service(d):
 <section class="section">
   <div class="wrap narrow">
     <h2>Zone d'intervention</h2>
-    <p>Nous intervenons à Toulouse (tous quartiers) et dans les communes proches : {ZONES_TXT}. Plus loin, jusqu'à 40 km environ, demandez-nous. <a href="contact.html#zone">Voir la zone d'intervention</a>.</p>
+    <p>Nous intervenons à Toulouse (tous quartiers) et dans les communes proches : {ZONES_TXT}. {DEPLACEMENT} <a href="contact.html#zone">Voir la zone d'intervention</a>.</p>
     <h2>Nos autres prestations</h2>
     <div class="hero-actions">{others}</div>
   </div>
