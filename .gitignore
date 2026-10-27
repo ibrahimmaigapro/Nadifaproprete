@@ -1,2 +1,5 @@
 __pycache__/
 *.pyc
+
+# Espace de travail local, jamais mis en ligne
+/_espace-travail/
