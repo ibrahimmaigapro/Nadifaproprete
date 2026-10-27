@@ -218,7 +218,7 @@ def cta_band():
 SERVICES = [
  ("car","Intérieur de voiture","voiture-207","Aspiration complète, plastiques, sièges et tapis de sol. Formule Basique ou Premium selon l'état.","nettoyage-interieur-voiture-toulouse.html","Intérieur d'une Peugeot 207 après nettoyage par Nadifa Propreté : tableau de bord, siège et moquette"),
  ("sofa","Canapés & fauteuils",("canape-avant","canape-apres",62),"Tissu, microfibre ou velours : taches, auréoles et odeurs traitées en profondeur, sans abîmer les fibres.","nettoyage-canape-toulouse.html",("Accoudoir d'un canapé en tissu gris clair taché, avant nettoyage","Le même accoudoir après nettoyage par Nadifa Propreté : la tache a disparu")),
- ("bed","Matelas","matelas","Poussière, acariens et traces. Un matelas assaini, sec en quelques heures.","nettoyage-matelas-toulouse.html","Nettoyage d'un matelas par injection-extraction"),
+ ("bed","Matelas","matelas","Poussière, acariens et traces. Un matelas assaini, sec en quelques heures.","nettoyage-matelas-toulouse.html","Illustration : aspirateur sur un matelas blanc"),
  ("rug","Tapis & moquettes","tapis","Tapis nettoyé chez vous, sans l'emporter. Moquettes de chambre, salon ou bureau.","nettoyage-tapis-moquette-toulouse.html","Tapis de salon bleu à médaillon nettoyé à domicile par Nadifa Propreté"),
 ]
 
@@ -454,7 +454,7 @@ def page_services():
 
 <section class="section" id="matelas">
   <div class="wrap service-block">
-    <div class="service-media">{picture("matelas","Nettoyage d'un matelas blanc par injection-extraction", sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
+    <div class="service-media">{picture("matelas","Illustration : aspirateur sur un matelas blanc", sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
     <div class="service-text">
       <span class="icon">{ICON["bed"]}</span>
       <h2>Matelas</h2>
@@ -700,7 +700,7 @@ SVC_PAGES = [
            ("Les vieilles taches partent-elles ?","La plupart, oui : boissons, sueur, auréoles, poussière incrustée. Certaines teintures (encre, colorant) peuvent laisser une marque atténuée. Envoyez une photo, nous vous disons franchement ce qu'il est possible d'obtenir."),
            ("Et les canapés en cuir ?","Oui, nous nettoyons aussi les canapés en cuir, au même prix que les canapés en tissu.")]),
  dict(path="nettoyage-matelas-toulouse.html", crumb="Nettoyage de matelas", icon="bed", img="matelas",
-      img_alt="Nettoyage d'un matelas blanc par injection-extraction à domicile à Toulouse",
+      img_alt="Illustration : aspirateur sur un matelas blanc",
       title="Nettoyage matelas à domicile à Toulouse | Nadifa Propreté",
       desc="Nettoyage de matelas à domicile à Toulouse : traces, auréoles, poussière et acariens retirés par injection-extraction. Prix fixe sur photo, sec le soir même.",
       h1="Nettoyage de matelas à domicile à Toulouse",
@@ -844,7 +844,7 @@ def page_mentions():
     <p>Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience. Le traitement des informations que vous nous transmettez (devis, prestation, facturation) est détaillé dans la <a href="politique-confidentialite.html">politique de confidentialité</a>.</p>
 
 {mediation_html()}    <h2>Propriété intellectuelle</h2>
-    <p>Le nom, le logo, les textes et les photographies de réalisations sont la propriété de Nadifa Propreté. Certaines illustrations de prestations sont des images génériques utilisées à titre d'exemple.</p>
+    <p>Le nom, le logo, les textes et les photographies de réalisations sont la propriété de Nadifa Propreté. Seule l'image du matelas est une illustration générique, utilisée à titre d'exemple.</p>
 
     <h2>Assurance et responsabilité</h2>
     <p>Les prestations sont réalisées avec des produits et un matériel adaptés aux textiles traités. Un test de tenue de couleur est effectué sur une zone discrète avant tout nettoyage lorsque la matière le justifie.</p>
