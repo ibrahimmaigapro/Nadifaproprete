@@ -483,7 +483,7 @@ def page_services():
 
 <section class="section section-tight" id="autres">
   <div class="wrap narrow">
-    <p class="center small muted">Également sur devis : ménage ponctuel ou régulier et remise au propre de logements Airbnb entre deux locataires. <a href="{WA_DEVIS}" target="_blank" rel="noopener">Écrivez-nous avec quelques photos</a>.</p>
+    <p class="center small muted">Une autre demande ? <a href="{WA_DEVIS}" target="_blank" rel="noopener">Écrivez-nous avec quelques photos</a>.</p>
   </div>
 </section>
 {cta_band()}
@@ -538,8 +538,6 @@ def page_reservation():
             <option>Moquette</option>
           </optgroup>
           <optgroup label="Autres">
-            <option>Ménage ponctuel ou régulier</option>
-            <option>Logement Airbnb / location courte durée</option>
             <option>Autre demande</option>
           </optgroup>
         </select>
