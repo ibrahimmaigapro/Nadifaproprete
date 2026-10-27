@@ -59,6 +59,7 @@ def head(title, desc, path, og_type="website", extra=""):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="cj4is6xl51RC_bZMNwxS9jAQGViXITtwPbpSm2-YP9A">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(desc)}">
 <link rel="canonical" href="{canonical}">
