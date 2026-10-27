@@ -696,7 +696,7 @@ SVC_PAGES = [
       faq=[("Combien de temps faut-il pour que le canapé sèche ?","Environ 3 heures. L'extraction retire la majeure partie de l'eau ; une pièce aérée accélère encore le séchage."),
            ("Faut-il déplacer le canapé ?","Non. Nous intervenons dans la pièce où il se trouve. Il nous faut seulement une prise électrique à proximité."),
            ("Les vieilles taches partent-elles ?","La plupart, oui : boissons, sueur, auréoles, poussière incrustée. Certaines teintures (encre, colorant) peuvent laisser une marque atténuée. Envoyez une photo, nous vous disons franchement ce qu'il est possible d'obtenir."),
-           ("Et les canapés en cuir ?","Le cuir ne se nettoie pas par injection-extraction. Envoyez-nous une photo pour savoir si nous pouvons intervenir.")]),
+           ("Et les canapés en cuir ?","Oui, nous nettoyons aussi les canapés en cuir, au même prix que les canapés en tissu.")]),
  dict(path="nettoyage-matelas-toulouse.html", crumb="Nettoyage de matelas", icon="bed", img="matelas",
       img_alt="Nettoyage d'un matelas blanc par injection-extraction à domicile à Toulouse",
       title="Nettoyage matelas à domicile à Toulouse | Nadifa Propreté",
