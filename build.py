@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os, html, datetime, hashlib
+import os, re, html, datetime, hashlib
 OUT = os.path.dirname(os.path.abspath(__file__))
 BASE = "https://nadifaproprete.fr"
 PHONE_H = "06 47 27 10 62"; PHONE_T = "+33647271062"; WA = "33647271062"
@@ -156,6 +156,29 @@ def footer():
 </html>
 '''
 
+# ---------- Grille de prix ----------
+# Une liste par catégorie : (prestation, détail, prix). Reprise telle quelle sur la page Services, sur la page
+# de la catégorie et dans les informations lues par Google : un prix s'écrit ici, et dans la description Google de la page.
+PRIX_CANAPE = [("Canapé 2 ou 3 places","Assise, dossier, accoudoirs et coussins. Tissu ou cuir.","69 €"),
+               ("Canapé 4 ou 5 places ou d'angle","Méridienne comprise. Tissu ou cuir.","79 €"),
+               ("Fauteuil","Fauteuil de salon, chaise en tissu, tête de lit.","25 €")]
+
+def ld_offers(prices, service_type):
+    """Offres lues par Google, une par ligne de prix : « 69 € », ou « 8 €/m² » (prix au m²). Une ligne sans montant (sur devis) reste sans prix."""
+    out = []
+    for name, _, price in prices:
+        m = re.fullmatch(r"(\d+) €(/m²)?", price)
+        if m and m[2]:
+            spec = f'"priceSpecification": {{ "@type": "UnitPriceSpecification", "price": "{m[1]}", "priceCurrency": "EUR", "unitText": "m²" }}, '
+        elif m:
+            spec = f'"price": "{m[1]}", "priceCurrency": "EUR", '
+        else:
+            spec = ""
+        out.append(f'{{ "@type": "Offer", {spec}"itemOffered": {{ "@type": "Service", "name": "{name}", "serviceType": "{service_type}" }} }}')
+    return out
+
+LD_GRILLE = ",\n      ".join(ld_offers(PRIX_CANAPE, "Nettoyage de textile d'ameublement"))
+
 # ---------- JSON-LD ----------
 LD_BUSINESS = f'''<script type="application/ld+json">
 {{
@@ -182,7 +205,7 @@ LD_BUSINESS = f'''<script type="application/ld+json">
     "itemListElement": [
       {{ "@type": "Offer", "priceSpecification": {{ "@type": "PriceSpecification", "minPrice": "50", "priceCurrency": "EUR" }}, "itemOffered": {{ "@type": "Service", "name": "Nettoyage intérieur de voiture – Formule Basique", "serviceType": "Nettoyage automobile intérieur" }} }},
       {{ "@type": "Offer", "priceSpecification": {{ "@type": "PriceSpecification", "minPrice": "70", "priceCurrency": "EUR" }}, "itemOffered": {{ "@type": "Service", "name": "Nettoyage intérieur de voiture – Formule Premium", "serviceType": "Nettoyage automobile intérieur" }} }},
-      {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de canapé et fauteuil", "serviceType": "Nettoyage de textile d'ameublement" }} }},
+      {LD_GRILLE},
       {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de matelas", "serviceType": "Nettoyage de literie" }} }},
       {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de tapis à domicile" }} }},
       {{ "@type": "Offer", "itemOffered": {{ "@type": "Service", "name": "Nettoyage de moquette" }} }}
@@ -443,10 +466,7 @@ def page_services():
       <h2>Canapés et fauteuils</h2>
       <p>Tissu, microfibre, velours, lin : pré-traitement des taches, injection-extraction sur l'assise, le dossier et les coussins, puis finition. Sec en 3 h environ.</p>
       <ul class="pricelist">
-        {price_row("Canapé 2 places","Assise, dossier, accoudoirs et coussins.","")}
-        {price_row("Canapé 3 places","Assise, dossier, accoudoirs et coussins.","")}
-        {price_row("Canapé 4 places ou d'angle","Méridienne comprise.","")}
-        {price_row("Fauteuil","Fauteuil de salon, chaise en tissu, tête de lit.","")}
+        {"".join(price_row(*x) for x in PRIX_CANAPE)}
       </ul>
       <p><a class="link-more" href="nettoyage-canape-toulouse.html">Tout savoir sur cette prestation</a></p>
     </div>
@@ -529,9 +549,8 @@ def page_reservation():
             <option>Voiture – Formule Premium</option>
           </optgroup>
           <optgroup label="Canapés et fauteuils">
-            <option>Canapé 2 places</option>
-            <option>Canapé 3 places</option>
-            <option>Canapé 4 places / d'angle</option>
+            <option>Canapé 2 ou 3 places</option>
+            <option>Canapé 4 ou 5 places ou d'angle</option>
             <option>Fauteuil</option>
           </optgroup>
           <optgroup label="Matelas">
@@ -666,9 +685,11 @@ def breadcrumb3(name, path):
 </script>
 '''
 
-def ld_service(name, service_type, desc, path, min_price=None):
+def ld_service(name, service_type, desc, path, min_price=None, offers=None):
     offer = (f''',
   "offers": {{ "@type": "Offer", "priceCurrency": "EUR", "priceSpecification": {{ "@type": "PriceSpecification", "minPrice": "{min_price}", "priceCurrency": "EUR" }} }}''' if min_price else "")
+    if offers:  # prix fixes : une offre par prestation
+        offer = ',\n  "offers": [\n    ' + ",\n    ".join(offers) + "\n  ]"
     return f'''<script type="application/ld+json">
 {{
   "@context": "https://schema.org",
@@ -687,15 +708,15 @@ SVC_PAGES = [
  dict(path="nettoyage-canape-toulouse.html", crumb="Nettoyage de canapé", icon="sofa", img="canape", portrait=True,
       img_alt="Canapé en tissu gris clair nettoyé à domicile par Nadifa Propreté à Toulouse",
       title="Nettoyage canapé à domicile à Toulouse | Nadifa Propreté",
-      desc="Nettoyage de canapé et fauteuil à domicile à Toulouse par injection-extraction : taches, auréoles, odeurs. Prix fixe sur photo, sec en 3 h environ.",
+      desc="Nettoyage de canapé et fauteuil à domicile à Toulouse par injection-extraction : canapé 2 ou 3 places 69 €, 4 ou 5 places ou d'angle 79 €, fauteuil 25 €.",
       h1="Nettoyage de canapé à domicile à Toulouse",
       lead="Tissu, microfibre, velours ou lin : votre canapé est nettoyé en profondeur chez vous, par injection-extraction. Vous envoyez une photo, vous recevez un prix fixe, nous venons sous 48 h.",
       stype="Nettoyage de textile d'ameublement", min_price=None,
       intro=["Un canapé en tissu accumule au fil des mois poussière, sueur, traces de boisson et odeurs. Un coup d'aspirateur ne touche que la surface : la saleté reste dans la mousse et dans la fibre.",
              "L'injection-extraction injecte de l'eau et un produit adapté au textile au cœur de la fibre, puis aspire immédiatement le tout avec la saleté dissoute. Le canapé est nettoyé en profondeur, sans être détrempé."],
       included=["Aspiration de l'assise, du dossier, des accoudoirs et des coussins","Pré-traitement des taches et auréoles","Test de tenue de couleur sur une zone discrète quand la matière le demande","Injection-extraction sur toutes les faces visibles","Finition et remise en place des coussins"],
-      prices=[("Canapé 2 places","Assise, dossier, accoudoirs et coussins.",""),("Canapé 3 places","Assise, dossier, accoudoirs et coussins.",""),("Canapé 4 places ou d'angle","Méridienne comprise.",""),("Fauteuil","Fauteuil de salon, chaise en tissu, tête de lit.","")],
-      price_note="Le tarif est fixé sur photo avant l'intervention.",
+      prices=PRIX_CANAPE,
+      price_note="Devis sur photo : le prix total vous est annoncé avant l'intervention.",
       faq=[("Combien de temps faut-il pour que le canapé sèche ?","Environ 3 heures. L'extraction retire la majeure partie de l'eau ; une pièce aérée accélère encore le séchage."),
            ("Faut-il déplacer le canapé ?","Non. Nous intervenons dans la pièce où il se trouve. Il nous faut seulement une prise électrique à proximité."),
            ("Les vieilles taches partent-elles ?","La plupart, oui : boissons, sueur, auréoles, poussière incrustée. Certaines teintures (encre, colorant) peuvent laisser une marque atténuée. Envoyez une photo, nous vous disons franchement ce qu'il est possible d'obtenir."),
@@ -750,7 +771,8 @@ SVC_PAGES = [
 
 def page_service(d):
     others = "".join(f'<a class="btn btn-secondary" href="{o["path"]}">{o["crumb"]}</a>' for o in SVC_PAGES if o is not d)
-    h = head(d["title"], d["desc"], d["path"], extra=breadcrumb3(d["crumb"], d["path"]) + ld_service(d["crumb"], d["stype"], d["desc"], d["path"], d["min_price"]))
+    offers = None if d["min_price"] else ld_offers(d["prices"], d["stype"])  # voiture : prix « à partir de », une seule offre
+    h = head(d["title"], d["desc"], d["path"], extra=breadcrumb3(d["crumb"], d["path"]) + ld_service(d["crumb"], d["stype"], d["desc"], d["path"], d["min_price"], offers))
     intro = "".join(f"<p>{x}</p>" for x in d["intro"])
     included = "".join(f'<li>{ICON["check"]} {x}</li>' for x in d["included"])
     prices = "".join(price_row(*x) for x in d["prices"])
