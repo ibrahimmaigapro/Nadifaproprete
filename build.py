@@ -310,7 +310,7 @@ def page_index():
       <li><span class="step-num">1</span><h3>Vous envoyez une photo</h3><p>Sur WhatsApp ou par téléphone, décrivez ce qu'il faut nettoyer. Vous recevez un prix fixe dans la foulée.</p></li>
       <li><span class="step-num">2</span><h3>On fixe un créneau</h3><p>Généralement sous 48 h, tous les jours sauf le vendredi, de 7 h à 22 h 30, à l'heure qui vous arrange.</p></li>
       <li><span class="step-num">3</span><h3>Nettoyage à domicile</h3><p>Pré-traitement des taches, injection-extraction, finitions. Comptez 45 min à 2 h selon la prestation.</p></li>
-      <li><span class="step-num">4</span><h3>Vous profitez</h3><p>Le textile est sec en 3 h environ. Vous vérifiez le résultat avec nous avant de régler.</p></li>
+      <li><span class="step-num">4</span><h3>Vous profitez</h3><p>Le textile est sec en 3 h environ. Vous réglez après l'intervention.</p></li>
     </ol>
   </div>
 </section>
@@ -388,7 +388,7 @@ def page_index():
     <details><summary>Dois-je déplacer mon canapé ou mon matelas ?</summary><p>Non. Nous intervenons à domicile, dans la pièce où se trouve le meuble. Nous avons seulement besoin d'une prise électrique.</p></details>
     <details><summary>Les taches anciennes partent-elles ?</summary><p>La plupart, oui : traces de boisson, sueur, auréoles, poussière incrustée. Certaines teintures (encre, colorant) peuvent laisser une marque atténuée. Envoyez une photo, nous vous dirons franchement ce qu'il est possible d'obtenir.</p></details>
     <details><summary>Où intervenez-vous ?</summary><p>À Toulouse (tous quartiers) et dans les communes proches : {ZONES_TXT}. {DEPLACEMENT}</p></details>
-    <details><summary>Comment se passe le paiement ?</summary><p>Vous réglez une fois l'intervention terminée et le résultat vérifié ensemble. Une facture vous est remise.</p></details>
+    <details><summary>Comment se passe le paiement ?</summary><p>Vous réglez après l'intervention.</p></details>
   </div>
 </section>
 {cta_band()}
@@ -799,7 +799,7 @@ def page_service(d):
       <li><span class="step-num">1</span><h3>Vous envoyez une photo</h3><p>Sur WhatsApp ou par téléphone. Vous recevez un prix fixe dans la foulée.</p></li>
       <li><span class="step-num">2</span><h3>On fixe un créneau</h3><p>Généralement sous 48 h, tous les jours sauf le vendredi, de 7 h à 22 h 30.</p></li>
       <li><span class="step-num">3</span><h3>Nettoyage sur place</h3><p>Chez vous ou là où est garé le véhicule. Il suffit d'une prise électrique.</p></li>
-      <li><span class="step-num">4</span><h3>Vous vérifiez, vous réglez</h3><p>Vous réglez une fois le résultat vérifié ensemble. Une facture vous est remise.</p></li>
+      <li><span class="step-num">4</span><h3>Vous réglez</h3><p>Vous réglez après l'intervention.</p></li>
     </ol>
   </div>
 </section>
