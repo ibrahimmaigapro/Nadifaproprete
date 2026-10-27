@@ -14,7 +14,8 @@ ZONES_TXT = ", ".join(ZONES[1:-1]) + " et " + ZONES[-1]
 # Règle de déplacement, reprise telle quelle partout où le site en parle (zone d'intervention et hors zone).
 DEPLACEMENT = ("Le déplacement est gratuit dans cette zone et jusqu'à 10 km autour. De 10 à 20 km autour, "
                "il est facturé et annoncé dans le devis sur photo. Au-delà de 20 km, nous n'intervenons pas.")
-DEPLACEMENT_COURT = "Déplacement gratuit à Toulouse, dans les communes proches et jusqu'à 10 km autour."
+DEPLACEMENT_COURT = ("Déplacement gratuit à Toulouse, dans les <a href=\"contact.html#zone\">communes proches</a> et jusqu'à 10 km autour ; "
+                     "facturé de 10 à 20 km autour ; au-delà de 20 km, nous n'intervenons pas.")  # même règle, en une phrase
 AREA_LD = ", ".join('{ "@type": "City", "name": "%s" }' % z.split(" (")[0] for z in ZONES)
 
 def wa(text):
@@ -694,7 +695,7 @@ SVC_PAGES = [
              "L'injection-extraction injecte de l'eau et un produit adapté au textile au cœur de la fibre, puis aspire immédiatement le tout avec la saleté dissoute. Le canapé est nettoyé en profondeur, sans être détrempé."],
       included=["Aspiration de l'assise, du dossier, des accoudoirs et des coussins","Pré-traitement des taches et auréoles","Test de tenue de couleur sur une zone discrète quand la matière le demande","Injection-extraction sur toutes les faces visibles","Finition et remise en place des coussins"],
       prices=[("Canapé 2 places","Assise, dossier, accoudoirs et coussins.",""),("Canapé 3 places","Assise, dossier, accoudoirs et coussins.",""),("Canapé 4 places ou d'angle","Méridienne comprise.",""),("Fauteuil","Fauteuil de salon, chaise en tissu, tête de lit.","")],
-      price_note="Le tarif est fixé sur photo avant l'intervention. " + DEPLACEMENT_COURT,
+      price_note="Le tarif est fixé sur photo avant l'intervention.",
       faq=[("Combien de temps faut-il pour que le canapé sèche ?","Environ 3 heures. L'extraction retire la majeure partie de l'eau ; une pièce aérée accélère encore le séchage."),
            ("Faut-il déplacer le canapé ?","Non. Nous intervenons dans la pièce où il se trouve. Il nous faut seulement une prise électrique à proximité."),
            ("Les vieilles taches partent-elles ?","La plupart, oui : boissons, sueur, auréoles, poussière incrustée. Certaines teintures (encre, colorant) peuvent laisser une marque atténuée. Envoyez une photo, nous vous disons franchement ce qu'il est possible d'obtenir."),
