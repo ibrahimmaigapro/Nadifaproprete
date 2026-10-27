@@ -174,13 +174,15 @@ def ld_offers(prices, service_type):
     """Offres lues par Google, une par ligne de prix : « 69 € », ou « 8 €/m² » (prix au m²). Une ligne sans montant (sur devis) reste sans prix."""
     out = []
     for name, _, price in prices:
-        m = re.fullmatch(r"(\d+) €(/m²)?", price)
-        if m and m[2]:
-            spec = f'"priceSpecification": {{ "@type": "UnitPriceSpecification", "price": "{m[1]}", "priceCurrency": "EUR", "unitText": "m²" }}, '
+        m = re.fullmatch(r"(?P<euros>\d+) €(?P<m2>/m²)?", price)
+        if m and m["m2"]:
+            spec = f'"priceSpecification": {{ "@type": "UnitPriceSpecification", "price": "{m["euros"]}", "priceCurrency": "EUR", "unitText": "m²" }}, '
         elif m:
-            spec = f'"price": "{m[1]}", "priceCurrency": "EUR", '
-        else:
+            spec = f'"price": "{m["euros"]}", "priceCurrency": "EUR", '
+        elif price == "Sur devis":
             spec = ""
+        else:  # un prix mal tapé donnerait en silence une offre sans prix
+            raise ValueError(f"Prix illisible pour Google : « {price} » ({name})")
         out.append(f'{{ "@type": "Offer", {spec}"itemOffered": {{ "@type": "Service", "name": "{name}", "serviceType": "{service_type}" }} }}')
     return out
 
@@ -779,6 +781,10 @@ SVC_PAGES = [
 def page_service(d):
     others = "".join(f'<a class="btn btn-secondary" href="{o["path"]}">{o["crumb"]}</a>' for o in SVC_PAGES if o is not d)
     offers = None if d["min_price"] else ld_offers(d["prices"], d["stype"])  # voiture : prix « à partir de », une seule offre
+    if offers:  # la description Google est écrite à la main : elle doit reprendre chaque prix de la grille
+        manquants = [p for _, _, p in d["prices"] if p[0].isdigit() and p not in d["desc"]]
+        if manquants:
+            raise ValueError(f"{d['path']} : prix absent(s) de la description Google : {', '.join(manquants)}")
     h = head(d["title"], d["desc"], d["path"], extra=breadcrumb3(d["crumb"], d["path"]) + ld_service(d["crumb"], d["stype"], d["desc"], d["path"], d["min_price"], offers))
     intro = "".join(f"<p>{x}</p>" for x in d["intro"])
     included = "".join(f'<li>{ICON["check"]} {x}</li>' for x in d["included"])
