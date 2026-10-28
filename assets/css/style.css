@@ -161,7 +161,8 @@ a.card-body{text-decoration:none;color:inherit}
 .reviews-track .review{flex:none;width:min(360px,80vw);margin-right:1.5rem;scroll-snap-align:start}
 .reviews-band.is-moving{overflow:hidden;scroll-snap-type:none}
 .reviews-band.is-moving .reviews-track{animation:reviews-scroll 70s linear infinite}
-.reviews-band.is-moving:hover .reviews-track,.reviews-band.is-paused .reviews-track{animation-play-state:paused}
+.reviews-band.is-paused .reviews-track{animation-play-state:paused}
+@media (hover:hover){.reviews-band.is-moving:hover .reviews-track{animation-play-state:paused}}
 @keyframes reviews-scroll{to{transform:translateX(-50%)}}
 .reviews-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem;margin:1.8rem 0 0}
 .reviews-pause[hidden]{display:none}
@@ -251,4 +252,4 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:#d9534f}
 .mobile-bar a{display:inline-flex;align-items:center;justify-content:center;gap:.5em;padding:.8em;border-radius:999px;font-weight:700;text-decoration:none;color:var(--ink);border:2px solid var(--line)}
 .mobile-bar .mobile-bar-wa{background:var(--accent);color:#04202a;border-color:var(--accent)}
 @media (max-width:860px){.mobile-bar{display:grid}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.reviews-band.is-moving .reviews-track{animation:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.reviews-band.is-moving{overflow-x:auto}.reviews-band.is-moving .reviews-track{animation:none}.reviews-pause{display:none}}

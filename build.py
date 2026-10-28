@@ -396,29 +396,29 @@ def page_index():
       <h2>Ils nous ont fait confiance</h2>
       <p class="rating">{ICON["star"]*5} <span>5/5 sur Google</span></p>
     </div>
-    <div class="reviews-band">
-     <div class="reviews-track">
-      <blockquote class="review">
-        <p>« J'ai fait nettoyer l'intérieur de ma voiture pro, une Sandero Stepway qui vit sur les chantiers. Les tapis étaient pleins de débris et j'avais des taches sur les sièges que je n'arrivais pas à faire partir. Tout est parti. Sièges nickel, moquettes comme neuves, même les aérateurs et les rainures autour du levier de vitesses sont propres. »</p>
-        <footer>Abdul M. · Nettoyage intérieur voiture</footer>
-      </blockquote>
-      <blockquote class="review">
-        <p>« La voiture était dans un état catastrophique, je ne la reconnais plus. »</p>
-        <footer>Madison V. · Nettoyage intérieur voiture</footer>
-      </blockquote>
-      <blockquote class="review">
-        <p>« Très satisfaite du nettoyage de mon canapé. Avec mon enfant, il était plein de taches, et depuis son passage il n'y en a plus aucune. Juste après, aucune odeur d'humidité ni de traces sur le tissu. La personne est très sérieuse dans son travail, le résultat est top. Je recommande vivement ! »</p>
-        <footer>Aissetou C. · Nettoyage canapé</footer>
-      </blockquote>
-      <blockquote class="review">
-        <p>« Très bon travail, le nettoyage est propre, rapide et sans oublier la politesse qui va avec, j’ai l’impression de de récupérer ma 207 neuve. Je recommande ! »</p>
-        <footer>Sam K. · Nettoyage intérieur voiture</footer>
-      </blockquote>
-      <blockquote class="review">
-        <p>« J’ai fais appel à Nadifa propreté pour le nettoyage de mon matelas, le résultat est très bien, impeccable ! »</p>
-        <footer>Joyce D. · Nettoyage matelas</footer>
-      </blockquote>
-     </div>
+    <div class="reviews-band" tabindex="0" role="region" aria-label="Avis clients">
+      <div class="reviews-track">
+        <blockquote class="review">
+          <p>« J'ai fait nettoyer l'intérieur de ma voiture pro, une Sandero Stepway qui vit sur les chantiers. Les tapis étaient pleins de débris et j'avais des taches sur les sièges que je n'arrivais pas à faire partir. Tout est parti. Sièges nickel, moquettes comme neuves, même les aérateurs et les rainures autour du levier de vitesses sont propres. »</p>
+          <footer>Abdul M. · Nettoyage intérieur voiture</footer>
+        </blockquote>
+        <blockquote class="review">
+          <p>« La voiture était dans un état catastrophique, je ne la reconnais plus. »</p>
+          <footer>Madison V. · Nettoyage intérieur voiture</footer>
+        </blockquote>
+        <blockquote class="review">
+          <p>« Très satisfaite du nettoyage de mon canapé. Avec mon enfant, il était plein de taches, et depuis son passage il n'y en a plus aucune. Juste après, aucune odeur d'humidité ni de traces sur le tissu. La personne est très sérieuse dans son travail, le résultat est top. Je recommande vivement ! »</p>
+          <footer>Aissetou C. · Nettoyage canapé</footer>
+        </blockquote>
+        <blockquote class="review">
+          <p>« Très bon travail, le nettoyage est propre, rapide et sans oublier la politesse qui va avec, j’ai l’impression de de récupérer ma 207 neuve. Je recommande ! »</p>
+          <footer>Sam K. · Nettoyage intérieur voiture</footer>
+        </blockquote>
+        <blockquote class="review">
+          <p>« J’ai fais appel à Nadifa propreté pour le nettoyage de mon matelas, le résultat est très bien, impeccable ! »</p>
+          <footer>Joyce D. · Nettoyage matelas</footer>
+        </blockquote>
+      </div>
     </div>
     <p class="reviews-actions"><button type="button" class="btn btn-ghost reviews-pause" hidden>Pause</button><a class="btn btn-secondary" href="{GBP}" target="_blank" rel="noopener">Lire les avis sur Google</a></p>
   </div>
@@ -1132,7 +1132,8 @@ a.card-body{text-decoration:none;color:inherit}
 .reviews-track .review{flex:none;width:min(360px,80vw);margin-right:1.5rem;scroll-snap-align:start}
 .reviews-band.is-moving{overflow:hidden;scroll-snap-type:none}
 .reviews-band.is-moving .reviews-track{animation:reviews-scroll 70s linear infinite}
-.reviews-band.is-moving:hover .reviews-track,.reviews-band.is-paused .reviews-track{animation-play-state:paused}
+.reviews-band.is-paused .reviews-track{animation-play-state:paused}
+@media (hover:hover){.reviews-band.is-moving:hover .reviews-track{animation-play-state:paused}}
 @keyframes reviews-scroll{to{transform:translateX(-50%)}}
 .reviews-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem;margin:1.8rem 0 0}
 .reviews-pause[hidden]{display:none}
@@ -1222,7 +1223,7 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:#d9534f}
 .mobile-bar a{display:inline-flex;align-items:center;justify-content:center;gap:.5em;padding:.8em;border-radius:999px;font-weight:700;text-decoration:none;color:var(--ink);border:2px solid var(--line)}
 .mobile-bar .mobile-bar-wa{background:var(--accent);color:#04202a;border-color:var(--accent)}
 @media (max-width:860px){.mobile-bar{display:grid}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.reviews-band.is-moving .reviews-track{animation:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.reviews-band.is-moving{overflow-x:auto}.reviews-band.is-moving .reviews-track{animation:none}.reviews-pause{display:none}}
 '''
 
 JS = r'''
