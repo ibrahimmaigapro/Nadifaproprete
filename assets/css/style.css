@@ -164,6 +164,7 @@ a.card-body{text-decoration:none;color:inherit}
 .reviews-track .review{flex:none;width:min(360px,80vw);margin-right:1.5rem;scroll-snap-align:start}
 .reviews-band.is-moving{overflow:hidden;scroll-snap-type:none}
 .reviews-band.is-moving .reviews-track{animation:reviews-scroll 50s linear infinite}
+.reviews-carousel:focus-within .reviews-band.is-moving .reviews-track{animation-play-state:paused}
 @media (hover:hover){.reviews-carousel:hover .reviews-band.is-moving .reviews-track{animation-play-state:paused}}
 @keyframes reviews-scroll{to{transform:translateX(-50%)}}
 .reviews-arrow{position:absolute;top:50%;z-index:2;display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin-top:-22px;padding:0;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);box-shadow:var(--shadow);cursor:pointer}
@@ -171,6 +172,7 @@ a.card-body{text-decoration:none;color:inherit}
 .reviews-arrow[hidden]{display:none}
 .reviews-prev{left:-1rem}
 .reviews-next{right:-1rem}
+@media (max-width:760px){.reviews-arrow{width:40px;height:40px;margin-top:-20px}}
 
 /* faq */
 details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:0 1.2rem;margin-bottom:.8rem}

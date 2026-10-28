@@ -1141,6 +1141,7 @@ a.card-body{text-decoration:none;color:inherit}
 .reviews-track .review{flex:none;width:min(360px,80vw);margin-right:1.5rem;scroll-snap-align:start}
 .reviews-band.is-moving{overflow:hidden;scroll-snap-type:none}
 .reviews-band.is-moving .reviews-track{animation:reviews-scroll 50s linear infinite}
+.reviews-carousel:focus-within .reviews-band.is-moving .reviews-track{animation-play-state:paused}
 @media (hover:hover){.reviews-carousel:hover .reviews-band.is-moving .reviews-track{animation-play-state:paused}}
 @keyframes reviews-scroll{to{transform:translateX(-50%)}}
 .reviews-arrow{position:absolute;top:50%;z-index:2;display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin-top:-22px;padding:0;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);box-shadow:var(--shadow);cursor:pointer}
@@ -1148,6 +1149,7 @@ a.card-body{text-decoration:none;color:inherit}
 .reviews-arrow[hidden]{display:none}
 .reviews-prev{left:-1rem}
 .reviews-next{right:-1rem}
+@media (max-width:760px){.reviews-arrow{width:40px;height:40px;margin-top:-20px}}
 
 /* faq */
 details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:0 1.2rem;margin-bottom:.8rem}
@@ -1282,23 +1284,22 @@ JS = r'''
   });
 })();
 (function(){
-  var b=document.querySelector('.reviews-band'),l=document.querySelector('.reviews-prev'),r=document.querySelector('.reviews-next');
-  if(!b||!l||!r)return;
+  var b=document.querySelector('.reviews-band'),prev=document.querySelector('.reviews-prev'),next=document.querySelector('.reviews-next');
+  if(!b||!prev||!next)return;
   var t=b.querySelector('.reviews-track'),n=t.children.length,still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   [].slice.call(t.children).forEach(function(c){var k=c.cloneNode(true);k.setAttribute('aria-hidden','true');t.appendChild(k);});
-  function step(){return t.children[1].offsetLeft-t.children[0].offsetLeft;}
+  function step(){return t.children[1].getBoundingClientRect().left-t.children[0].getBoundingClientRect().left;}
   function go(d){
     var s=step(),x=b.scrollLeft;
     if(b.classList.contains('is-moving')){x=-new DOMMatrix(getComputedStyle(t).transform).m41;b.classList.remove('is-moving');}
     if(x>=s*n)x-=s*n;
     if(d<0&&x<s/2)x+=s*n;
     b.scrollLeft=x;
-    var i=x/s;
-    b.scrollTo({left:(d>0?Math.floor(i+.05)+1:Math.ceil(i-.05)-1)*s,behavior:still?'auto':'smooth'});
+    b.scrollTo({left:(Math.round(x/s)+d)*s,behavior:still?'auto':'smooth'});
   }
-  l.addEventListener('click',function(){go(-1);});
-  r.addEventListener('click',function(){go(1);});
-  b.classList.add('has-arrows');l.hidden=r.hidden=false;
+  prev.addEventListener('click',function(){go(-1);});
+  next.addEventListener('click',function(){go(1);});
+  b.classList.add('has-arrows');prev.hidden=next.hidden=false;
   if(!still)b.classList.add('is-moving');
 })();
 '''
