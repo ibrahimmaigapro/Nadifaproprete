@@ -41,3 +41,11 @@
     window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(build()),'_blank','noopener');
   });
 })();
+(function(){
+  var b=document.querySelector('.reviews-band'),p=document.querySelector('.reviews-pause');
+  if(!b||!p||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var t=b.querySelector('.reviews-track');
+  [].slice.call(t.children).forEach(function(r){var c=r.cloneNode(true);c.setAttribute('aria-hidden','true');t.appendChild(c);});
+  b.classList.add('is-moving');p.hidden=false;
+  p.addEventListener('click',function(){var s=b.classList.toggle('is-paused');p.textContent=s?'Reprendre':'Pause';});
+})();
