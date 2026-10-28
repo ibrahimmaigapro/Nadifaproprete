@@ -42,10 +42,22 @@
   });
 })();
 (function(){
-  var b=document.querySelector('.reviews-band'),p=document.querySelector('.reviews-pause');
-  if(!b||!p||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  var t=b.querySelector('.reviews-track');
-  [].slice.call(t.children).forEach(function(r){var c=r.cloneNode(true);c.setAttribute('aria-hidden','true');t.appendChild(c);});
-  b.classList.add('is-moving');p.hidden=false;
-  p.addEventListener('click',function(){var s=b.classList.toggle('is-paused');p.textContent=s?'Reprendre':'Pause';});
+  var b=document.querySelector('.reviews-band'),l=document.querySelector('.reviews-prev'),r=document.querySelector('.reviews-next');
+  if(!b||!l||!r)return;
+  var t=b.querySelector('.reviews-track'),n=t.children.length,still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  [].slice.call(t.children).forEach(function(c){var k=c.cloneNode(true);k.setAttribute('aria-hidden','true');t.appendChild(k);});
+  function step(){return t.children[1].offsetLeft-t.children[0].offsetLeft;}
+  function go(d){
+    var s=step(),x=b.scrollLeft;
+    if(b.classList.contains('is-moving')){x=-new DOMMatrix(getComputedStyle(t).transform).m41;b.classList.remove('is-moving');}
+    if(x>=s*n)x-=s*n;
+    if(d<0&&x<s/2)x+=s*n;
+    b.scrollLeft=x;
+    var i=x/s;
+    b.scrollTo({left:(d>0?Math.floor(i+.05)+1:Math.ceil(i-.05)-1)*s,behavior:still?'auto':'smooth'});
+  }
+  l.addEventListener('click',function(){go(-1);});
+  r.addEventListener('click',function(){go(1);});
+  b.classList.add('has-arrows');l.hidden=r.hidden=false;
+  if(!still)b.classList.add('is-moving');
 })();

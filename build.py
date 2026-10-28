@@ -46,6 +46,8 @@ ICON = {
  "wa": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 8.5c.2-.6.7-.6 1-.6h.6c.2 0 .4.1.5.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c-.1.1-.1.3 0 .4a6 6 0 0 0 2.9 2.7c.2.1.3 0 .4-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.2.1.3.3.3.5 0 .7-.3 1.3-.9 1.6-.6.4-1.3.5-2 .3a8.5 8.5 0 0 1-5.5-5.3c-.3-.9-.2-1.8.3-2.7z" fill="currentColor"/></svg>',
  "mail": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3zM3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
  "check": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ "prev": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ "next": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
  "star": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z" fill="currentColor"/></svg>',
  "camera": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',
  "shield": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
@@ -396,31 +398,35 @@ def page_index():
       <h2>Ils nous ont fait confiance</h2>
       <p class="rating">{ICON["star"]*5} <span>5/5 sur Google</span></p>
     </div>
-    <div class="reviews-band" tabindex="0" role="region" aria-label="Avis clients">
-      <div class="reviews-track">
-        <blockquote class="review">
-          <p>« J'ai fait nettoyer l'intérieur de ma voiture pro, une Sandero Stepway qui vit sur les chantiers. Les tapis étaient pleins de débris et j'avais des taches sur les sièges que je n'arrivais pas à faire partir. Tout est parti. Sièges nickel, moquettes comme neuves, même les aérateurs et les rainures autour du levier de vitesses sont propres. »</p>
-          <footer>Abdul M. · Nettoyage intérieur voiture</footer>
-        </blockquote>
-        <blockquote class="review">
-          <p>« La voiture était dans un état catastrophique, je ne la reconnais plus. »</p>
-          <footer>Madison V. · Nettoyage intérieur voiture</footer>
-        </blockquote>
-        <blockquote class="review">
-          <p>« Très satisfaite du nettoyage de mon canapé. Avec mon enfant, il était plein de taches, et depuis son passage il n'y en a plus aucune. Juste après, aucune odeur d'humidité ni de traces sur le tissu. La personne est très sérieuse dans son travail, le résultat est top. Je recommande vivement ! »</p>
-          <footer>Aissetou C. · Nettoyage canapé</footer>
-        </blockquote>
-        <blockquote class="review">
-          <p>« Très bon travail, le nettoyage est propre, rapide et sans oublier la politesse qui va avec, j’ai l’impression de de récupérer ma 207 neuve. Je recommande ! »</p>
-          <footer>Sam K. · Nettoyage intérieur voiture</footer>
-        </blockquote>
-        <blockquote class="review">
-          <p>« J’ai fais appel à Nadifa propreté pour le nettoyage de mon matelas, le résultat est très bien, impeccable ! »</p>
-          <footer>Joyce D. · Nettoyage matelas</footer>
-        </blockquote>
+    <div class="reviews-carousel">
+      <button type="button" class="reviews-arrow reviews-prev" aria-label="Avis précédent" hidden>{ICON["prev"]}</button>
+      <div class="reviews-band" tabindex="0" role="region" aria-label="Avis clients">
+        <div class="reviews-track">
+          <blockquote class="review">
+            <p>« J'ai fait nettoyer l'intérieur de ma voiture pro, une Sandero Stepway qui vit sur les chantiers. Les tapis étaient pleins de débris et j'avais des taches sur les sièges que je n'arrivais pas à faire partir. Tout est parti. Sièges nickel, moquettes comme neuves, même les aérateurs et les rainures autour du levier de vitesses sont propres. »</p>
+            <footer>Abdul M. · Nettoyage intérieur voiture</footer>
+          </blockquote>
+          <blockquote class="review">
+            <p>« La voiture était dans un état catastrophique, je ne la reconnais plus. »</p>
+            <footer>Madison V. · Nettoyage intérieur voiture</footer>
+          </blockquote>
+          <blockquote class="review">
+            <p>« Très satisfaite du nettoyage de mon canapé. Avec mon enfant, il était plein de taches, et depuis son passage il n'y en a plus aucune. Juste après, aucune odeur d'humidité ni de traces sur le tissu. La personne est très sérieuse dans son travail, le résultat est top. Je recommande vivement ! »</p>
+            <footer>Aissetou C. · Nettoyage canapé</footer>
+          </blockquote>
+          <blockquote class="review">
+            <p>« Très bon travail, le nettoyage est propre, rapide et sans oublier la politesse qui va avec, j’ai l’impression de de récupérer ma 207 neuve. Je recommande ! »</p>
+            <footer>Sam K. · Nettoyage intérieur voiture</footer>
+          </blockquote>
+          <blockquote class="review">
+            <p>« J’ai fais appel à Nadifa propreté pour le nettoyage de mon matelas, le résultat est très bien, impeccable ! »</p>
+            <footer>Joyce D. · Nettoyage matelas</footer>
+          </blockquote>
+        </div>
       </div>
+      <button type="button" class="reviews-arrow reviews-next" aria-label="Avis suivant" hidden>{ICON["next"]}</button>
     </div>
-    <p class="reviews-actions"><button type="button" class="btn btn-ghost reviews-pause" hidden>Pause</button><a class="btn btn-secondary" href="{GBP}" target="_blank" rel="noopener">Lire les avis sur Google</a></p>
+    <p class="center"><a class="btn btn-secondary" href="{GBP}" target="_blank" rel="noopener">Lire les avis sur Google</a></p>
   </div>
 </section>
 
@@ -1127,16 +1133,21 @@ a.card-body{text-decoration:none;color:inherit}
 .review::before{content:"“";position:absolute;top:-.2em;left:1rem;font-size:5rem;color:var(--accent-soft);font-family:Georgia,serif;line-height:1}
 .review p{position:relative;font-size:1.02rem}
 .review footer{font-weight:700;color:var(--ink);font-size:.93rem}
+.reviews-carousel{position:relative;margin-bottom:1.8rem}
 .reviews-band{overflow-x:auto;scroll-snap-type:x mandatory;padding:1.2rem 0 .6rem}
+.reviews-band.has-arrows{scrollbar-width:none;scroll-snap-type:none}
+.reviews-band.has-arrows::-webkit-scrollbar{display:none}
 .reviews-track{display:flex;width:max-content}
 .reviews-track .review{flex:none;width:min(360px,80vw);margin-right:1.5rem;scroll-snap-align:start}
 .reviews-band.is-moving{overflow:hidden;scroll-snap-type:none}
-.reviews-band.is-moving .reviews-track{animation:reviews-scroll 70s linear infinite}
-.reviews-band.is-paused .reviews-track{animation-play-state:paused}
-@media (hover:hover){.reviews-band.is-moving:hover .reviews-track{animation-play-state:paused}}
+.reviews-band.is-moving .reviews-track{animation:reviews-scroll 50s linear infinite}
+@media (hover:hover){.reviews-carousel:hover .reviews-band.is-moving .reviews-track{animation-play-state:paused}}
 @keyframes reviews-scroll{to{transform:translateX(-50%)}}
-.reviews-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem;margin:1.8rem 0 0}
-.reviews-pause[hidden]{display:none}
+.reviews-arrow{position:absolute;top:50%;z-index:2;display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin-top:-22px;padding:0;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);box-shadow:var(--shadow);cursor:pointer}
+.reviews-arrow:hover{border-color:var(--accent)}
+.reviews-arrow[hidden]{display:none}
+.reviews-prev{left:-1rem}
+.reviews-next{right:-1rem}
 
 /* faq */
 details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:0 1.2rem;margin-bottom:.8rem}
@@ -1223,7 +1234,7 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:#d9534f}
 .mobile-bar a{display:inline-flex;align-items:center;justify-content:center;gap:.5em;padding:.8em;border-radius:999px;font-weight:700;text-decoration:none;color:var(--ink);border:2px solid var(--line)}
 .mobile-bar .mobile-bar-wa{background:var(--accent);color:#04202a;border-color:var(--accent)}
 @media (max-width:860px){.mobile-bar{display:grid}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.reviews-band.is-moving{overflow-x:auto}.reviews-band.is-moving .reviews-track{animation:none}.reviews-pause{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.reviews-band.is-moving{overflow-x:auto}.reviews-band.is-moving .reviews-track{animation:none}}
 '''
 
 JS = r'''
@@ -1271,12 +1282,24 @@ JS = r'''
   });
 })();
 (function(){
-  var b=document.querySelector('.reviews-band'),p=document.querySelector('.reviews-pause');
-  if(!b||!p||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  var t=b.querySelector('.reviews-track');
-  [].slice.call(t.children).forEach(function(r){var c=r.cloneNode(true);c.setAttribute('aria-hidden','true');t.appendChild(c);});
-  b.classList.add('is-moving');p.hidden=false;
-  p.addEventListener('click',function(){var s=b.classList.toggle('is-paused');p.textContent=s?'Reprendre':'Pause';});
+  var b=document.querySelector('.reviews-band'),l=document.querySelector('.reviews-prev'),r=document.querySelector('.reviews-next');
+  if(!b||!l||!r)return;
+  var t=b.querySelector('.reviews-track'),n=t.children.length,still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  [].slice.call(t.children).forEach(function(c){var k=c.cloneNode(true);k.setAttribute('aria-hidden','true');t.appendChild(k);});
+  function step(){return t.children[1].offsetLeft-t.children[0].offsetLeft;}
+  function go(d){
+    var s=step(),x=b.scrollLeft;
+    if(b.classList.contains('is-moving')){x=-new DOMMatrix(getComputedStyle(t).transform).m41;b.classList.remove('is-moving');}
+    if(x>=s*n)x-=s*n;
+    if(d<0&&x<s/2)x+=s*n;
+    b.scrollLeft=x;
+    var i=x/s;
+    b.scrollTo({left:(d>0?Math.floor(i+.05)+1:Math.ceil(i-.05)-1)*s,behavior:still?'auto':'smooth'});
+  }
+  l.addEventListener('click',function(){go(-1);});
+  r.addEventListener('click',function(){go(1);});
+  b.classList.add('has-arrows');l.hidden=r.hidden=false;
+  if(!still)b.classList.add('is-moving');
 })();
 '''
 
