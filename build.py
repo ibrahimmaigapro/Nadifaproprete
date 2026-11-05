@@ -171,6 +171,24 @@ PRIX_TAPIS = [("Petit tapis","Jusqu'à 2 × 2 m.","35 €"),
               ("Grand tapis","Jusqu'à 2 × 3 m.","45 €"),
               ("Tapis plus grand que 2 × 3 m","Prix selon les dimensions.","Sur devis"),
               ("Moquette","Chambre, salon, bureau, escalier.","8 €/m²")]
+PRIX_VOITURE = [("Formule Basique","Aspiration complète de l'habitacle, dépoussiérage des plastiques, du tableau de bord et des aérateurs.","À partir de 50 €"),
+                ("Formule Premium","Formule Basique + shampoing des sièges, tapis de sol et moquettes par injection-extraction.","À partir de 70 €")]
+
+# ---------- Remise multi-prestations ----------
+# Règle de la Finance : −15 % sur le total des prestations dès 2 prestations dans la même intervention, voiture comprise ;
+# le total est arrondi à l'euro du dessous. Les exemples du site sont calculés ici à partir de la grille de prix : ils ne
+# peuvent pas s'en écarter quand un prix change.
+def montant(prix):
+    """« 69 € » ou « À partir de 70 € » -> 69 ou 70."""
+    return int(re.search(r"(\d+) €", prix).group(1))
+
+def remise_exemple(titre, lignes, depart=False):
+    """Une ligne de prix pour la page Services : le total sans remise, puis le total remisé (arrondi à l'euro du dessous)."""
+    montants = [montant(p) for _, _, p in lignes]
+    sans = sum(montants)
+    avec = sans * 85 // 100  # calcul entier : pas d'erreur d'arrondi
+    detail = " + ".join(f"{m} €" for m in montants) + f" = {sans} € sans remise, avec la remise :"
+    return price_row(titre, detail, ("À partir de " if depart else "") + f"{avec} €")
 
 def ld_offers(prices, service_type):
     """Offres lues par Google, une par ligne de prix : « 69 € », ou « 8 €/m² » (prix au m²). Une ligne sans montant (sur devis) reste sans prix."""
@@ -477,8 +495,7 @@ def page_services():
       <h2>Intérieur de voiture</h2>
       <p>Voiture personnelle, voiture pro qui tourne sur les chantiers, véhicule de famille : nous intervenons sur votre parking, chez vous ou au travail.</p>
       <ul class="pricelist">
-        {price_row("Formule Basique","Aspiration complète de l'habitacle, dépoussiérage des plastiques, du tableau de bord et des aérateurs.","À partir de 50 €")}
-        {price_row("Formule Premium","Formule Basique + shampoing des sièges, tapis de sol et moquettes par injection-extraction.","À partir de 70 €")}
+        {"".join(price_row(*x) for x in PRIX_VOITURE)}
       </ul>
       <p class="small muted">Le tarif dépend de la taille du véhicule (citadine, berline, SUV, utilitaire) et de son état. Il est fixé sur photo avant l'intervention.</p>
       <p><a class="link-more" href="nettoyage-interieur-voiture-toulouse.html">Tout savoir sur cette prestation</a></p>
@@ -529,6 +546,20 @@ def page_services():
       </ul>
       <p><a class="link-more" href="nettoyage-tapis-moquette-toulouse.html">Tout savoir sur cette prestation</a></p>
     </div>
+  </div>
+</section>
+
+<section class="section" id="remise">
+  <div class="wrap narrow">
+    <p class="eyebrow">Remise</p>
+    <h2>−15&nbsp;% dès deux prestations</h2>
+    <p>Quand vous faites nettoyer au moins deux choses lors d'une même intervention (même jour, même adresse), nous retirons 15&nbsp;% du total des prestations, toutes catégories confondues, voiture comprise. Le total est arrondi à l'euro du dessous. Le déplacement, quand il est facturé, n'est pas remisé.</p>
+    <ul class="pricelist">
+      {remise_exemple("Canapé 2 ou 3 places + matelas 2 places", [PRIX_CANAPE[0], PRIX_MATELAS[1]])}
+      {remise_exemple("Canapé 2 ou 3 places + fauteuil", [PRIX_CANAPE[0], PRIX_CANAPE[2]])}
+      {remise_exemple("Canapé 2 ou 3 places + voiture Formule Premium (prix de départ)", [PRIX_CANAPE[0], PRIX_VOITURE[1]], depart=True)}
+    </ul>
+    <p class="small muted">Pour la voiture, le prix dépend du véhicule : l'exemple part du prix de départ, et le devis sur photo annonce le prix total avant l'intervention.</p>
   </div>
 </section>
 
@@ -790,7 +821,7 @@ SVC_PAGES = [
       intro=["Miettes, sable, poussière sur le tableau de bord, taches sur les sièges, tapis de sol pleins de débris : l'intérieur d'une voiture se salit vite, surtout avec des enfants ou un usage professionnel.",
              "Nous venons avec le matériel : aspirateur professionnel, produits pour plastiques et machine d'injection-extraction pour les sièges et moquettes. Vous n'avez pas à vous déplacer en station."],
       included=["Aspiration complète de l'habitacle et du coffre","Dépoussiérage des plastiques, du tableau de bord, de la console et des aérateurs","Nettoyage des tapis de sol","Formule Premium : shampoing des sièges, tapis et moquettes par injection-extraction"],
-      prices=[("Formule Basique","Aspiration complète de l'habitacle, dépoussiérage des plastiques, du tableau de bord et des aérateurs.","À partir de 50 €"),("Formule Premium","Formule Basique + shampoing des sièges, tapis de sol et moquettes par injection-extraction.","À partir de 70 €")],
+      prices=PRIX_VOITURE,
       price_note="Le tarif dépend de la taille du véhicule (citadine, berline, SUV, utilitaire) et de son état. Il est fixé sur photo avant l'intervention.",
       faq=[("Où se fait le nettoyage ?","Là où la voiture est garée : devant chez vous, sur votre lieu de travail ou sur un parking, à Toulouse et dans les communes proches."),
            ("Combien de temps ça prend ?","Entre 45 minutes et 2 heures selon la formule, la taille du véhicule et son état."),
@@ -844,6 +875,7 @@ def page_service(d):
       <h2>Tarifs</h2>
       <ul class="pricelist">{prices}</ul>
       <p class="small muted">{d["price_note"]}</p>
+      <p class="small muted">Dès deux prestations dans la même intervention, −15&nbsp;% sur le total : <a href="services.html#remise">voir la remise</a>.</p>
     </div>
   </div>
 </section>
