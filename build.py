@@ -49,7 +49,6 @@ ICON = {
  "prev": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
  "next": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
  "star": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z" fill="currentColor"/></svg>',
- "camera": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',
  "shield": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
 }
 
@@ -283,7 +282,7 @@ def cta_band():
 
 SERVICES = [
  ("car","Intérieur de voiture","voiture-207","Aspiration complète, plastiques, sièges et tapis de sol. Formule Basique ou Premium selon l'état.","nettoyage-interieur-voiture-toulouse.html","Intérieur d'une Peugeot 207 après nettoyage par Nadifa Propreté : tableau de bord, siège et moquette"),
- ("sofa","Canapés & fauteuils",("canape-avant","canape-apres",62),"Tissu, microfibre, velours ou cuir : taches, auréoles et odeurs traitées en profondeur, sans abîmer la matière.","nettoyage-canape-toulouse.html",("Accoudoir d'un canapé en tissu gris clair taché, avant nettoyage","Le même accoudoir après nettoyage par Nadifa Propreté : la tache a disparu")),
+ ("sofa","Canapés & fauteuils",("canape-avant","canape-apres"),"Tissu, microfibre, velours ou cuir : taches, auréoles et odeurs traitées en profondeur, sans abîmer la matière.","nettoyage-canape-toulouse.html",("Accoudoir d'un canapé en tissu gris clair taché, avant nettoyage","Le même accoudoir après nettoyage par Nadifa Propreté : la tache a disparu")),
  ("bed","Matelas","matelas","Poussière, acariens et traces. Un matelas assaini, sec en quelques heures.","nettoyage-matelas-toulouse.html","Illustration : aspirateur sur un matelas blanc"),
  ("rug","Tapis & moquettes","tapis","Tapis nettoyé chez vous, sans l'emporter. Moquettes de chambre, salon ou bureau.","nettoyage-tapis-moquette-toulouse.html","Tapis de salon bleu à médaillon nettoyé à domicile par Nadifa Propreté"),
 ]
@@ -303,21 +302,53 @@ def compare(left, right, alt_left, alt_right, label_left="Avant", label_right="A
         <input class="cmp-range" type="range" min="0" max="100" value="{start}" aria-label="Faire glisser pour comparer : {html.escape(label_left)} / {html.escape(label_right)}">
       </div>'''
 
+def avant_apres(avant, apres, alt_avant, alt_apres, titre="", sizes="(max-width: 760px) 84vw, 520px", eager=False, w=1400, h=933):
+    """Canapés : deux photos superposées, deux boutons. Départ sur « Avant ». Marche même si les deux photos n'ont pas le même cadrage."""
+    titre_html = f'<span class="ba-titre">{titre}</span>' if titre else ""
+    return f'''<figure class="ba">
+        <div class="ba-media">
+          {picture(apres, alt_apres, sizes=sizes, cls="ba-img ba-apres", w=w, h=h)}
+          {picture(avant, alt_avant, sizes=sizes, cls="ba-img ba-avant", eager=eager, w=w, h=h)}
+          <span class="ba-tag">Avant</span>
+        </div>
+        <figcaption class="ba-bar">{titre_html}<span class="ba-btns" role="group" aria-label="Voir la photo avant ou après le nettoyage"><button type="button" class="ba-btn" data-ba="avant" aria-pressed="true">Avant</button><button type="button" class="ba-btn" data-ba="apres" aria-pressed="false">Après</button></span></figcaption>
+      </figure>'''
+
+# Résultats canapés : (photo avant, photo après, intitulé, texte de la photo avant, texte de la photo après).
+# Une photo présentée ici est une vraie photo d'une intervention Nadifa, avec l'accord du client.
+RESULTATS_CANAPE = [
+ ("canape-velours-avant","canape-velours-apres","Canapé velours côtelé · vue d'ensemble","Canapé en velours côtelé beige avant nettoyage : traces sombres sur les assises, le dossier et le devant","Le même canapé en velours côtelé après nettoyage par Nadifa Propreté à Toulouse"),
+ ("canape-velours-assise-avant","canape-velours-assise-apres","Canapé velours côtelé · assise","Assise d'un canapé en velours côtelé avant nettoyage : auréoles et traces sombres","Assise du même canapé après nettoyage par Nadifa Propreté"),
+ ("canape-angle-meridienne-avant","canape-angle-meridienne-apres","Canapé d'angle gris · méridienne","Méridienne d'un canapé d'angle gris avant nettoyage : grandes auréoles sur le tissu","La même méridienne après nettoyage par Nadifa Propreté"),
+ ("canape-angle-assise-avant","canape-angle-assise-apres","Canapé d'angle gris · assise","Assise d'un canapé d'angle gris avant nettoyage : auréoles sur le tissu","Assise du même canapé d'angle après nettoyage par Nadifa Propreté"),
+ ("canape-boudins-avant","canape-boudins-apres","Canapé gris à boudins · vue d'ensemble","Canapé gris à boudins avant nettoyage : assises ternies et marquées","Le même canapé à boudins après nettoyage par Nadifa Propreté"),
+ ("canape-avant","canape-apres","Canapé gris clair · tache sur l'accoudoir","Accoudoir d'un canapé en tissu gris clair taché, avant nettoyage","Le même accoudoir après nettoyage par Nadifa Propreté : la tache a disparu"),
+]
+
+def carrousel():
+    cartes = "".join(avant_apres(a, b, alt_a, alt_b, titre) for a, b, titre, alt_a, alt_b in RESULTATS_CANAPE)
+    return f'''<div class="ba-carrousel">
+      <div class="ba-fleches" hidden>
+        <button type="button" class="ba-fleche ba-prev" aria-label="Résultat précédent">{ICON["prev"]}</button>
+        <button type="button" class="ba-fleche ba-next" aria-label="Résultat suivant">{ICON["next"]}</button>
+      </div>
+      <div class="ba-bande" tabindex="0" role="region" aria-label="Résultats avant et après nettoyage de canapés">{cartes}</div>
+    </div>'''
+
 # ---------- INDEX ----------
 def page_index():
     h = head("Nettoyage canapé, matelas, tapis et voiture à Toulouse | Nadifa Propreté",
              "Nettoyage à domicile de canapés, matelas, tapis et intérieurs de voiture à Toulouse, par injection-extraction. Devis sur photo, intervention sous 48 h.",
-             "index.html", extra=LD_BUSINESS + '<link rel="preload" as="image" href="assets/img/hero-canape-800.webp" imagesrcset="assets/img/hero-canape-480.webp 480w, assets/img/hero-canape-800.webp 800w, assets/img/hero-canape-1400.webp 1400w" imagesizes="(max-width: 900px) 100vw, 45vw">\n<link rel="preload" as="image" href="assets/img/hero-voiture-800.webp" imagesrcset="assets/img/hero-voiture-480.webp 480w, assets/img/hero-voiture-800.webp 800w, assets/img/hero-voiture-1400.webp 1400w" imagesizes="(max-width: 900px) 100vw, 45vw">\n')
+             "index.html", extra=LD_BUSINESS + '<link rel="preload" as="image" href="assets/img/canape-velours-avant-800.webp" imagesrcset="assets/img/canape-velours-avant-480.webp 480w, assets/img/canape-velours-avant-800.webp 800w, assets/img/canape-velours-avant-1400.webp 1400w" imagesizes="(max-width: 900px) 100vw, 45vw">\n')
     def card(ic, t, img, d, link, alt):
         body = f'''<span class="icon">{ICON[ic]}</span>
         <h3>{t}</h3>
         <p>{d}</p>
         <span class="link-more">Voir la prestation</span>'''
         if isinstance(img, tuple):
-            # Avant / après à glisser : la photo reste hors du lien, sinon la toucher ouvrirait la page.
-            # 3e valeur du tuple : position de départ du trait (sur la tache).
+            # Avant / après à boutons : la photo reste hors du lien, sinon la toucher ouvrirait la page.
             return f'''<div class="card service-card">
-      <div class="card-media">{compare(img[0], img[1], alt[0], alt[1], sizes="(max-width: 700px) 100vw, 25vw", w=1400, h=1050, start=img[2])}</div>
+      <div class="card-media">{avant_apres(img[0], img[1], alt[0], alt[1], sizes="(max-width: 700px) 100vw, 25vw", w=1400, h=1050)}</div>
       <a class="card-body" href="{link}">
         {body}
       </a>
@@ -342,15 +373,14 @@ def page_index():
       </div>
       <ul class="hero-proof">
         <li>{ICON["check"]} Intervention sous 48 h</li>
-        <li>{ICON["check"]} Sec en 3 h environ</li>
+        <li>{ICON["check"]} Sec en quelques heures</li>
         <li>{ICON["check"]} Prix fixe, sans surprise</li>
         <li>{ICON["check"]} Avis Google 5/5</li>
       </ul>
     </div>
-    <figure class="hero-media">
-      {compare("hero-canape", "hero-voiture", "Canapé en tissu gris clair après nettoyage par Nadifa Propreté : assise, dossier et accoudoir propres", "Intérieur d'une voiture après nettoyage par Nadifa Propreté à Toulouse", label_left="Canapés", label_right="Voitures", sizes="(max-width: 900px) 100vw, 45vw", eager=True)}
-      <figcaption><span class="badge">{ICON["camera"]} Faites glisser : canapés, matelas, tapis et voitures</span></figcaption>
-    </figure>
+    <div class="hero-media">
+      {avant_apres(RESULTATS_CANAPE[0][0], RESULTATS_CANAPE[0][1], RESULTATS_CANAPE[0][3], RESULTATS_CANAPE[0][4], RESULTATS_CANAPE[0][2], sizes="(max-width: 900px) 100vw, 45vw", eager=True)}
+    </div>
   </div>
 </section>
 
@@ -376,7 +406,7 @@ def page_index():
       <li><span class="step-num">1</span><h3>Vous envoyez une photo</h3><p>Sur WhatsApp ou par téléphone, décrivez ce qu'il faut nettoyer. On vous rappelle rapidement avec un prix fixe.</p></li>
       <li><span class="step-num">2</span><h3>On fixe un créneau</h3><p>Généralement sous 48 h, tous les jours sauf le vendredi, de 7 h à 22 h 30, à l'heure qui vous arrange.</p></li>
       <li><span class="step-num">3</span><h3>Nettoyage à domicile</h3><p>Pré-traitement des taches, injection-extraction, finitions. Comptez 45 min à 2 h selon la prestation.</p></li>
-      <li><span class="step-num">4</span><h3>Vous profitez</h3><p>Le textile est sec en 3 h environ. Vous réglez après l'intervention.</p></li>
+      <li><span class="step-num">4</span><h3>Vous profitez</h3><p>Le textile est sec en quelques heures. Vous réglez après l'intervention.</p></li>
     </ol>
   </div>
 </section>
@@ -386,7 +416,9 @@ def page_index():
     <div class="section-head">
       <p class="eyebrow">Avant / après</p>
       <h2>Des résultats visibles, pas des promesses</h2>
+      <p class="muted">Choisissez « Avant » ou « Après » sous chaque canapé pour comparer.</p>
     </div>
+    {carrousel()}
     <div class="grid-2 results">
       <figure class="result">
         {compare("yaris-avant", "yaris-apres", "Toyota Yaris avant nettoyage : tableau de bord poussiéreux, tapis de sol pleins de débris", "Toyota Yaris après nettoyage par Nadifa Propreté : console, plastiques et moquettes propres")}
@@ -395,14 +427,6 @@ def page_index():
       <figure class="result">
         {compare("207-avant", "207-apres", "Peugeot 207 avant nettoyage : miettes et poussière sur les tapis de sol et les sièges", "Peugeot 207 après nettoyage par Nadifa Propreté : sièges, moquettes et plastiques nets")}
         <figcaption>Berline compacte : sièges en tissu, moquettes et plastiques. Faites glisser pour comparer.</figcaption>
-      </figure>
-      <figure class="result">
-        {picture("avant-apres-canape", "Canapé noir en tissu avant et après nettoyage par injection-extraction : traces et auréoles disparues", sizes="(max-width: 760px) 100vw, 50vw", w=1024, h=1024)}
-        <figcaption>Canapé d'angle en tissu : auréoles et traces d'usage éliminées.</figcaption>
-      </figure>
-      <figure class="result">
-        {picture("injection-canape", "Buse d'injection-extraction sur un canapé en tissu clair pendant le nettoyage", sizes="(max-width: 760px) 100vw, 50vw", w=1024, h=1024)}
-        <figcaption>L'injection-extraction : l'eau et le produit sont injectés dans la fibre puis aspirés avec la saleté.</figcaption>
       </figure>
     </div>
   </div>
@@ -468,7 +492,7 @@ def page_index():
       <p class="eyebrow">Questions fréquentes</p>
       <h2>Ce qu'on nous demande souvent</h2>
     </div>
-    <details><summary>Combien de temps faut-il pour que ça sèche ?</summary><p>Environ 3 heures pour un canapé ou un matelas, grâce à l'extraction qui retire la majeure partie de l'eau. Une pièce aérée accélère encore le séchage.</p></details>
+    <details><summary>Combien de temps faut-il pour que ça sèche ?</summary><p>Quelques heures pour un canapé ou un matelas, grâce à l'extraction qui retire la majeure partie de l'eau. Une pièce aérée accélère encore le séchage.</p></details>
     <details><summary>Dois-je déplacer mon canapé ou mon matelas ?</summary><p>Non. Nous intervenons à domicile, dans la pièce où se trouve le meuble. Nous avons seulement besoin d'une prise électrique.</p></details>
     <details><summary>Les taches anciennes partent-elles ?</summary><p>La plupart, oui : traces de boisson, sueur, auréoles, poussière incrustée. Certaines teintures (encre, colorant) peuvent laisser une marque atténuée. Envoyez une photo, nous vous dirons franchement ce qu'il est possible d'obtenir.</p></details>
     <details><summary>Où intervenez-vous ?</summary><p>À Toulouse (tous quartiers) et dans les communes proches : {ZONES_TXT}. {DEPLACEMENT}</p></details>
@@ -519,16 +543,20 @@ def page_services():
 
 <section class="section section-alt" id="canapes">
   <div class="wrap service-block reverse">
-    <div class="service-media">{picture("canape","Canapé en tissu gris clair après nettoyage à domicile par injection-extraction", sizes="(max-width: 900px) 100vw, 40vw", cls="portrait", w=1400, h=1866)}</div>
+    <div class="service-media">{picture("canape-angle-large","Canapé d'angle gris après nettoyage à domicile par Nadifa Propreté", sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
     <div class="service-text">
       <span class="icon">{ICON["sofa"]}</span>
       <h2>Canapés et fauteuils</h2>
-      <p>Tissu, microfibre, velours, lin : pré-traitement des taches, injection-extraction sur l'assise, le dossier et les coussins, puis finition. Sec en 3 h environ. Le cuir est aussi pris en charge, au même prix que le tissu.</p>
+      <p>Tissu, microfibre, velours, lin : pré-traitement des taches, injection-extraction sur l'assise, le dossier et les coussins, puis finition. Sec en quelques heures. Le cuir est aussi pris en charge, au même prix que le tissu.</p>
       <ul class="pricelist">
         {"".join(price_row(*x) for x in PRIX_CANAPE)}
       </ul>
       <p><a class="link-more" href="nettoyage-canape-toulouse.html">Tout savoir sur cette prestation</a></p>
     </div>
+  </div>
+  <div class="wrap service-resultats">
+    <h3>Nos résultats sur des canapés</h3>
+    {carrousel()}
   </div>
 </section>
 
@@ -674,7 +702,7 @@ def page_reservation():
           <li>{ICON["check"]} Une prise électrique à proximité</li>
           <li>{ICON["check"]} Le meuble accessible (coussins et objets retirés)</li>
           <li>{ICON["check"]} Pour une voiture : les objets personnels sortis, une place où stationner</li>
-          <li>{ICON["check"]} Comptez 45 min à 2 h selon la prestation, puis 3 h de séchage</li>
+          <li>{ICON["check"]} Comptez 45 min à 2 h selon la prestation, puis quelques heures de séchage</li>
         </ul>
       </div>
       <div class="aside-card aside-quiet">
@@ -778,9 +806,73 @@ def ld_service(name, service_type, desc, path, min_price=None, offers=None):
 </script>
 '''
 
+# Méthode de la page Canapé : (identifiant, bouton, [(image, titre, texte), …]).
+# Ce sont les gestes réels de Nadifa, écrits avec nos mots. Les images sont des illustrations, jamais présentées comme un résultat.
+ILLUSTRATION = {
+ "etape-injection":"Illustration : main gantée qui injecte une solution sur l'assise d'un canapé en tissu",
+ "etape-brossage":"Illustration : main gantée qui brosse l'assise d'un canapé en tissu avec une brosse souple sur perceuse",
+ "etape-vapeur":"Illustration : main gantée qui passe de la vapeur sur l'assise d'un canapé en tissu",
+ "etape-extraction":"Illustration : main gantée qui aspire l'eau de l'assise d'un canapé en tissu",
+ "etape-cuir-examen":"Illustration : main gantée qui teste un produit sur le coin d'un accoudoir en cuir",
+ "etape-cuir-nettoyage":"Illustration : main gantée qui nettoie une assise en cuir à la brosse souple",
+ "etape-cuir-essuyage":"Illustration : main gantée qui essuie une assise en cuir avec une microfibre",
+}
+MATIERES = [
+ ("tissu","Tissu &amp; lin",[
+   ("etape-injection","Injection","Nous répartissons sur le tissu une solution choisie pour ses fibres. L'eau est dosée pour ne pas tremper la mousse."),
+   ("etape-brossage","Brossage","Une brosse souple sur perceuse travaille les taches et les zones de contact, à vitesse réglée, sans agresser le tissu."),
+   ("etape-vapeur","Vapeur","Si les fibres et les colles le supportent, un passage de vapeur ciblé complète le nettoyage. Sinon, nous la laissons de côté."),
+   ("etape-extraction","Extraction","La machine aspire l'eau chargée de saleté. Quelques passages à sec enlèvent l'humidité en trop et préparent le séchage."),
+ ]),
+ ("microfibre","Microfibre",[
+   ("etape-injection","Injection","Nous avançons zone par zone pour garder la main sur la quantité d'eau, avec un produit dosé selon la réaction de la fibre."),
+   ("etape-brossage","Brossage","La brosse souple insiste sur les accoudoirs, les assises et les endroits les plus touchés, avec une pression légère."),
+   ("etape-vapeur","Vapeur","La vapeur vient en plus, seulement après avoir contrôlé le tissu, les colles et les assemblages."),
+   ("etape-extraction","Extraction","L'aspiration retire l'eau et les résidus, puis les fibres sont remises en place pour un aspect régulier."),
+ ]),
+ ("velours","Velours",[
+   ("etape-injection","Injection","Le velours passe à la machine seulement si le tissu et son support le permettent. Sinon, le travail se fait à la main."),
+   ("etape-brossage","Brossage","Le brossage reste à la main, avec une brosse souple, toujours dans le sens du poil."),
+   ("etape-vapeur","Vapeur","Nous l'utilisons uniquement si le velours et les colles la supportent. Sinon, nous passons cette étape."),
+   ("etape-extraction","Extraction","L'humidité est retirée, le poil est replacé, puis nous regardons le canapé sous plusieurs angles pour repérer les traces."),
+ ]),
+ ("cuir","Cuir &amp; simili",[
+   ("etape-cuir-examen","Examen et test","Nous regardons la finition, les plis et les zones fragiles, puis nous testons le produit sur un endroit discret."),
+   ("etape-cuir-nettoyage","Nettoyage à la main","Produit adapté, brosse souple et microfibres, par petites zones. Ni machine à injection, ni vapeur, et jamais trop de liquide."),
+   ("etape-cuir-essuyage","Essuyage et conseils","Nous essuyons les résidus et contrôlons le rendu. Un soin est posé seulement si le cuir en a besoin, et vous repartez avec nos conseils d'entretien."),
+ ]),
+]
+
+def bloc_methode(matieres):
+    onglets, panneaux = "", ""
+    for i, (mid, label, etapes) in enumerate(matieres):
+        onglets += f'<button type="button" role="tab" class="mat-tab" id="tab-{mid}" aria-controls="mat-{mid}" aria-selected="{"true" if i == 0 else "false"}">{label}</button>'
+        cartes = "".join(f'''<li>{picture(img, ILLUSTRATION[img], sizes="(max-width: 560px) 110px, (max-width: 1100px) 45vw, 25vw", w=1400, h=1046)}
+          <div class="mat-texte"><span class="step-num">{n}</span><h3>{titre}</h3><p>{texte}</p></div></li>''' for n, (img, titre, texte) in enumerate(etapes, 1))
+        trois = " trois" if len(etapes) == 3 else ""
+        panneaux += f'<div class="mat-panel" id="mat-{mid}" role="tabpanel" aria-labelledby="tab-{mid}" tabindex="0"><ol class="mat-etapes{trois}">{cartes}</ol></div>'
+    return f'''
+<section class="section" id="methode">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Comment nous nettoyons</p>
+      <h2>Notre méthode, matière par matière</h2>
+      <p class="muted">Avant tout, nous regardons la matière, nous aspirons le canapé et nous faisons un test discret. Choisissez votre matière pour voir les étapes.</p>
+    </div>
+    <div class="mat">
+      <div class="mat-tabs" role="tablist" aria-label="Choisir la matière du canapé">{onglets}</div>
+      {panneaux}
+    </div>
+    <p class="mat-honnete">Un travail soigné et un avis franc : certaines taches anciennes ou certaines teintures peuvent rester atténuées, et un nettoyage ne répare ni l'usure, ni une brûlure, ni une décoloration.</p>
+    <p class="small muted">Images d'illustration créées par IA : elles montrent le geste, pas un résultat.</p>
+  </div>
+</section>
+'''
+
 SVC_PAGES = [
- dict(path="nettoyage-canape-toulouse.html", crumb="Nettoyage de canapé", icon="sofa", img="canape", portrait=True,
-      img_alt="Canapé en tissu gris clair nettoyé à domicile par Nadifa Propreté à Toulouse",
+ dict(path="nettoyage-canape-toulouse.html", crumb="Nettoyage de canapé", icon="sofa", img="injection-canape", matieres=MATIERES,
+      img_alt="Buse d'injection-extraction sur un canapé en tissu clair pendant le nettoyage",
+      hero_img="canape-page-hero", hero_alt="Canapé gris à boudins après nettoyage à domicile par Nadifa Propreté à Toulouse",
       title="Nettoyage canapé à domicile à Toulouse | Nadifa Propreté",
       desc="Nettoyage de canapé et fauteuil à domicile à Toulouse, en tissu ou en cuir : canapé 2 ou 3 places 69 €, 4 ou 5 places ou d'angle 79 €, fauteuil 25 €.",
       h1="Nettoyage de canapé à domicile à Toulouse",
@@ -788,10 +880,10 @@ SVC_PAGES = [
       stype="Nettoyage de textile d'ameublement", min_price=None,
       intro=["Un canapé en tissu accumule au fil des mois poussière, sueur, traces de boisson et odeurs. Un coup d'aspirateur ne touche que la surface : la saleté reste dans la mousse et dans la fibre.",
              "L'injection-extraction injecte de l'eau et un produit adapté au textile au cœur de la fibre, puis aspire immédiatement le tout avec la saleté dissoute. Le canapé est nettoyé en profondeur, sans être détrempé."],
-      included=["Aspiration de l'assise, du dossier, des accoudoirs et des coussins","Pré-traitement des taches et auréoles","Test de tenue de couleur sur une zone discrète quand la matière le demande","Tissu, microfibre, velours, lin : injection-extraction sur toutes les faces visibles","Finition et remise en place des coussins"],
+      included=["Assise, dossier, accoudoirs et coussins","Détachage des taches et auréoles","Nettoyage en profondeur adapté à la matière","Nettoyage à la vapeur quand la matière le permet","Séchage en quelques heures"],
       prices=PRIX_CANAPE,
       price_note="Devis sur photo : le prix total vous est annoncé avant l'intervention.",
-      faq=[("Combien de temps faut-il pour que le canapé sèche ?","Environ 3 heures. L'extraction retire la majeure partie de l'eau ; une pièce aérée accélère encore le séchage."),
+      faq=[("Combien de temps faut-il pour que le canapé sèche ?","Quelques heures. L'extraction retire la majeure partie de l'eau ; une pièce aérée accélère encore le séchage."),
            ("Faut-il déplacer le canapé ?","Non. Nous intervenons dans la pièce où il se trouve. Il nous faut seulement une prise électrique à proximité."),
            ("Les vieilles taches partent-elles ?","La plupart, oui : boissons, sueur, auréoles, poussière incrustée. Certaines teintures (encre, colorant) peuvent laisser une marque atténuée. Envoyez une photo, nous vous disons franchement ce qu'il est possible d'obtenir."),
            ("Et les canapés en cuir ?","Oui, nous nettoyons aussi les canapés en cuir, au même prix que les canapés en tissu.")]),
@@ -804,10 +896,10 @@ SVC_PAGES = [
       stype="Nettoyage de literie", min_price=None,
       intro=["On passe environ un tiers de sa vie sur son matelas. Il absorbe transpiration, peaux mortes et poussière, qui nourrissent les acariens et laissent des auréoles jaunes.",
              "Le nettoyage par injection-extraction va chercher la saleté dans l'épaisseur du garnissage, là où l'aspirateur ne va pas. Le matelas reste chez vous, il n'y a rien à transporter."],
-      included=["Aspiration minutieuse de la face de couchage et des bords","Pré-traitement des auréoles et des taches","Injection-extraction sur toute la face","Séchage accéléré par extraction : sec en 3 h environ"],
+      included=["Aspiration minutieuse de la face de couchage et des bords","Pré-traitement des auréoles et des taches","Injection-extraction sur toute la face","Séchage accéléré par extraction : sec en quelques heures"],
       prices=PRIX_MATELAS,
       price_note="Deuxième face ou sommier tapissier : sur demande. Devis sur photo : le prix total vous est annoncé avant l'intervention.",
-      faq=[("Peut-on dormir dessus le soir même ?","Oui. Comptez environ 3 heures de séchage ; en aérant la chambre, le matelas est sec avant le coucher."),
+      faq=[("Peut-on dormir dessus le soir même ?","Oui. Comptez quelques heures de séchage ; en aérant la chambre, le matelas est sec avant le coucher."),
            ("Faut-il retourner le matelas ?","Nous nettoyons la face de couchage. La deuxième face se fait sur demande, si le matelas est réversible."),
            ("Les taches d'urine ou de transpiration partent-elles ?","Elles sont très nettement atténuées, souvent complètement. Envoyez une photo pour un avis honnête avant de réserver.")]),
  dict(path="nettoyage-tapis-moquette-toulouse.html", crumb="Nettoyage de tapis et moquette", icon="rug", img="tapis",
@@ -823,7 +915,7 @@ SVC_PAGES = [
       prices=PRIX_TAPIS,
       price_note="Devis sur photo : le prix total vous est annoncé avant l'intervention (indiquez les dimensions du tapis ou la surface de moquette).",
       faq=[("Faut-il emporter le tapis ?","Non, il est nettoyé chez vous. Il suffit de libérer la surface et d'avoir une prise électrique."),
-           ("Combien de temps pour une moquette ?","Environ une heure par pièce, puis 3 heures de séchage."),
+           ("Combien de temps pour une moquette ?","Environ une heure par pièce, puis quelques heures de séchage."),
            ("Tous les tapis peuvent-ils être nettoyés ?","La plupart des tapis en fibres synthétiques, laine ou coton, oui. Pour un tapis ancien ou fragile, envoyez une photo : nous vous dirons s'il vaut mieux le confier à un spécialiste.")]),
  dict(path="nettoyage-interieur-voiture-toulouse.html", crumb="Nettoyage intérieur de voiture", icon="car", img="voiture-207",
       img_alt="Intérieur d'une Peugeot 207 après nettoyage par Nadifa Propreté à Toulouse : tableau de bord, siège et moquette",
@@ -855,22 +947,57 @@ def page_service(d):
     included = "".join(f'<li>{ICON["check"]} {x}</li>' for x in d["included"])
     prices = "".join(price_row(*x) for x in d["prices"])
     faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q,a in d["faq"])
-    body = f'''
-<section class="page-head">
-  <div class="wrap">
-    <p class="eyebrow"><a href="services.html">Services</a> · {d["crumb"]}</p>
-    <h1>{d["h1"]}</h1>
-    <p class="lead">{d["lead"]}</p>
-    <div class="hero-actions">
+    actions = f'''<div class="hero-actions">
       <a class="btn btn-primary" href="{WA_DEVIS}" target="_blank" rel="noopener">{ICON["wa"]} Obtenir mon prix sur WhatsApp</a>
       <a class="btn btn-ghost" href="tel:{PHONE_T}">{ICON["phone"]} {PHONE_H}</a>
+    </div>'''
+    fil = f'<p class="eyebrow"><a href="services.html">Services</a> · {d["crumb"]}</p>'
+    if "matieres" in d:  # page Canapé : grande photo, résultats et méthode par matière
+        grille = " · ".join(f"<span>{nom}&nbsp;: {prix}</span>" for nom, _, prix in d["prices"])
+        tete = f'''
+<section class="page-hero">
+  {picture(d["hero_img"], d["hero_alt"], sizes="100vw", cls="page-hero-img", eager=True, w=1400, h=700)}
+  <div class="wrap">
+    <div class="page-hero-texte">
+      {fil}
+      <h1>{d["h1"]}</h1>
+      <p class="lead">{d["lead"]}</p>
+      <p class="page-hero-prix">{grille}</p>
+      {actions}
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="resultats">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Avant / après</p>
+      <h2>Nos résultats sur des canapés</h2>
+      <p class="muted">Choisissez « Avant » ou « Après » sous chaque canapé pour comparer.</p>
+    </div>
+    {carrousel()}
+  </div>
+</section>
+'''
+        methode = bloc_methode(d["matieres"])
+        fond = "section section-alt"
+    else:
+        tete = f'''
+<section class="page-head">
+  <div class="wrap">
+    {fil}
+    <h1>{d["h1"]}</h1>
+    <p class="lead">{d["lead"]}</p>
+    {actions}
+  </div>
+</section>
+'''
+        methode = ""
+        fond = "section"
+    body = f'''{tete}
+<section class="{fond}">
   <div class="wrap service-block">
-    <div class="service-media">{picture(d["img"], d["img_alt"], sizes="(max-width: 900px) 100vw, 40vw", cls="portrait", w=1400, h=1866) if d.get("portrait") else picture(d["img"], d["img_alt"], sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
+    <div class="service-media">{picture(d["img"], d["img_alt"], sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
     <div class="service-text">
       <span class="icon">{ICON[d["icon"]]}</span>
       <h2>Pourquoi un nettoyage professionnel</h2>
@@ -878,7 +1005,7 @@ def page_service(d):
     </div>
   </div>
 </section>
-
+{methode}
 <section class="section section-alt">
   <div class="wrap grid-2">
     <div>
@@ -946,7 +1073,7 @@ def page_mentions():
     <p>Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience. Le traitement des informations que vous nous transmettez (devis, prestation, facturation) est détaillé dans la <a href="politique-confidentialite.html">politique de confidentialité</a>.</p>
 
 {mediation_html()}    <h2>Propriété intellectuelle</h2>
-    <p>Le nom, le logo, les textes et les photographies de réalisations sont la propriété de Nadifa Propreté. Seule l'image du matelas est une illustration générique, utilisée à titre d'exemple.</p>
+    <p>Le nom, le logo, les textes et les photographies de réalisations sont la propriété de Nadifa Propreté. L'image du matelas est une illustration générique, utilisée à titre d'exemple. Les images des étapes de la page canapé sont des illustrations créées par IA.</p>
 
     <h2>Assurance et responsabilité</h2>
     <p>Les prestations sont réalisées avec des produits et un matériel adaptés aux textiles traités. Un test de tenue de couleur est effectué sur une zone discrète avant tout nettoyage lorsque la matière le justifie.</p>
@@ -1099,13 +1226,9 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 .hero-proof li{display:inline-flex;align-items:center;gap:.4em}
 .hero-proof svg{color:var(--accent-2)}
 .hero-media{margin:0;position:relative}
-.hero-media > img{border-radius:24px;box-shadow:0 25px 60px rgba(11,31,51,.2);aspect-ratio:3/4;object-fit:cover;width:100%}
-.hero-media figcaption{position:absolute;left:1rem;bottom:1rem}
-.badge{display:inline-flex;align-items:center;gap:.5em;background:rgba(11,31,51,.85);color:#fff;padding:.5em .9em;border-radius:999px;font-size:.85rem;font-weight:600;backdrop-filter:blur(6px)}
 @media (max-width:900px){
   .hero{padding:2.2rem 0 2.5rem}
   .hero-grid{grid-template-columns:1fr;gap:2rem}
-  .hero-media > img{aspect-ratio:4/3}
 }
 
 /* sections */
@@ -1144,7 +1267,7 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 @media (max-width:980px){.steps{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){.steps{grid-template-columns:1fr}}
 
-/* compare (avant / après, canapé / voiture) */
+/* curseur avant / après (voitures) */
 .compare{position:relative;aspect-ratio:1;overflow:hidden;border-radius:var(--radius);user-select:none;-webkit-user-select:none;background:var(--bg-alt);touch-action:pan-y;cursor:ew-resize}
 .compare.dragging{cursor:grabbing}
 .compare img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;margin:0;border-radius:0;box-shadow:none;aspect-ratio:auto;pointer-events:none;-webkit-user-drag:none}
@@ -1156,14 +1279,36 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 .cmp-label-l{left:.8rem}.cmp-label-r{right:.8rem}
 .cmp-range{position:absolute;left:0;bottom:0;width:100%;height:2px;margin:0;padding:0;opacity:0;pointer-events:none}
 .cmp-range:focus-visible + .cmp-line,.compare:has(.cmp-range:focus-visible) .cmp-handle{outline:3px solid var(--accent)}
-.hero-media .compare{border-radius:24px;box-shadow:0 25px 60px rgba(11,31,51,.2)}
 .results .result .compare{border-radius:0}
-.card-media .compare{aspect-ratio:4/3;border-radius:0}
 a.card-body{text-decoration:none;color:inherit}
+
+/* boutons avant / après (canapés) */
+.ba{margin:0;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.ba-media{position:relative;aspect-ratio:3/2;background:var(--bg-alt)}
+.ba .ba-img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;transition:opacity .25s}
+.ba.is-apres .ba-avant{opacity:0}
+.ba-tag{position:absolute;top:.8rem;left:.8rem;background:rgba(11,31,51,.8);color:#fff;font-weight:700;font-size:.8rem;padding:.35em .7em;border-radius:999px;letter-spacing:.03em}
+.ba-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem .8rem;padding:.7rem .8rem}
+.ba-titre{color:var(--muted);font-size:.85rem;flex:1 1 11rem}
+.ba-btns{display:inline-flex;gap:.2rem;margin-left:auto;padding:.2rem;border:1px solid var(--line);border-radius:999px;background:#fff}
+.ba-btn{border:0;background:none;font:inherit;font-weight:700;font-size:.85rem;color:var(--ink);padding:.45em 1.1em;min-height:40px;border-radius:999px;cursor:pointer}
+.ba-btn[aria-pressed="true"]{background:var(--navy);color:#fff}
+.ba-btn:focus-visible,.ba-fleche:focus-visible,.mat-tab:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.hero-media .ba{box-shadow:0 25px 60px rgba(11,31,51,.2)}
+.card-media .ba{border:0;border-radius:0}
+.card-media .ba-media{aspect-ratio:4/3}
+.ba-carrousel{margin-bottom:2rem}
+.ba-fleches{display:flex;justify-content:flex-end;gap:.5rem;margin-bottom:.8rem}
+.ba-fleches[hidden]{display:none}
+.ba-fleche{display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);box-shadow:var(--shadow);cursor:pointer}
+.ba-fleche:hover:not(:disabled){border-color:var(--accent)}
+.ba-fleche:disabled{opacity:.4;cursor:default;box-shadow:none}
+.ba-bande{display:flex;gap:1.2rem;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:.8rem;scrollbar-width:thin}
+.ba-bande .ba{flex:none;width:min(520px,84vw);scroll-snap-align:start}
+.service-resultats{margin-top:3rem}
 
 /* results */
 .result{margin:0;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.result > img{aspect-ratio:1;object-fit:cover;width:100%}
 .result figcaption{padding:1rem 1.2rem;color:var(--muted);font-size:.95rem}
 
 /* features */
@@ -1216,11 +1361,48 @@ details p{margin:0 0 1.1rem;color:var(--muted)}
 .page-head{background:linear-gradient(180deg,#fff,var(--bg-alt));padding:3rem 0 2.5rem;border-bottom:1px solid var(--line)}
 .page-head .hero-actions{margin-bottom:0}
 
+/* page Canapé : grande photo */
+.page-hero{position:relative;background:var(--navy);color:#fff;overflow:hidden}
+.page-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.page-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,31,51,.94) 0%,rgba(11,31,51,.82) 45%,rgba(11,31,51,.1) 100%)}
+.page-hero .wrap{position:relative;z-index:1;padding:4.5rem 0}
+.page-hero-texte{max-width:620px}
+.page-hero h1{color:#fff}
+.page-hero .lead{color:#e6eef5}
+.page-hero .eyebrow,.page-hero .eyebrow a{color:var(--accent)}
+.page-hero-prix{font-weight:700;margin:0}
+.page-hero-prix span{white-space:nowrap}
+.page-hero .hero-actions{margin-bottom:0}
+@media (max-width:860px){
+  .page-hero-img{position:static;height:auto;aspect-ratio:2/1}
+  .page-hero::after{display:none}
+  .page-hero .wrap{padding:1.8rem 0 2.2rem}
+}
+
+/* page Canapé : méthode par matière */
+.mat-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem;padding:.3rem;margin-bottom:1.6rem;background:var(--bg-alt);border-radius:var(--radius)}
+.mat-tab{border:0;background:none;font:inherit;font-weight:700;color:var(--ink);padding:.7em .5em;min-height:44px;border-radius:999px;cursor:pointer}
+.mat-tab[aria-selected="true"]{background:var(--navy);color:#fff}
+.mat-etapes{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.mat-etapes.trois{grid-template-columns:repeat(3,1fr)}
+.mat-etapes li{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.mat-etapes img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.mat-texte{padding:1.1rem 1.2rem 1.3rem}
+.mat-texte p{color:var(--muted);font-size:.97rem;margin:0}
+.mat-honnete{margin:1.8rem 0 .4rem;color:var(--ink);font-weight:600}
+@media (max-width:1100px){.mat-etapes,.mat-etapes.trois{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){
+  .mat-tabs{grid-template-columns:repeat(2,1fr)}
+  .mat-etapes,.mat-etapes.trois{grid-template-columns:1fr}
+  .mat-etapes li{display:grid;grid-template-columns:110px 1fr}
+  .mat-etapes img{height:100%;aspect-ratio:auto;object-fit:contain;background:var(--accent-soft)}
+  .mat-texte{padding:.8rem .9rem}
+}
+
 /* services page */
 .service-block{display:grid;grid-template-columns:.9fr 1.1fr;gap:3rem;align-items:center}
 .service-block.reverse .service-media{order:2}
 .service-media img{border-radius:var(--radius);aspect-ratio:1;object-fit:cover;box-shadow:var(--shadow)}
-.service-media img.portrait{aspect-ratio:3/4;width:min(100%,450px);margin-inline:auto}
 .pricelist{list-style:none;padding:0;margin:1.2rem 0}
 .pricelist li{display:grid;grid-template-columns:1fr auto;gap:.5rem 1rem;align-items:center;padding:.9rem 0;border-top:1px solid var(--line)}
 .pricelist li:last-child{border-bottom:1px solid var(--line)}
@@ -1346,6 +1528,38 @@ JS = r'''
   next.addEventListener('click',function(){go(1);});
   b.classList.add('has-arrows');prev.hidden=next.hidden=false;
   if(!still)b.classList.add('is-moving');
+})();
+(function(){
+  document.querySelectorAll('.ba').forEach(function(f){
+    var tag=f.querySelector('.ba-tag'),btns=f.querySelectorAll('.ba-btn');
+    btns.forEach(function(b){b.addEventListener('click',function(){
+      f.classList.toggle('is-apres',b.dataset.ba==='apres');
+      tag.textContent=b.textContent;
+      btns.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+    });});
+  });
+  var still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.ba-carrousel').forEach(function(c){
+    var b=c.querySelector('.ba-bande'),fl=c.querySelector('.ba-fleches'),p=c.querySelector('.ba-prev'),n=c.querySelector('.ba-next');
+    function pas(){return b.children[1].offsetLeft-b.children[0].offsetLeft;}
+    function maj(){p.disabled=b.scrollLeft<=2;n.disabled=b.scrollLeft+b.clientWidth>=b.scrollWidth-2;}
+    p.addEventListener('click',function(){b.scrollBy({left:-pas(),behavior:still?'auto':'smooth'});});
+    n.addEventListener('click',function(){b.scrollBy({left:pas(),behavior:still?'auto':'smooth'});});
+    b.addEventListener('scroll',maj,{passive:true});
+    fl.hidden=false;maj();
+  });
+  document.querySelectorAll('.mat').forEach(function(m){
+    var tabs=[].slice.call(m.querySelectorAll('[role=tab]'));
+    function choisir(t,focus){
+      tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on?'true':'false');x.tabIndex=on?0:-1;document.getElementById(x.getAttribute('aria-controls')).hidden=!on;});
+      if(focus)t.focus();
+    }
+    tabs.forEach(function(t,i){
+      t.addEventListener('click',function(){choisir(t);});
+      t.addEventListener('keydown',function(e){var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){e.preventDefault();choisir(tabs[(i+d+tabs.length)%tabs.length],true);}});
+    });
+    choisir(tabs[0]);
+  });
 })();
 '''
 
