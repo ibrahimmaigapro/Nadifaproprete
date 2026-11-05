@@ -467,7 +467,7 @@ def page_index():
 
 # ---------- SERVICES ----------
 def price_row(name, detail, price, note=""):
-    p = f'<span class="price">{price}</span>' if price else '<span class="price price-quote">Prix fixe sur photo</span>'
+    p = f'<span class="price">{price}</span>'
     return f'<li><div><strong>{name}</strong><span class="muted">{detail}</span></div>{p}{f"<em>{note}</em>" if note else ""}</li>'
 
 def page_services():
@@ -1213,7 +1213,6 @@ details p{margin:0 0 1.1rem;color:var(--muted)}
 .pricelist strong{display:block;color:var(--ink)}
 .pricelist .muted{display:block;font-size:.92rem}
 .price{font-weight:800;color:var(--ink);font-size:1.15rem;white-space:nowrap}
-.price-quote{font-size:.85rem;color:var(--accent-2);background:var(--accent-soft);padding:.35em .7em;border-radius:999px}
 @media (max-width:860px){.service-block{grid-template-columns:1fr;gap:1.6rem}.service-block.reverse .service-media{order:0}}
 
 /* form */
