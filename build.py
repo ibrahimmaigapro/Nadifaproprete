@@ -269,7 +269,7 @@ def cta_band():
 
 SERVICES = [
  ("car","Intérieur de voiture","voiture-207","Aspiration complète, plastiques, sièges et tapis de sol. Formule Basique ou Premium selon l'état.","nettoyage-interieur-voiture-toulouse.html","Intérieur d'une Peugeot 207 après nettoyage par Nadifa Propreté : tableau de bord, siège et moquette"),
- ("sofa","Canapés & fauteuils",("canape-avant","canape-apres",62),"Tissu, microfibre ou velours : taches, auréoles et odeurs traitées en profondeur, sans abîmer les fibres.","nettoyage-canape-toulouse.html",("Accoudoir d'un canapé en tissu gris clair taché, avant nettoyage","Le même accoudoir après nettoyage par Nadifa Propreté : la tache a disparu")),
+ ("sofa","Canapés & fauteuils",("canape-avant","canape-apres",62),"Tissu, microfibre, velours ou cuir : taches, auréoles et odeurs traitées en profondeur, sans abîmer la matière.","nettoyage-canape-toulouse.html",("Accoudoir d'un canapé en tissu gris clair taché, avant nettoyage","Le même accoudoir après nettoyage par Nadifa Propreté : la tache a disparu")),
  ("bed","Matelas","matelas","Poussière, acariens et traces. Un matelas assaini, sec en quelques heures.","nettoyage-matelas-toulouse.html","Illustration : aspirateur sur un matelas blanc"),
  ("rug","Tapis & moquettes","tapis","Tapis nettoyé chez vous, sans l'emporter. Moquettes de chambre, salon ou bureau.","nettoyage-tapis-moquette-toulouse.html","Tapis de salon bleu à médaillon nettoyé à domicile par Nadifa Propreté"),
 ]
@@ -509,7 +509,7 @@ def page_services():
     <div class="service-text">
       <span class="icon">{ICON["sofa"]}</span>
       <h2>Canapés et fauteuils</h2>
-      <p>Tissu, microfibre, velours, lin : pré-traitement des taches, injection-extraction sur l'assise, le dossier et les coussins, puis finition. Sec en 3 h environ.</p>
+      <p>Tissu, microfibre, velours, lin : pré-traitement des taches, injection-extraction sur l'assise, le dossier et les coussins, puis finition. Sec en 3 h environ. Le cuir est aussi pris en charge, au même prix que le tissu.</p>
       <ul class="pricelist">
         {"".join(price_row(*x) for x in PRIX_CANAPE)}
       </ul>
@@ -768,13 +768,13 @@ SVC_PAGES = [
  dict(path="nettoyage-canape-toulouse.html", crumb="Nettoyage de canapé", icon="sofa", img="canape", portrait=True,
       img_alt="Canapé en tissu gris clair nettoyé à domicile par Nadifa Propreté à Toulouse",
       title="Nettoyage canapé à domicile à Toulouse | Nadifa Propreté",
-      desc="Nettoyage de canapé et fauteuil à domicile à Toulouse par injection-extraction : canapé 2 ou 3 places 69 €, 4 ou 5 places ou d'angle 79 €, fauteuil 25 €.",
+      desc="Nettoyage de canapé et fauteuil à domicile à Toulouse, en tissu ou en cuir : canapé 2 ou 3 places 69 €, 4 ou 5 places ou d'angle 79 €, fauteuil 25 €.",
       h1="Nettoyage de canapé à domicile à Toulouse",
-      lead="Tissu, microfibre, velours ou lin : votre canapé est nettoyé en profondeur chez vous, par injection-extraction. Vous envoyez une photo, vous recevez un prix fixe, nous venons sous 48 h.",
+      lead="Tissu, microfibre, velours, lin ou cuir : votre canapé est nettoyé en profondeur chez vous. Vous envoyez une photo, vous recevez un prix fixe, nous venons sous 48 h.",
       stype="Nettoyage de textile d'ameublement", min_price=None,
       intro=["Un canapé en tissu accumule au fil des mois poussière, sueur, traces de boisson et odeurs. Un coup d'aspirateur ne touche que la surface : la saleté reste dans la mousse et dans la fibre.",
              "L'injection-extraction injecte de l'eau et un produit adapté au textile au cœur de la fibre, puis aspire immédiatement le tout avec la saleté dissoute. Le canapé est nettoyé en profondeur, sans être détrempé."],
-      included=["Aspiration de l'assise, du dossier, des accoudoirs et des coussins","Pré-traitement des taches et auréoles","Test de tenue de couleur sur une zone discrète quand la matière le demande","Injection-extraction sur toutes les faces visibles","Finition et remise en place des coussins"],
+      included=["Aspiration de l'assise, du dossier, des accoudoirs et des coussins","Pré-traitement des taches et auréoles","Test de tenue de couleur sur une zone discrète quand la matière le demande","Tissu, microfibre, velours, lin : injection-extraction sur toutes les faces visibles","Finition et remise en place des coussins"],
       prices=PRIX_CANAPE,
       price_note="Devis sur photo : le prix total vous est annoncé avant l'intervention.",
       faq=[("Combien de temps faut-il pour que le canapé sèche ?","Environ 3 heures. L'extraction retire la majeure partie de l'eau ; une pièce aérée accélère encore le séchage."),
