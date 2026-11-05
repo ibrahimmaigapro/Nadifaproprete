@@ -404,7 +404,7 @@ def page_index():
       <div class="feature"><span class="icon">{ICON["spark"]}</span><h3>Injection-extraction professionnelle</h3><p>Une machine professionnelle qui nettoie dans la fibre, pas seulement en surface. Les taches incrustées partent.</p></div>
       <div class="feature"><span class="icon">{ICON["tag"]}</span><h3>Prix fixe annoncé avant</h3><p>Le devis sur photo annonce le prix avant l'intervention. Pas de supplément découvert sur place.</p></div>
       <div class="feature"><span class="icon">{ICON["clock"]}</span><h3>Réactif</h3><p>On vous rappelle rapidement, intervention sous 48 h dans la plupart des cas.</p></div>
-      <div class="feature"><span class="icon">{ICON["pin"]}</span><h3>Local et indépendant</h3><p>Une entreprise née à Toulouse : nous connaissons la ville et nous intervenons chez vous, dans tous les quartiers et les communes proches.</p></div>
+      <div class="feature"><span class="icon">{ICON["pin"]}</span><h3>Proche de chez vous</h3><p>Une entreprise née à Toulouse : nous connaissons la ville et nous intervenons chez vous, dans tous les quartiers et les communes proches.</p></div>
     </div>
   </div>
 </section>
