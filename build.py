@@ -176,18 +176,32 @@ PRIX_VOITURE = [("Formule Basique","Aspiration complète de l'habitacle, dépous
 
 # ---------- Remise multi-prestations ----------
 # Règle de la Finance : −15 % sur le total des prestations dès 2 prestations dans la même intervention, voiture comprise ;
-# le total est arrondi à l'euro du dessous. Les exemples du site sont calculés ici à partir de la grille de prix : ils ne
-# peuvent pas s'en écarter quand un prix change.
-def montant(prix):
-    """« 69 € » ou « À partir de 70 € » -> 69 ou 70."""
-    return int(re.search(r"(\d+) €", prix).group(1))
+# le total est arrondi à l'euro du dessous. Les exemples du site sont calculés ici à partir de la grille de prix et de ce
+# pourcentage : ils ne peuvent pas s'en écarter si un prix ou la remise change.
+REMISE_POURCENT = 15
 
-def remise_exemple(titre, lignes, depart=False):
-    """Une ligne de prix pour la page Services : le total sans remise, puis le total remisé (arrondi à l'euro du dessous)."""
+def montant(prix):
+    """« 69 € » ou « À partir de 70 € » -> 69 ou 70. Une ligne sans montant (« Sur devis », « 8 €/m² ») n'a pas de total."""
+    m = re.fullmatch(r"(?:À partir de )?(\d+) €", prix)
+    if not m:
+        raise ValueError(f"Prix inutilisable pour un exemple de remise : « {prix} »")
+    return int(m.group(1))
+
+def ligne(grille, nom):
+    """La ligne de la grille qui porte ce nom : le site ne se fabrique plus si elle change de nom."""
+    for l in grille:
+        if l[0] == nom:
+            return l
+    raise ValueError(f"Prestation absente de la grille : « {nom} »")
+
+def remise_exemple(titre, lignes):
+    """Une ligne de prix pour la page Services : le total sans remise, puis le total remisé (arrondi à l'euro du dessous).
+    Si une ligne est un prix de départ (« À partir de »), le total l'est aussi."""
     montants = [montant(p) for _, _, p in lignes]
+    depart = any(p.startswith("À partir de") for _, _, p in lignes)
     sans = sum(montants)
-    avec = sans * 85 // 100  # calcul entier : pas d'erreur d'arrondi
-    detail = " + ".join(f"{m} €" for m in montants) + f" = {sans} € sans remise, avec la remise :"
+    avec = sans * (100 - REMISE_POURCENT) // 100  # calcul entier : pas d'erreur d'arrondi
+    detail = " + ".join(f"{m} €" for m in montants) + f" = {sans} € sans remise{' (prix de départ)' if depart else ''}, avec la remise :"
     return price_row(titre, detail, ("À partir de " if depart else "") + f"{avec} €")
 
 def ld_offers(prices, service_type):
@@ -552,12 +566,12 @@ def page_services():
 <section class="section" id="remise">
   <div class="wrap narrow">
     <p class="eyebrow">Remise</p>
-    <h2>−15&nbsp;% dès deux prestations</h2>
-    <p>Quand vous faites nettoyer au moins deux choses lors d'une même intervention (même jour, même adresse), nous retirons 15&nbsp;% du total des prestations, toutes catégories confondues, voiture comprise. Le total est arrondi à l'euro du dessous. Le déplacement, quand il est facturé, n'est pas remisé.</p>
+    <h2>−{REMISE_POURCENT}&nbsp;% dès deux prestations</h2>
+    <p>Dès deux prestations dans la même intervention (même jour, même adresse), nous retirons {REMISE_POURCENT}&nbsp;% du total des prestations. La remise vaut pour toutes les catégories, voiture comprise. Le total est arrondi à l'euro du dessous. Le déplacement, quand il est facturé, n'est pas remisé.</p>
     <ul class="pricelist">
-      {remise_exemple("Canapé 2 ou 3 places + matelas 2 places", [PRIX_CANAPE[0], PRIX_MATELAS[1]])}
-      {remise_exemple("Canapé 2 ou 3 places + fauteuil", [PRIX_CANAPE[0], PRIX_CANAPE[2]])}
-      {remise_exemple("Canapé 2 ou 3 places + voiture Formule Premium (prix de départ)", [PRIX_CANAPE[0], PRIX_VOITURE[1]], depart=True)}
+      {remise_exemple("Canapé 2 ou 3 places + matelas 2 places", [ligne(PRIX_CANAPE, "Canapé 2 ou 3 places"), ligne(PRIX_MATELAS, "Matelas 2 places")])}
+      {remise_exemple("Canapé 2 ou 3 places + fauteuil", [ligne(PRIX_CANAPE, "Canapé 2 ou 3 places"), ligne(PRIX_CANAPE, "Fauteuil")])}
+      {remise_exemple("Canapé 2 ou 3 places + voiture Formule Premium", [ligne(PRIX_CANAPE, "Canapé 2 ou 3 places"), ligne(PRIX_VOITURE, "Formule Premium")])}
     </ul>
     <p class="small muted">Pour la voiture, le prix dépend du véhicule : l'exemple part du prix de départ, et le devis sur photo annonce le prix total avant l'intervention.</p>
   </div>
@@ -875,7 +889,7 @@ def page_service(d):
       <h2>Tarifs</h2>
       <ul class="pricelist">{prices}</ul>
       <p class="small muted">{d["price_note"]}</p>
-      <p class="small muted">Dès deux prestations dans la même intervention, −15&nbsp;% sur le total : <a href="services.html#remise">voir la remise</a>.</p>
+      <p class="small muted">Dès deux prestations dans la même intervention, −{REMISE_POURCENT}&nbsp;% sur le total : <a href="services.html#remise">voir la remise</a>.</p>
     </div>
   </div>
 </section>
