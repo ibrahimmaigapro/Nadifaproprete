@@ -256,7 +256,7 @@ def cta_band():
     return f'''<section class="cta-band">
   <div class="wrap cta-inner">
     <div>
-      <h2>Un devis clair en quelques minutes</h2>
+      <h2>Envoyez une photo, on vous rappelle rapidement</h2>
       <p>Envoyez une photo de votre canapé, matelas, tapis ou véhicule sur WhatsApp : vous recevez le tarif exact avant toute intervention.</p>
     </div>
     <div class="cta-actions">
@@ -359,7 +359,7 @@ def page_index():
       <h2>Comment ça se passe</h2>
     </div>
     <ol class="steps">
-      <li><span class="step-num">1</span><h3>Vous envoyez une photo</h3><p>Sur WhatsApp ou par téléphone, décrivez ce qu'il faut nettoyer. Vous recevez un prix fixe dans la foulée.</p></li>
+      <li><span class="step-num">1</span><h3>Vous envoyez une photo</h3><p>Sur WhatsApp ou par téléphone, décrivez ce qu'il faut nettoyer. On vous rappelle rapidement avec un prix fixe.</p></li>
       <li><span class="step-num">2</span><h3>On fixe un créneau</h3><p>Généralement sous 48 h, tous les jours sauf le vendredi, de 7 h à 22 h 30, à l'heure qui vous arrange.</p></li>
       <li><span class="step-num">3</span><h3>Nettoyage à domicile</h3><p>Pré-traitement des taches, injection-extraction, finitions. Comptez 45 min à 2 h selon la prestation.</p></li>
       <li><span class="step-num">4</span><h3>Vous profitez</h3><p>Le textile est sec en 3 h environ. Vous réglez après l'intervention.</p></li>
@@ -403,7 +403,7 @@ def page_index():
     <div class="grid-2 features">
       <div class="feature"><span class="icon">{ICON["spark"]}</span><h3>Injection-extraction professionnelle</h3><p>Une machine professionnelle qui nettoie dans la fibre, pas seulement en surface. Les taches incrustées partent.</p></div>
       <div class="feature"><span class="icon">{ICON["tag"]}</span><h3>Prix fixe annoncé avant</h3><p>Le devis sur photo annonce le prix avant l'intervention. Pas de supplément découvert sur place.</p></div>
-      <div class="feature"><span class="icon">{ICON["clock"]}</span><h3>Réactif</h3><p>Réponse rapide sur WhatsApp, intervention sous 48 h dans la plupart des cas.</p></div>
+      <div class="feature"><span class="icon">{ICON["clock"]}</span><h3>Réactif</h3><p>On vous rappelle rapidement, intervention sous 48 h dans la plupart des cas.</p></div>
       <div class="feature"><span class="icon">{ICON["pin"]}</span><h3>Local et indépendant</h3><p>Une entreprise née à Toulouse : nous connaissons la ville et nous intervenons chez vous, dans tous les quartiers et les communes proches.</p></div>
     </div>
   </div>
@@ -479,7 +479,7 @@ def page_services():
   <div class="wrap">
     <p class="eyebrow">Services</p>
     <h1>Nos services de nettoyage à domicile à Toulouse</h1>
-    <p class="lead">Envoyez une photo sur WhatsApp, vous recevez le tarif exact en quelques minutes. {DEPLACEMENT_COURT}</p>
+    <p class="lead">Envoyez une photo sur WhatsApp : on vous rappelle rapidement avec le tarif exact. {DEPLACEMENT_COURT}</p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="{WA_DEVIS}" target="_blank" rel="noopener">{ICON["wa"]} Obtenir mon tarif</a>
       <a class="btn btn-ghost" href="reservation.html">Réserver un créneau</a>
@@ -582,7 +582,7 @@ def page_reservation():
   <div class="wrap">
     <p class="eyebrow">Réservation</p>
     <h1>Réserver un nettoyage à domicile à Toulouse</h1>
-    <p class="lead">Remplissez le formulaire : votre demande s'ouvre dans WhatsApp, prête à envoyer. Nous confirmons le tarif et le créneau rapidement. Rien n'est enregistré sur ce site.</p>
+    <p class="lead">Remplissez le formulaire : votre demande s'ouvre dans WhatsApp, prête à envoyer. On vous rappelle rapidement pour confirmer le tarif et le créneau. Rien n'est enregistré sur ce site.</p>
   </div>
 </section>
 
@@ -652,7 +652,7 @@ def page_reservation():
       <div class="aside-card">
         <h2>Vous préférez appeler ?</h2>
         <p><a class="big-link" href="tel:{PHONE_T}">{ICON["phone"]} {PHONE_H}</a></p>
-        <p class="muted">Tous les jours sauf le vendredi, de 7 h à 22 h 30. Si nous sommes en intervention, laissez un message ou écrivez sur WhatsApp : nous rappelons dans la journée.</p>
+        <p class="muted">Tous les jours sauf le vendredi, de 7 h à 22 h 30. Si nous sommes en intervention, laissez un message ou écrivez sur WhatsApp : on vous rappelle rapidement.</p>
       </div>
       <div class="aside-card">
         <h2>Le jour de l'intervention</h2>
@@ -685,7 +685,7 @@ def page_contact():
   <div class="wrap">
     <p class="eyebrow">Contact</p>
     <h1>Contacter Nadifa Propreté à Toulouse</h1>
-    <p class="lead">Le plus rapide : une photo sur WhatsApp. Vous recevez un prix fixe et un créneau dans la journée.</p>
+    <p class="lead">Le plus rapide : une photo sur WhatsApp. On vous rappelle rapidement avec un prix fixe et un créneau.</p>
   </div>
 </section>
 
@@ -695,7 +695,7 @@ def page_contact():
       <span class="icon">{ICON["wa"]}</span>
       <h2>WhatsApp</h2>
       <p class="big">{PHONE_H}</p>
-      <p class="muted">Réponse rapide, photos bienvenues</p>
+      <p class="muted">On vous rappelle rapidement, photos bienvenues</p>
     </a>
     <a class="contact-card" href="tel:{PHONE_T}">
       <span class="icon">{ICON["phone"]}</span>
@@ -884,7 +884,7 @@ def page_service(d):
   <div class="wrap">
     <div class="section-head"><h2>Comment ça se passe</h2></div>
     <ol class="steps">
-      <li><span class="step-num">1</span><h3>Vous envoyez une photo</h3><p>Sur WhatsApp ou par téléphone. Vous recevez un prix fixe dans la foulée.</p></li>
+      <li><span class="step-num">1</span><h3>Vous envoyez une photo</h3><p>Sur WhatsApp ou par téléphone. On vous rappelle rapidement avec un prix fixe.</p></li>
       <li><span class="step-num">2</span><h3>On fixe un créneau</h3><p>Généralement sous 48 h, tous les jours sauf le vendredi, de 7 h à 22 h 30.</p></li>
       <li><span class="step-num">3</span><h3>Nettoyage sur place</h3><p>Chez vous ou là où est garé le véhicule. Il suffit d'une prise électrique.</p></li>
       <li><span class="step-num">4</span><h3>Vous réglez</h3><p>Vous réglez après l'intervention.</p></li>
