@@ -292,7 +292,7 @@ def compare(left, right, alt_left, alt_right, label_left="Avant", label_right="A
 # ---------- INDEX ----------
 def page_index():
     h = head("Nettoyage canapé, matelas, tapis et voiture à Toulouse | Nadifa Propreté",
-             "Nettoyage à domicile de canapés, matelas, tapis et intérieurs de voiture à Toulouse, par injection-extraction. Prix fixe sur photo, intervention sous 48 h.",
+             "Nettoyage à domicile de canapés, matelas, tapis et intérieurs de voiture à Toulouse, par injection-extraction. Devis sur photo, intervention sous 48 h.",
              "index.html", extra=LD_BUSINESS + '<link rel="preload" as="image" href="assets/img/hero-canape-800.webp" imagesrcset="assets/img/hero-canape-480.webp 480w, assets/img/hero-canape-800.webp 800w, assets/img/hero-canape-1400.webp 1400w" imagesizes="(max-width: 900px) 100vw, 45vw">\n<link rel="preload" as="image" href="assets/img/hero-voiture-800.webp" imagesrcset="assets/img/hero-voiture-480.webp 480w, assets/img/hero-voiture-800.webp 800w, assets/img/hero-voiture-1400.webp 1400w" imagesizes="(max-width: 900px) 100vw, 45vw">\n')
     def card(ic, t, img, d, link, alt):
         body = f'''<span class="icon">{ICON[ic]}</span>
@@ -402,7 +402,7 @@ def page_index():
     </div>
     <div class="grid-2 features">
       <div class="feature"><span class="icon">{ICON["spark"]}</span><h3>Injection-extraction professionnelle</h3><p>Une machine professionnelle qui nettoie dans la fibre, pas seulement en surface. Les taches incrustées partent.</p></div>
-      <div class="feature"><span class="icon">{ICON["tag"]}</span><h3>Prix fixe annoncé avant</h3><p>Le tarif est donné sur photo, avant l'intervention. Pas de supplément découvert sur place.</p></div>
+      <div class="feature"><span class="icon">{ICON["tag"]}</span><h3>Prix fixe annoncé avant</h3><p>Le devis sur photo annonce le prix avant l'intervention. Pas de supplément découvert sur place.</p></div>
       <div class="feature"><span class="icon">{ICON["clock"]}</span><h3>Réactif</h3><p>Réponse rapide sur WhatsApp, intervention sous 48 h dans la plupart des cas.</p></div>
       <div class="feature"><span class="icon">{ICON["pin"]}</span><h3>Local et indépendant</h3><p>Une entreprise née à Toulouse : nous connaissons la ville et nous intervenons chez vous, dans tous les quartiers et les communes proches.</p></div>
     </div>
@@ -472,7 +472,7 @@ def price_row(name, detail, price, note=""):
 
 def page_services():
     h = head("Services : voiture, canapé, matelas, tapis à Toulouse | Nadifa Propreté",
-             "Nettoyage à domicile à Toulouse : intérieur de voiture dès 50 €, canapés, fauteuils, matelas, tapis et moquettes. Prix fixe annoncé sur photo.",
+             "Nettoyage à domicile à Toulouse : intérieur de voiture dès 50 €, canapés, fauteuils, matelas, tapis et moquettes. Devis sur photo avant l'intervention.",
              "services.html", extra=breadcrumb("Services","services.html"))
     body = f'''
 <section class="page-head">
@@ -497,7 +497,7 @@ def page_services():
       <ul class="pricelist">
         {"".join(price_row(*x) for x in PRIX_VOITURE)}
       </ul>
-      <p class="small muted">Le tarif dépend de la taille du véhicule (citadine, berline, SUV, utilitaire) et de son état. Il est fixé sur photo avant l'intervention.</p>
+      <p class="small muted">Le tarif dépend de la taille du véhicule (citadine, berline, SUV, utilitaire) et de son état. Devis sur photo : le prix total vous est annoncé avant l'intervention.</p>
       <p><a class="link-more" href="nettoyage-interieur-voiture-toulouse.html">Tout savoir sur cette prestation</a></p>
     </div>
   </div>
@@ -814,7 +814,7 @@ SVC_PAGES = [
  dict(path="nettoyage-interieur-voiture-toulouse.html", crumb="Nettoyage intérieur de voiture", icon="car", img="voiture-207",
       img_alt="Intérieur d'une Peugeot 207 après nettoyage par Nadifa Propreté à Toulouse : tableau de bord, siège et moquette",
       title="Nettoyage intérieur voiture à Toulouse dès 50 € | Nadifa Propreté",
-      desc="Nettoyage intérieur de voiture à Toulouse, chez vous ou au travail : Formule Basique dès 50 €, Premium avec shampoing des sièges dès 70 €. Prix fixe sur photo.",
+      desc="Nettoyage intérieur de voiture à Toulouse, chez vous ou au travail : Formule Basique dès 50 €, Premium avec shampoing des sièges dès 70 €. Devis sur photo.",
       h1="Nettoyage intérieur de voiture à Toulouse",
       lead="Voiture personnelle, utilitaire qui tourne sur les chantiers, véhicule de famille : nous nettoyons l'habitacle sur votre parking, chez vous ou au travail. Formule Basique dès 50 €, Premium dès 70 €.",
       stype="Nettoyage automobile intérieur", min_price="50",
@@ -822,7 +822,7 @@ SVC_PAGES = [
              "Nous venons avec le matériel : aspirateur professionnel, produits pour plastiques et machine d'injection-extraction pour les sièges et moquettes. Vous n'avez pas à vous déplacer en station."],
       included=["Aspiration complète de l'habitacle et du coffre","Dépoussiérage des plastiques, du tableau de bord, de la console et des aérateurs","Nettoyage des tapis de sol","Formule Premium : shampoing des sièges, tapis et moquettes par injection-extraction"],
       prices=PRIX_VOITURE,
-      price_note="Le tarif dépend de la taille du véhicule (citadine, berline, SUV, utilitaire) et de son état. Il est fixé sur photo avant l'intervention.",
+      price_note="Le tarif dépend de la taille du véhicule (citadine, berline, SUV, utilitaire) et de son état. Devis sur photo : le prix total vous est annoncé avant l'intervention.",
       faq=[("Où se fait le nettoyage ?","Là où la voiture est garée : devant chez vous, sur votre lieu de travail ou sur un parking, à Toulouse et dans les communes proches."),
            ("Combien de temps ça prend ?","Entre 45 minutes et 2 heures selon la formule, la taille du véhicule et son état."),
            ("Nettoyez-vous les véhicules professionnels ?","Oui : utilitaires d'artisans, VTC, véhicules de société. Pour un entretien régulier de plusieurs véhicules, écrivez-nous pour un tarif adapté."),
