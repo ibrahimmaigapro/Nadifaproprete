@@ -287,22 +287,21 @@ SERVICES = [
  ("rug","Tapis & moquettes","tapis","Tapis nettoyé chez vous, sans l'emporter. Moquettes de chambre, salon ou bureau.","nettoyage-tapis-moquette-toulouse.html","Tapis de salon bleu à médaillon nettoyé à domicile par Nadifa Propreté"),
 ]
 
-def compare(left, right, alt_left, alt_right, label_left="Avant", label_right="Après", sizes="(max-width: 760px) 100vw, 50vw", eager=False, w=1400, h=1400, start=50):
-    """Deux images superposées, une poignée à glisser : à gauche `left`, à droite `right`. `start` : position de départ du trait, en %."""
-    load = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
+def compare(left, right, alt_left, alt_right, sizes="(max-width: 760px) 100vw, 50vw", w=1400, h=1400):
+    """Voitures : deux images superposées, une poignée à glisser, à gauche `left` (avant), à droite `right` (après)."""
     def img(name, alt, cls):
         return (f'<img class="{cls}" src="assets/img/{name}-800.webp" '
                 f'srcset="assets/img/{name}-480.webp 480w, assets/img/{name}-800.webp 800w, assets/img/{name}-1400.webp 1400w" '
-                f'sizes="{sizes}" width="{w}" height="{h}" alt="{html.escape(alt)}" {load} draggable="false">')
-    return f'''<div class="compare" style="--pos:{start}%" data-start="{start}">
+                f'sizes="{sizes}" width="{w}" height="{h}" alt="{html.escape(alt)}" loading="lazy" decoding="async" draggable="false">')
+    return f'''<div class="compare" style="--pos:50%" data-start="50">
         {img(right, alt_right, "cmp-right")}
         {img(left, alt_left, "cmp-left")}
-        <span class="cmp-label cmp-label-l">{label_left}</span><span class="cmp-label cmp-label-r">{label_right}</span>
+        <span class="cmp-label cmp-label-l">Avant</span><span class="cmp-label cmp-label-r">Après</span>
         <div class="cmp-line" aria-hidden="true"><span class="cmp-handle"><svg viewBox="0 0 24 24"><path d="M9 6l-5 6 5 6M15 6l5 6-5 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-        <input class="cmp-range" type="range" min="0" max="100" value="{start}" aria-label="Faire glisser pour comparer : {html.escape(label_left)} / {html.escape(label_right)}">
+        <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Faire glisser pour comparer : Avant / Après">
       </div>'''
 
-def avant_apres(avant, apres, alt_avant, alt_apres, titre="", sizes="(max-width: 760px) 84vw, 520px", eager=False, w=1400, h=933):
+def avant_apres(avant, apres, alt_avant, alt_apres, titre="", sizes="min(520px, 84vw)", eager=False, w=1400, h=933):
     """Canapés : deux photos superposées, deux boutons. Départ sur « Avant ». Marche même si les deux photos n'ont pas le même cadrage."""
     titre_html = f'<span class="ba-titre">{titre}</span>' if titre else ""
     return f'''<figure class="ba">
@@ -314,19 +313,19 @@ def avant_apres(avant, apres, alt_avant, alt_apres, titre="", sizes="(max-width:
         <figcaption class="ba-bar">{titre_html}<span class="ba-btns" role="group" aria-label="Voir la photo avant ou après le nettoyage"><button type="button" class="ba-btn" data-ba="avant" aria-pressed="true">Avant</button><button type="button" class="ba-btn" data-ba="apres" aria-pressed="false">Après</button></span></figcaption>
       </figure>'''
 
-# Résultats canapés : (photo avant, photo après, intitulé, texte de la photo avant, texte de la photo après).
+# Résultats canapés, dans l'ordre des paramètres de avant_apres() : (photo avant, photo après, texte de la photo avant, texte de la photo après, intitulé).
 # Une photo présentée ici est une vraie photo d'une intervention Nadifa, avec l'accord du client.
 RESULTATS_CANAPE = [
- ("canape-velours-avant","canape-velours-apres","Canapé velours côtelé · vue d'ensemble","Canapé en velours côtelé beige avant nettoyage : traces sombres sur les assises, le dossier et le devant","Le même canapé en velours côtelé après nettoyage par Nadifa Propreté à Toulouse"),
- ("canape-velours-assise-avant","canape-velours-assise-apres","Canapé velours côtelé · assise","Assise d'un canapé en velours côtelé avant nettoyage : auréoles et traces sombres","Assise du même canapé après nettoyage par Nadifa Propreté"),
- ("canape-angle-meridienne-avant","canape-angle-meridienne-apres","Canapé d'angle gris · méridienne","Méridienne d'un canapé d'angle gris avant nettoyage : grandes auréoles sur le tissu","La même méridienne après nettoyage par Nadifa Propreté"),
- ("canape-angle-assise-avant","canape-angle-assise-apres","Canapé d'angle gris · assise","Assise d'un canapé d'angle gris avant nettoyage : auréoles sur le tissu","Assise du même canapé d'angle après nettoyage par Nadifa Propreté"),
- ("canape-boudins-avant","canape-boudins-apres","Canapé gris à boudins · vue d'ensemble","Canapé gris à boudins avant nettoyage : assises ternies et marquées","Le même canapé à boudins après nettoyage par Nadifa Propreté"),
- ("canape-avant","canape-apres","Canapé gris clair · tache sur l'accoudoir","Accoudoir d'un canapé en tissu gris clair taché, avant nettoyage","Le même accoudoir après nettoyage par Nadifa Propreté : la tache a disparu"),
+ ("canape-velours-avant","canape-velours-apres","Canapé en velours côtelé beige avant nettoyage : traces sombres sur les assises, le dossier et le devant","Le même canapé en velours côtelé après nettoyage par Nadifa Propreté à Toulouse","Canapé velours côtelé · vue d'ensemble"),
+ ("canape-velours-assise-avant","canape-velours-assise-apres","Assise d'un canapé en velours côtelé avant nettoyage : auréoles et traces sombres","Assise du même canapé après nettoyage par Nadifa Propreté","Canapé velours côtelé · assise"),
+ ("canape-angle-meridienne-avant","canape-angle-meridienne-apres","Méridienne d'un canapé d'angle gris avant nettoyage : grandes auréoles sur le tissu","La même méridienne après nettoyage par Nadifa Propreté","Canapé d'angle gris · méridienne"),
+ ("canape-angle-assise-avant","canape-angle-assise-apres","Assise d'un canapé d'angle gris avant nettoyage : auréoles sur le tissu","Assise du même canapé d'angle après nettoyage par Nadifa Propreté","Canapé d'angle gris · assise"),
+ ("canape-boudins-avant","canape-boudins-apres","Canapé gris à boudins avant nettoyage : assises ternies et marquées","Le même canapé à boudins après nettoyage par Nadifa Propreté","Canapé gris à boudins · vue d'ensemble"),
+ ("canape-avant","canape-apres","Accoudoir d'un canapé en tissu gris clair taché, avant nettoyage","Le même accoudoir après nettoyage par Nadifa Propreté : la tache a disparu","Canapé gris clair · tache sur l'accoudoir"),
 ]
 
-def carrousel():
-    cartes = "".join(avant_apres(a, b, alt_a, alt_b, titre) for a, b, titre, alt_a, alt_b in RESULTATS_CANAPE)
+def carrousel_canapes():
+    cartes = "".join(avant_apres(*resultat) for resultat in RESULTATS_CANAPE)
     return f'''<div class="ba-carrousel">
       <div class="ba-fleches" hidden>
         <button type="button" class="ba-fleche ba-prev" aria-label="Résultat précédent">{ICON["prev"]}</button>
@@ -379,7 +378,7 @@ def page_index():
       </ul>
     </div>
     <div class="hero-media">
-      {avant_apres(RESULTATS_CANAPE[0][0], RESULTATS_CANAPE[0][1], RESULTATS_CANAPE[0][3], RESULTATS_CANAPE[0][4], RESULTATS_CANAPE[0][2], sizes="(max-width: 900px) 100vw, 45vw", eager=True)}
+      {avant_apres(*RESULTATS_CANAPE[0], sizes="(max-width: 900px) 100vw, 45vw", eager=True)}
     </div>
   </div>
 </section>
@@ -416,9 +415,8 @@ def page_index():
     <div class="section-head">
       <p class="eyebrow">Avant / après</p>
       <h2>Des résultats visibles, pas des promesses</h2>
-      <p class="muted">Choisissez « Avant » ou « Après » sous chaque canapé pour comparer.</p>
     </div>
-    {carrousel()}
+    {carrousel_canapes()}
     <div class="grid-2 results">
       <figure class="result">
         {compare("yaris-avant", "yaris-apres", "Toyota Yaris avant nettoyage : tableau de bord poussiéreux, tapis de sol pleins de débris", "Toyota Yaris après nettoyage par Nadifa Propreté : console, plastiques et moquettes propres")}
@@ -556,7 +554,7 @@ def page_services():
   </div>
   <div class="wrap service-resultats">
     <h3>Nos résultats sur des canapés</h3>
-    {carrousel()}
+    {carrousel_canapes()}
   </div>
 </section>
 
@@ -808,9 +806,10 @@ def ld_service(name, service_type, desc, path, min_price=None, offers=None):
 
 # Méthode de la page Canapé : (identifiant, bouton, [(image, titre, texte), …]).
 # Ce sont les gestes réels de Nadifa, écrits avec nos mots. Les images sont des illustrations, jamais présentées comme un résultat.
-ILLUSTRATION = {
+ALT_ILLUSTRATIONS = {
  "etape-injection":"Illustration : main gantée qui injecte une solution sur l'assise d'un canapé en tissu",
  "etape-brossage":"Illustration : main gantée qui brosse l'assise d'un canapé en tissu avec une brosse souple sur perceuse",
+ "etape-brossage-main":"Illustration : main gantée qui brosse l'assise d'un canapé en velours avec une brosse à main",
  "etape-vapeur":"Illustration : main gantée qui passe de la vapeur sur l'assise d'un canapé en tissu",
  "etape-extraction":"Illustration : main gantée qui aspire l'eau de l'assise d'un canapé en tissu",
  "etape-cuir-examen":"Illustration : main gantée qui teste un produit sur le coin d'un accoudoir en cuir",
@@ -832,7 +831,7 @@ MATIERES = [
  ]),
  ("velours","Velours",[
    ("etape-injection","Injection","Le velours passe à la machine seulement si le tissu et son support le permettent. Sinon, le travail se fait à la main."),
-   ("etape-brossage","Brossage","Le brossage reste à la main, avec une brosse souple, toujours dans le sens du poil."),
+   ("etape-brossage-main","Brossage","Le brossage reste à la main, avec une brosse souple, toujours dans le sens du poil."),
    ("etape-vapeur","Vapeur","Nous l'utilisons uniquement si le velours et les colles la supportent. Sinon, nous passons cette étape."),
    ("etape-extraction","Extraction","L'humidité est retirée, le poil est replacé, puis nous regardons le canapé sous plusieurs angles pour repérer les traces."),
  ]),
@@ -847,7 +846,7 @@ def bloc_methode(matieres):
     onglets, panneaux = "", ""
     for i, (mid, label, etapes) in enumerate(matieres):
         onglets += f'<button type="button" role="tab" class="mat-tab" id="tab-{mid}" aria-controls="mat-{mid}" aria-selected="{"true" if i == 0 else "false"}">{label}</button>'
-        cartes = "".join(f'''<li>{picture(img, ILLUSTRATION[img], sizes="(max-width: 560px) 110px, (max-width: 1100px) 45vw, 25vw", w=1400, h=1046)}
+        cartes = "".join(f'''<li>{picture(img, ALT_ILLUSTRATIONS[img], sizes="(max-width: 560px) 110px, (max-width: 1100px) 45vw, 25vw", w=1400, h=1046)}
           <div class="mat-texte"><span class="step-num">{n}</span><h3>{titre}</h3><p>{texte}</p></div></li>''' for n, (img, titre, texte) in enumerate(etapes, 1))
         trois = " trois" if len(etapes) == 3 else ""
         panneaux += f'<div class="mat-panel" id="mat-{mid}" role="tabpanel" aria-labelledby="tab-{mid}" tabindex="0"><ol class="mat-etapes{trois}">{cartes}</ol></div>'
@@ -863,7 +862,7 @@ def bloc_methode(matieres):
       <div class="mat-tabs" role="tablist" aria-label="Choisir la matière du canapé">{onglets}</div>
       {panneaux}
     </div>
-    <p class="mat-honnete">Un travail soigné et un avis franc : certaines taches anciennes ou certaines teintures peuvent rester atténuées, et un nettoyage ne répare ni l'usure, ni une brûlure, ni une décoloration.</p>
+    <p class="mat-honnete">Un travail soigné et un avis franc : nous ne garantissons pas la disparition de toutes les taches. Certaines taches anciennes ou certaines teintures peuvent rester atténuées, et un nettoyage ne répare ni l'usure, ni une brûlure, ni une décoloration.</p>
     <p class="small muted">Images d'illustration créées par IA : elles montrent le geste, pas un résultat.</p>
   </div>
 </section>
@@ -951,18 +950,18 @@ def page_service(d):
       <a class="btn btn-primary" href="{WA_DEVIS}" target="_blank" rel="noopener">{ICON["wa"]} Obtenir mon prix sur WhatsApp</a>
       <a class="btn btn-ghost" href="tel:{PHONE_T}">{ICON["phone"]} {PHONE_H}</a>
     </div>'''
-    fil = f'<p class="eyebrow"><a href="services.html">Services</a> · {d["crumb"]}</p>'
+    fil_ariane = f'<p class="eyebrow"><a href="services.html">Services</a> · {d["crumb"]}</p>'
     if "matieres" in d:  # page Canapé : grande photo, résultats et méthode par matière
-        grille = " · ".join(f"<span>{nom}&nbsp;: {prix}</span>" for nom, _, prix in d["prices"])
-        tete = f'''
+        grille_prix = " · ".join(f"<span>{nom}&nbsp;: {prix}</span>" for nom, _, prix in d["prices"])
+        haut_de_page = f'''
 <section class="page-hero">
   {picture(d["hero_img"], d["hero_alt"], sizes="100vw", cls="page-hero-img", eager=True, w=1400, h=700)}
   <div class="wrap">
     <div class="page-hero-texte">
-      {fil}
+      {fil_ariane}
       <h1>{d["h1"]}</h1>
       <p class="lead">{d["lead"]}</p>
-      <p class="page-hero-prix">{grille}</p>
+      <p class="page-hero-prix">{grille_prix}</p>
       {actions}
     </div>
   </div>
@@ -973,19 +972,18 @@ def page_service(d):
     <div class="section-head">
       <p class="eyebrow">Avant / après</p>
       <h2>Nos résultats sur des canapés</h2>
-      <p class="muted">Choisissez « Avant » ou « Après » sous chaque canapé pour comparer.</p>
     </div>
-    {carrousel()}
+    {carrousel_canapes()}
   </div>
 </section>
 '''
         methode = bloc_methode(d["matieres"])
-        fond = "section section-alt"
+        fond_pourquoi = "section section-alt"
     else:
-        tete = f'''
+        haut_de_page = f'''
 <section class="page-head">
   <div class="wrap">
-    {fil}
+    {fil_ariane}
     <h1>{d["h1"]}</h1>
     <p class="lead">{d["lead"]}</p>
     {actions}
@@ -993,9 +991,9 @@ def page_service(d):
 </section>
 '''
         methode = ""
-        fond = "section"
-    body = f'''{tete}
-<section class="{fond}">
+        fond_pourquoi = "section"
+    body = f'''{haut_de_page}
+<section class="{fond_pourquoi}">
   <div class="wrap service-block">
     <div class="service-media">{picture(d["img"], d["img_alt"], sizes="(max-width: 900px) 100vw, 40vw", w=1024, h=1024)}</div>
     <div class="service-text">
@@ -1151,7 +1149,7 @@ CSS = r'''
 :root{
   --navy:#0b1f33; --navy-2:#122b45; --ink:#13202e; --text:#2b3a4a; --muted:#5f6f80;
   --accent:#0cc0df; --accent-2:#089fb9; --accent-soft:#e3f8fc; --bg:#ffffff; --bg-alt:#f3f8fb;
-  --line:#e2e9ef; --radius:16px; --shadow:0 10px 30px rgba(11,31,51,.08);
+  --line:#e2e9ef; --navy-rgb:11,31,51; --radius:16px; --shadow:0 10px 30px rgba(11,31,51,.08);
   --font:"Inter","Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 *{box-sizing:border-box}
@@ -1283,24 +1281,24 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 a.card-body{text-decoration:none;color:inherit}
 
 /* boutons avant / après (canapés) */
-.ba{margin:0;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.ba{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
 .ba-media{position:relative;aspect-ratio:3/2;background:var(--bg-alt)}
 .ba .ba-img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;transition:opacity .25s}
 .ba.is-apres .ba-avant{opacity:0}
-.ba-tag{position:absolute;top:.8rem;left:.8rem;background:rgba(11,31,51,.8);color:#fff;font-weight:700;font-size:.8rem;padding:.35em .7em;border-radius:999px;letter-spacing:.03em}
+.ba-tag{position:absolute;top:.8rem;left:.8rem;background:rgba(var(--navy-rgb),.8);color:var(--bg);font-weight:700;font-size:.8rem;padding:.35em .7em;border-radius:999px;letter-spacing:.03em}
 .ba-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem .8rem;padding:.7rem .8rem}
 .ba-titre{color:var(--muted);font-size:.85rem;flex:1 1 11rem}
-.ba-btns{display:inline-flex;gap:.2rem;margin-left:auto;padding:.2rem;border:1px solid var(--line);border-radius:999px;background:#fff}
+.ba-btns{display:inline-flex;gap:.2rem;margin-left:auto;padding:.2rem;border:1px solid var(--line);border-radius:999px;background:var(--bg)}
 .ba-btn{border:0;background:none;font:inherit;font-weight:700;font-size:.85rem;color:var(--ink);padding:.45em 1.1em;min-height:40px;border-radius:999px;cursor:pointer}
-.ba-btn[aria-pressed="true"]{background:var(--navy);color:#fff}
+.ba-btn[aria-pressed="true"]{background:var(--navy);color:var(--bg)}
 .ba-btn:focus-visible,.ba-fleche:focus-visible,.mat-tab:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.hero-media .ba{box-shadow:0 25px 60px rgba(11,31,51,.2)}
+.hero-media .ba{box-shadow:0 25px 60px rgba(var(--navy-rgb),.2)}
 .card-media .ba{border:0;border-radius:0}
 .card-media .ba-media{aspect-ratio:4/3}
 .ba-carrousel{margin-bottom:2rem}
 .ba-fleches{display:flex;justify-content:flex-end;gap:.5rem;margin-bottom:.8rem}
 .ba-fleches[hidden]{display:none}
-.ba-fleche{display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);box-shadow:var(--shadow);cursor:pointer}
+.ba-fleche{display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);box-shadow:var(--shadow);cursor:pointer}
 .ba-fleche:hover:not(:disabled){border-color:var(--accent)}
 .ba-fleche:disabled{opacity:.4;cursor:default;box-shadow:none}
 .ba-bande{display:flex;gap:1.2rem;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:.8rem;scrollbar-width:thin}
@@ -1362,13 +1360,13 @@ details p{margin:0 0 1.1rem;color:var(--muted)}
 .page-head .hero-actions{margin-bottom:0}
 
 /* page Canapé : grande photo */
-.page-hero{position:relative;background:var(--navy);color:#fff;overflow:hidden}
+.page-hero{position:relative;background:var(--navy);color:var(--bg);overflow:hidden}
 .page-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.page-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,31,51,.94) 0%,rgba(11,31,51,.82) 45%,rgba(11,31,51,.1) 100%)}
+.page-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(var(--navy-rgb),.94) 0%,rgba(var(--navy-rgb),.82) 45%,rgba(var(--navy-rgb),.1) 100%)}
 .page-hero .wrap{position:relative;z-index:1;padding:4.5rem 0}
 .page-hero-texte{max-width:620px}
-.page-hero h1{color:#fff}
-.page-hero .lead{color:#e6eef5}
+.page-hero h1{color:var(--bg)}
+.page-hero .lead{color:var(--bg)}
 .page-hero .eyebrow,.page-hero .eyebrow a{color:var(--accent)}
 .page-hero-prix{font-weight:700;margin:0}
 .page-hero-prix span{white-space:nowrap}
@@ -1382,13 +1380,13 @@ details p{margin:0 0 1.1rem;color:var(--muted)}
 /* page Canapé : méthode par matière */
 .mat-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem;padding:.3rem;margin-bottom:1.6rem;background:var(--bg-alt);border-radius:var(--radius)}
 .mat-tab{border:0;background:none;font:inherit;font-weight:700;color:var(--ink);padding:.7em .5em;min-height:44px;border-radius:999px;cursor:pointer}
-.mat-tab[aria-selected="true"]{background:var(--navy);color:#fff}
+.mat-tab[aria-selected="true"]{background:var(--navy);color:var(--bg)}
 .mat-etapes{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
 .mat-etapes.trois{grid-template-columns:repeat(3,1fr)}
-.mat-etapes li{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.mat-etapes li{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
 .mat-etapes img{width:100%;aspect-ratio:4/3;object-fit:cover}
 .mat-texte{padding:1.1rem 1.2rem 1.3rem}
-.mat-texte p{color:var(--muted);font-size:.97rem;margin:0}
+.mat-texte p{color:var(--muted);margin:0}
 .mat-honnete{margin:1.8rem 0 .4rem;color:var(--ink);font-weight:600}
 @media (max-width:1100px){.mat-etapes,.mat-etapes.trois{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){

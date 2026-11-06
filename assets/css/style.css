@@ -1,7 +1,7 @@
 :root{
   --navy:#0b1f33; --navy-2:#122b45; --ink:#13202e; --text:#2b3a4a; --muted:#5f6f80;
   --accent:#0cc0df; --accent-2:#089fb9; --accent-soft:#e3f8fc; --bg:#ffffff; --bg-alt:#f3f8fb;
-  --line:#e2e9ef; --radius:16px; --shadow:0 10px 30px rgba(11,31,51,.08);
+  --line:#e2e9ef; --navy-rgb:11,31,51; --radius:16px; --shadow:0 10px 30px rgba(11,31,51,.08);
   --font:"Inter","Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 *{box-sizing:border-box}
@@ -133,24 +133,24 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 a.card-body{text-decoration:none;color:inherit}
 
 /* boutons avant / après (canapés) */
-.ba{margin:0;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.ba{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
 .ba-media{position:relative;aspect-ratio:3/2;background:var(--bg-alt)}
 .ba .ba-img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;transition:opacity .25s}
 .ba.is-apres .ba-avant{opacity:0}
-.ba-tag{position:absolute;top:.8rem;left:.8rem;background:rgba(11,31,51,.8);color:#fff;font-weight:700;font-size:.8rem;padding:.35em .7em;border-radius:999px;letter-spacing:.03em}
+.ba-tag{position:absolute;top:.8rem;left:.8rem;background:rgba(var(--navy-rgb),.8);color:var(--bg);font-weight:700;font-size:.8rem;padding:.35em .7em;border-radius:999px;letter-spacing:.03em}
 .ba-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem .8rem;padding:.7rem .8rem}
 .ba-titre{color:var(--muted);font-size:.85rem;flex:1 1 11rem}
-.ba-btns{display:inline-flex;gap:.2rem;margin-left:auto;padding:.2rem;border:1px solid var(--line);border-radius:999px;background:#fff}
+.ba-btns{display:inline-flex;gap:.2rem;margin-left:auto;padding:.2rem;border:1px solid var(--line);border-radius:999px;background:var(--bg)}
 .ba-btn{border:0;background:none;font:inherit;font-weight:700;font-size:.85rem;color:var(--ink);padding:.45em 1.1em;min-height:40px;border-radius:999px;cursor:pointer}
-.ba-btn[aria-pressed="true"]{background:var(--navy);color:#fff}
+.ba-btn[aria-pressed="true"]{background:var(--navy);color:var(--bg)}
 .ba-btn:focus-visible,.ba-fleche:focus-visible,.mat-tab:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.hero-media .ba{box-shadow:0 25px 60px rgba(11,31,51,.2)}
+.hero-media .ba{box-shadow:0 25px 60px rgba(var(--navy-rgb),.2)}
 .card-media .ba{border:0;border-radius:0}
 .card-media .ba-media{aspect-ratio:4/3}
 .ba-carrousel{margin-bottom:2rem}
 .ba-fleches{display:flex;justify-content:flex-end;gap:.5rem;margin-bottom:.8rem}
 .ba-fleches[hidden]{display:none}
-.ba-fleche{display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);box-shadow:var(--shadow);cursor:pointer}
+.ba-fleche{display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);box-shadow:var(--shadow);cursor:pointer}
 .ba-fleche:hover:not(:disabled){border-color:var(--accent)}
 .ba-fleche:disabled{opacity:.4;cursor:default;box-shadow:none}
 .ba-bande{display:flex;gap:1.2rem;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:.8rem;scrollbar-width:thin}
@@ -212,13 +212,13 @@ details p{margin:0 0 1.1rem;color:var(--muted)}
 .page-head .hero-actions{margin-bottom:0}
 
 /* page Canapé : grande photo */
-.page-hero{position:relative;background:var(--navy);color:#fff;overflow:hidden}
+.page-hero{position:relative;background:var(--navy);color:var(--bg);overflow:hidden}
 .page-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.page-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,31,51,.94) 0%,rgba(11,31,51,.82) 45%,rgba(11,31,51,.1) 100%)}
+.page-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(var(--navy-rgb),.94) 0%,rgba(var(--navy-rgb),.82) 45%,rgba(var(--navy-rgb),.1) 100%)}
 .page-hero .wrap{position:relative;z-index:1;padding:4.5rem 0}
 .page-hero-texte{max-width:620px}
-.page-hero h1{color:#fff}
-.page-hero .lead{color:#e6eef5}
+.page-hero h1{color:var(--bg)}
+.page-hero .lead{color:var(--bg)}
 .page-hero .eyebrow,.page-hero .eyebrow a{color:var(--accent)}
 .page-hero-prix{font-weight:700;margin:0}
 .page-hero-prix span{white-space:nowrap}
@@ -232,13 +232,13 @@ details p{margin:0 0 1.1rem;color:var(--muted)}
 /* page Canapé : méthode par matière */
 .mat-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem;padding:.3rem;margin-bottom:1.6rem;background:var(--bg-alt);border-radius:var(--radius)}
 .mat-tab{border:0;background:none;font:inherit;font-weight:700;color:var(--ink);padding:.7em .5em;min-height:44px;border-radius:999px;cursor:pointer}
-.mat-tab[aria-selected="true"]{background:var(--navy);color:#fff}
+.mat-tab[aria-selected="true"]{background:var(--navy);color:var(--bg)}
 .mat-etapes{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
 .mat-etapes.trois{grid-template-columns:repeat(3,1fr)}
-.mat-etapes li{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.mat-etapes li{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
 .mat-etapes img{width:100%;aspect-ratio:4/3;object-fit:cover}
 .mat-texte{padding:1.1rem 1.2rem 1.3rem}
-.mat-texte p{color:var(--muted);font-size:.97rem;margin:0}
+.mat-texte p{color:var(--muted);margin:0}
 .mat-honnete{margin:1.8rem 0 .4rem;color:var(--ink);font-weight:600}
 @media (max-width:1100px){.mat-etapes,.mat-etapes.trois{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){
