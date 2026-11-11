@@ -160,7 +160,7 @@ def footer():
 # ---------- Grille de prix ----------
 # Une liste par catégorie : (prestation, détail, prix). Reprise telle quelle sur la page Services, sur la page
 # de la catégorie et dans les informations lues par Google : un prix s'écrit ici, et dans la description Google de la page.
-PRIX_CANAPE = [("Canapé 2 ou 3 places","Assise, dossier, accoudoirs et coussins. Tissu ou cuir.","69 €"),
+PRIX_CANAPE = [("Canapé 2 ou 3 places","Assise, dossier et accoudoirs. Tissu ou cuir.","69 €"),
                ("Canapé 4 ou 5 places ou d'angle","Méridienne comprise. Tissu ou cuir.","79 €"),
                ("Fauteuil","Fauteuil de salon, chaise en tissu, tête de lit.","25 €")]
 PRIX_MATELAS = [("Matelas 1 place","Une face.","45 €"),
@@ -545,7 +545,7 @@ def page_services():
     <div class="service-text">
       <span class="icon">{ICON["sofa"]}</span>
       <h2>Canapés et fauteuils</h2>
-      <p>Tissu, microfibre, velours, lin : pré-traitement des taches, injection-extraction sur l'assise, le dossier et les coussins, puis finition. Sec en quelques heures. Le cuir est aussi pris en charge, au même prix que le tissu.</p>
+      <p>Tissu, microfibre, velours, lin : pré-traitement des taches, injection-extraction sur l'assise, le dossier et les accoudoirs, puis finition. Sec en quelques heures. Le cuir est aussi pris en charge, au même prix que le tissu.</p>
       <ul class="pricelist">
         {"".join(price_row(*x) for x in PRIX_CANAPE)}
       </ul>
@@ -879,7 +879,7 @@ SVC_PAGES = [
       stype="Nettoyage de textile d'ameublement", min_price=None,
       intro=["Un canapé en tissu accumule au fil des mois poussière, sueur, traces de boisson et odeurs. Un coup d'aspirateur ne touche que la surface : la saleté reste dans la mousse et dans la fibre.",
              "L'injection-extraction injecte de l'eau et un produit adapté au textile au cœur de la fibre, puis aspire immédiatement le tout avec la saleté dissoute. Le canapé est nettoyé en profondeur, sans être détrempé."],
-      included=["Assise, dossier, accoudoirs et coussins","Détachage des taches et auréoles","Nettoyage en profondeur adapté à la matière","Nettoyage à la vapeur quand la matière le permet","Séchage en quelques heures"],
+      included=["Assise, dossier et accoudoirs","Détachage des taches et auréoles","Nettoyage en profondeur adapté à la matière","Nettoyage à la vapeur quand la matière le permet","Séchage en quelques heures"],
       prices=PRIX_CANAPE,
       price_note="Devis sur photo : le prix total vous est annoncé avant l'intervention.",
       faq=[("Combien de temps faut-il pour que le canapé sèche ?","Quelques heures. L'extraction retire la majeure partie de l'eau ; une pièce aérée accélère encore le séchage."),
