@@ -56,7 +56,7 @@ MARK = '<svg class="brand-mark" viewBox="0 0 64 64" width="44" height="44" aria-
 
 LOGO_IMG = '<img class="brand-logo" src="assets/img/logo-nadifa-600.webp" srcset="assets/img/logo-nadifa-600.webp 600w, assets/img/logo-nadifa.webp 1426w" sizes="220px" width="600" height="180" alt="Nadifa Propreté">'
 
-NAV = [("./","Accueil"),("services.html","Services"),("reservation.html","Réserver"),("nettoyage-professionnels-toulouse.html","Professionnels"),("contact.html","Contact")]
+NAV = [("./","Accueil"),("services.html","Particuliers"),("nettoyage-professionnels-toulouse.html","Professionnels"),("reservation.html","Réserver"),("contact.html","Contact")]
 
 def head(title, desc, path, og_type="website", extra=""):
     canonical = BASE + ("/" if path=="index.html" else "/"+path)
@@ -772,7 +772,7 @@ def page_contact():
   <div class="wrap narrow">
     <p class="eyebrow">Professionnels</p>
     <h2>Commerces, bureaux et locaux d'entreprise</h2>
-    <p>Vitres et vitrines, bureaux, locaux commerciaux : nous intervenons chez les professionnels de Toulouse, sur devis gratuit après visite de vos locaux.</p>
+    <p>Vitres et vitrines, bureaux, locaux commerciaux : nous intervenons chez les professionnels de Toulouse et des communes proches, sur devis gratuit après visite de vos locaux.</p>
     <p><a class="btn btn-secondary" href="nettoyage-professionnels-toulouse.html">Voir l'offre pour les professionnels</a></p>
   </div>
 </section>
@@ -1059,8 +1059,8 @@ def page_service(d):
 PROS_PATH = "nettoyage-professionnels-toulouse.html"
 PROS_WA = wa("Bonjour Nadifa Propreté, je représente une entreprise et je souhaite un devis pour : ")
 PROS_FAQ = [
-    ("Combien coûte l'intervention ?","Nous ne publions pas de prix : chaque local est différent. Après la visite, nous vous remettons un devis, et le prix annoncé est celui que vous payez."),
-    ("Faut-il vous voir sur place avant ?","Oui : nous venons visiter vos locaux avant de chiffrer, pour voir les surfaces, les accès et l'état des lieux."),
+    ("Combien coûte l'intervention ?","Pour vos locaux, nous ne publions pas de prix : chaque local est différent. Après la visite, nous vous remettons un devis, et le prix annoncé est celui que vous payez."),
+    ("Faut-il vous voir sur place avant ?","Pour vos locaux, oui : nous venons les visiter avant de chiffrer, pour voir les surfaces, les accès et l'état des lieux."),
     ("Une seule intervention ou un passage régulier ?","Les deux : un passage ponctuel, ou un contrat avec un rythme fixé ensemble, par exemple chaque mois. Vous recevez une facture."),
     ("Quels locaux nettoyez-vous ?","Commerces à vitrine, bureaux et locaux commerciaux, à Toulouse et dans les communes proches. Écrivez-nous pour un autre type de local."),
 ]
@@ -1127,7 +1127,7 @@ def page_pros():
     <p>Vous êtes un particulier ? <a href="services.html">Voir nos prestations pour les particuliers</a>.</p>
   </div>
 </section>
-{cta_band("Parlons de vos locaux", "Écrivez-nous sur WhatsApp ou appelez-nous : on vous rappelle rapidement pour fixer la visite.", PROS_WA, "Devis gratuit")}
+{cta_band("Parlons de vos locaux", "Écrivez-nous sur WhatsApp ou appelez-nous pour fixer la visite de vos locaux.", PROS_WA, "Devis gratuit")}
 '''
     return h + header(PROS_PATH) + body + footer()
 
@@ -1284,12 +1284,13 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 .nav a:not(.btn){color:var(--ink);text-decoration:none;font-weight:600;padding:.4em 0;border-bottom:2px solid transparent}
 .nav a:not(.btn):hover,.nav a[aria-current="page"]{border-bottom-color:var(--accent)}
 .btn-nav{padding:.6em 1.1em;font-size:.95rem;white-space:nowrap}
+.site-header .brand{flex-shrink:0}
 .nav-toggle{display:none;background:none;border:0;width:44px;height:44px;padding:0;cursor:pointer;color:var(--ink);-webkit-appearance:none;appearance:none;border-radius:10px}
 .nav-toggle svg{width:28px;height:28px;vertical-align:middle}
 .nav-toggle .ico-close{display:none}
 .nav-toggle[aria-expanded="true"] .ico-burger{display:none}
 .nav-toggle[aria-expanded="true"] .ico-close{display:inline}
-@media (max-width:860px){
+@media (max-width:960px){
   .nav-toggle{display:inline-block}
   .nav{position:absolute;left:0;right:0;top:70px;background:#fff;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;padding:1rem 1.25rem 1.25rem;gap:.5rem;display:none;box-shadow:var(--shadow)}
   .nav.open{display:flex}
@@ -1535,13 +1536,13 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:#d9534f}
 .site-footer .muted{color:#9fb1c2}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:2.5rem;padding-top:1.2rem;font-size:.85rem;color:#8fa2b5}
 @media (max-width:760px){.footer-grid{grid-template-columns:1fr;gap:2rem}}
-@media (min-width:861px){.site-footer{margin-bottom:0}}
+@media (min-width:961px){.site-footer{margin-bottom:0}}
 
 /* mobile bar */
 .mobile-bar{position:fixed;left:0;right:0;bottom:0;display:none;grid-template-columns:1fr 1.4fr;gap:.6rem;padding:.6rem .8rem calc(.6rem + env(safe-area-inset-bottom));background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-top:1px solid var(--line);z-index:40}
 .mobile-bar a{display:inline-flex;align-items:center;justify-content:center;gap:.5em;padding:.8em;border-radius:999px;font-weight:700;text-decoration:none;color:var(--ink);border:2px solid var(--line)}
 .mobile-bar .mobile-bar-wa{background:var(--accent);color:#04202a;border-color:var(--accent)}
-@media (max-width:860px){.mobile-bar{display:grid}}
+@media (max-width:960px){.mobile-bar{display:grid}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.reviews-band.is-moving{overflow-x:auto}.reviews-band.is-moving .reviews-track{animation:none}}
 '''
 
