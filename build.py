@@ -56,7 +56,7 @@ MARK = '<svg class="brand-mark" viewBox="0 0 64 64" width="44" height="44" aria-
 
 LOGO_IMG = '<img class="brand-logo" src="assets/img/logo-nadifa-600.webp" srcset="assets/img/logo-nadifa-600.webp 600w, assets/img/logo-nadifa.webp 1426w" sizes="220px" width="600" height="180" alt="Nadifa Propreté">'
 
-NAV = [("./","Accueil"),("services.html","Services"),("reservation.html","Réserver"),("contact.html","Contact")]
+NAV = [("./","Accueil"),("services.html","Services"),("reservation.html","Réserver"),("nettoyage-professionnels-toulouse.html","Professionnels"),("contact.html","Contact")]
 
 def head(title, desc, path, og_type="website", extra=""):
     canonical = BASE + ("/" if path=="index.html" else "/"+path)
@@ -127,6 +127,7 @@ def footer():
         <li><a href="nettoyage-matelas-toulouse.html">Nettoyage matelas</a></li>
         <li><a href="nettoyage-tapis-moquette-toulouse.html">Nettoyage tapis et moquette</a></li>
         <li><a href="nettoyage-interieur-voiture-toulouse.html">Nettoyage intérieur voiture</a></li>
+        <li><a href="nettoyage-professionnels-toulouse.html">Professionnels</a></li>
         <li><a href="reservation.html">Réserver une intervention</a></li>
         <li><a href="contact.html">Contact et zone d'intervention</a></li>
         <li><a href="{GBP}" target="_blank" rel="noopener">Avis Google</a></li>
@@ -265,15 +266,18 @@ def breadcrumb(name, path):
 '''
 
 # ---------- Reusable blocks ----------
-def cta_band():
+def cta_band(titre="Envoyez une photo, on vous rappelle rapidement",
+             texte="Envoyez une photo de votre canapé, matelas, tapis ou véhicule sur WhatsApp : vous recevez le tarif exact avant toute intervention.",
+             wa_lien=None, bouton="Envoyer une photo"):
+    wa_lien = wa_lien or WA_DEVIS
     return f'''<section class="cta-band">
   <div class="wrap cta-inner">
     <div>
-      <h2>Envoyez une photo, on vous rappelle rapidement</h2>
-      <p>Envoyez une photo de votre canapé, matelas, tapis ou véhicule sur WhatsApp : vous recevez le tarif exact avant toute intervention.</p>
+      <h2>{titre}</h2>
+      <p>{texte}</p>
     </div>
     <div class="cta-actions">
-      <a class="btn btn-light" href="{WA_DEVIS}" target="_blank" rel="noopener">{ICON["wa"]} Envoyer une photo</a>
+      <a class="btn btn-light" href="{wa_lien}" target="_blank" rel="noopener">{ICON["wa"]} {bouton}</a>
       <a class="btn btn-outline-light" href="tel:{PHONE_T}">{ICON["phone"]} {PHONE_H}</a>
     </div>
   </div>
@@ -767,8 +771,9 @@ def page_contact():
 <section class="section">
   <div class="wrap narrow">
     <p class="eyebrow">Professionnels</p>
-    <h2>Artisans, VTC, agences, locations saisonnières</h2>
-    <p>Véhicule pro qui doit rester présentable, canapés d'un meublé entre deux locataires, fauteuils d'un cabinet : nous proposons un entretien régulier avec facture. Écrivez-nous avec le nombre de véhicules ou de logements, nous vous répondons avec un tarif adapté.</p>
+    <h2>Commerces, bureaux et locaux d'entreprise</h2>
+    <p>Vitres et vitrines, bureaux, locaux commerciaux : nous intervenons chez les professionnels de Toulouse, sur devis gratuit après visite de vos locaux.</p>
+    <p><a class="btn btn-secondary" href="nettoyage-professionnels-toulouse.html">Voir l'offre pour les professionnels</a></p>
   </div>
 </section>
 {cta_band()}
@@ -1050,6 +1055,82 @@ def page_service(d):
 '''
     return h + header("services.html") + body + footer()
 
+# ---------- PAGE PROFESSIONNELS ----------
+PROS_PATH = "nettoyage-professionnels-toulouse.html"
+PROS_WA = wa("Bonjour Nadifa Propreté, je représente une entreprise et je souhaite un devis pour : ")
+PROS_FAQ = [
+    ("Combien coûte l'intervention ?","Nous ne publions pas de prix : chaque local est différent. Après la visite, nous vous remettons un devis, et le prix annoncé est celui que vous payez."),
+    ("Faut-il vous voir sur place avant ?","Oui : nous venons visiter vos locaux avant de chiffrer, pour voir les surfaces, les accès et l'état des lieux."),
+    ("Une seule intervention ou un passage régulier ?","Les deux : un passage ponctuel, ou un contrat avec un rythme fixé ensemble, par exemple chaque mois. Vous recevez une facture."),
+    ("Quels locaux nettoyez-vous ?","Commerces à vitrine, bureaux et locaux commerciaux, à Toulouse et dans les communes proches. Écrivez-nous pour un autre type de local."),
+]
+
+def page_pros():
+    titre = "Nettoyage pour professionnels à Toulouse | Nadifa Propreté"
+    desc = "Nadifa Propreté nettoie les vitres, vitrines, bureaux et locaux commerciaux des professionnels à Toulouse et communes proches. Devis gratuit après visite."
+    h = head(titre, desc, PROS_PATH, extra=breadcrumb("Professionnels", PROS_PATH) + ld_service("Nettoyage pour professionnels", "Nettoyage de vitres, de bureaux et de locaux commerciaux", desc, PROS_PATH))
+    faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in PROS_FAQ)
+    services = [
+        ("Vitres et vitrines", "Commerces, cabinets et bureaux : vitrines et baies vitrées propres, à l'intérieur comme à l'extérieur.", None),
+        ("Ménage de bureaux", "Bureaux, salles de réunion et espaces communs entretenus à un rythme fixé avec vous.", None),
+        ("Locaux commerciaux", "Boutiques, salles d'accueil et locaux ouverts au public.", None),
+        ("Fauteuils, chaises et moquette", "Le textile de vos locaux est nettoyé sur place par injection-extraction.", "nettoyage-tapis-moquette-toulouse.html"),
+        ("Intérieur des véhicules de société", "Utilitaires, véhicules d'artisans ou de VTC : nous venons là où ils sont garés.", "nettoyage-interieur-voiture-toulouse.html"),
+    ]
+    cartes = "".join(
+        f'<li>{ICON["check"]} <strong>{t}</strong> : {d}' + (f' <a href="{u}">Voir la prestation</a>' if u else "") + "</li>"
+        for t, d, u in services)
+    actions = f'''<div class="hero-actions">
+      <a class="btn btn-primary" href="{PROS_WA}" target="_blank" rel="noopener">{ICON["wa"]} Devis gratuit sur WhatsApp</a>
+      <a class="btn btn-ghost" href="tel:{PHONE_T}">{ICON["phone"]} {PHONE_H}</a>
+    </div>'''
+    body = f'''
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Professionnels</p>
+    <h1>Nettoyage de vitres, de bureaux et de locaux à Toulouse</h1>
+    <p class="lead">Commerces, cabinets, bureaux : nous nettoyons vos locaux et vos vitrines, avec un devis gratuit établi après visite.</p>
+    {actions}
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap narrow">
+    <h2>Ce que nous nettoyons</h2>
+    <ul class="checklist">{cartes}</ul>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap">
+    <div class="section-head"><h2>Comment ça se passe</h2></div>
+    <ol class="steps">
+      <li><span class="step-num">1</span><h3>Vous nous contactez</h3><p>Par WhatsApp, par téléphone ou par e-mail. On vous rappelle rapidement.</p></li>
+      <li><span class="step-num">2</span><h3>Nous visitons vos locaux</h3><p>Nous regardons les surfaces, les accès et l'état des lieux.</p></li>
+      <li><span class="step-num">3</span><h3>Vous recevez un devis gratuit</h3><p>Le prix annoncé est celui que vous payez, sans surprise.</p></li>
+      <li><span class="step-num">4</span><h3>Nous intervenons</h3><p>À un créneau fixé avec vous. Vous recevez ensuite une facture.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap narrow">
+    <div class="section-head"><h2>Questions fréquentes</h2></div>
+    {faq}
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap narrow">
+    <h2>Zone d'intervention</h2>
+    <p>Nous intervenons à Toulouse (tous quartiers) et dans les communes proches : {ZONES_TXT}. <a href="contact.html#zone">Voir la zone d'intervention</a>.</p>
+    <p>Vous êtes un particulier ? <a href="services.html">Voir nos prestations pour les particuliers</a>.</p>
+  </div>
+</section>
+{cta_band("Parlons de vos locaux", "Écrivez-nous sur WhatsApp ou appelez-nous : on vous rappelle rapidement pour fixer la visite.", PROS_WA, "Devis gratuit")}
+'''
+    return h + header(PROS_PATH) + body + footer()
+
 # ---------- MENTIONS LEGALES ----------
 def page_mentions():
     h = head("Mentions légales | Nadifa Propreté",
@@ -1202,7 +1283,7 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 .nav{display:flex;align-items:center;gap:1.4rem}
 .nav a:not(.btn){color:var(--ink);text-decoration:none;font-weight:600;padding:.4em 0;border-bottom:2px solid transparent}
 .nav a:not(.btn):hover,.nav a[aria-current="page"]{border-bottom-color:var(--accent)}
-.btn-nav{padding:.6em 1.1em;font-size:.95rem}
+.btn-nav{padding:.6em 1.1em;font-size:.95rem;white-space:nowrap}
 .nav-toggle{display:none;background:none;border:0;width:44px;height:44px;padding:0;cursor:pointer;color:var(--ink);-webkit-appearance:none;appearance:none;border-radius:10px}
 .nav-toggle svg{width:28px;height:28px;vertical-align:middle}
 .nav-toggle .ico-close{display:none}
@@ -1578,10 +1659,10 @@ ROBOTS = f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap.xml\n"
 today = datetime.date.today().isoformat()
 SITEMAP = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
     f'  <url><loc>{BASE}/{p}</loc><lastmod>{today}</lastmod><changefreq>{f}</changefreq><priority>{pr}</priority></url>\n'
-    for p,f,pr in [("","weekly","1.0"),("services.html","monthly","0.9")] + [(d["path"],"monthly","0.9") for d in SVC_PAGES] + [("reservation.html","monthly","0.8"),("contact.html","monthly","0.7")]) + "</urlset>\n"
+    for p,f,pr in [("","weekly","1.0"),("services.html","monthly","0.9")] + [(d["path"],"monthly","0.9") for d in SVC_PAGES] + [("reservation.html","monthly","0.8"),("nettoyage-professionnels-toulouse.html","monthly","0.8"),("contact.html","monthly","0.7")]) + "</urlset>\n"
 
 ASSET_V = hashlib.md5((CSS+JS).encode()).hexdigest()[:8]
-pages = {"index.html":page_index(),"services.html":page_services(),"reservation.html":page_reservation(),"contact.html":page_contact(),"mentions-legales.html":page_mentions(),"politique-confidentialite.html":page_confidentialite(),"404.html":page_404()}
+pages = {"index.html":page_index(),"services.html":page_services(),"reservation.html":page_reservation(),"contact.html":page_contact(),"mentions-legales.html":page_mentions(),"politique-confidentialite.html":page_confidentialite(),"404.html":page_404(),PROS_PATH:page_pros()}
 pages.update({d["path"]:page_service(d) for d in SVC_PAGES})
 for name,content in pages.items():
     open(os.path.join(OUT,name),"w",encoding="utf-8").write(content)
