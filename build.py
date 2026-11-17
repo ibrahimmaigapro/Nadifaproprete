@@ -112,6 +112,7 @@ def header(active):
 '''
 
 def footer():
+    pros = "".join(f'\n        <li><a href="{d["path"]}">{d["label"]}</a></li>' for d in PRO_PAGES)
     return f'''</main>
 <footer class="site-footer">
   <div class="wrap footer-grid">
@@ -127,7 +128,6 @@ def footer():
         <li><a href="nettoyage-matelas-toulouse.html">Nettoyage matelas</a></li>
         <li><a href="nettoyage-tapis-moquette-toulouse.html">Nettoyage tapis et moquette</a></li>
         <li><a href="nettoyage-interieur-voiture-toulouse.html">Nettoyage intérieur voiture</a></li>
-        <li><a href="nettoyage-professionnels-toulouse.html">Professionnels</a></li>
         <li><a href="reservation.html">Réserver une intervention</a></li>
         <li><a href="contact.html">Contact et zone d'intervention</a></li>
         <li><a href="{GBP}" target="_blank" rel="noopener">Avis Google</a></li>
@@ -136,11 +136,17 @@ def footer():
       </ul>
     </div>
     <div>
+      <h2 class="footer-title">Professionnels</h2>
+      <ul class="footer-links">
+        <li><a href="nettoyage-professionnels-toulouse.html">Services aux professionnels</a></li>{pros}
+      </ul>
+    </div>
+    <div>
       <h2 class="footer-title">Contact</h2>
       <ul class="footer-links">
         <li><a href="tel:{PHONE_T}">{ICON["phone"]} {PHONE_H}</a></li>
         <li><a href="{WA_DEVIS}" target="_blank" rel="noopener">{ICON["wa"]} WhatsApp</a></li>
-        <li><a href="mailto:{EMAIL}">{ICON["mail"]} {EMAIL}</a></li>
+        <li><a class="footer-mail" href="mailto:{EMAIL}">{ICON["mail"]} {EMAIL}</a></li>
         <li>{ICON["clock"]} Tous les jours sauf le vendredi, 7 h – 22 h 30</li>
       </ul>
     </div>
@@ -781,11 +787,11 @@ def page_contact():
     return h + header("contact.html") + body + footer()
 
 # ---------- PAGES SERVICE DÉDIÉES (SEO) ----------
-def breadcrumb3(name, path):
+def breadcrumb3(name, path, parent=("Services", "services.html")):
     return f'''<script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
 {{"@type":"ListItem","position":1,"name":"Accueil","item":"{BASE}/"}},
-{{"@type":"ListItem","position":2,"name":"Services","item":"{BASE}/services.html"}},
+{{"@type":"ListItem","position":2,"name":"{parent[0]}","item":"{BASE}/{parent[1]}"}},
 {{"@type":"ListItem","position":3,"name":"{name}","item":"{BASE}/{path}"}}]}}
 </script>
 '''
@@ -1065,21 +1071,201 @@ PROS_FAQ = [
     ("Quels locaux nettoyez-vous ?","Commerces à vitrine, bureaux et locaux commerciaux, à Toulouse et dans les communes proches. Écrivez-nous pour un autre type de local."),
 ]
 
+# ---------- PAGES PROFESSIONNELS, UNE PAR SERVICE ----------
+# Fabriquées par page_pro(), listées sur la page Professionnels, dans le pied de page et dans le sitemap.
+# Aucun prix pour les locaux : devis gratuit après visite. Les photos sont des illustrations libres de droits
+# (licences Unsplash et Pexels) : le mot « Illustration » est dans le texte alternatif, jamais présentées comme un travail Nadifa.
+# Sources : pro-vitres-hero unsplash.com/photos/x2SdB_gN6wo · pro-bureaux-hero unsplash.com/photos/wlHBYkK2y4k ·
+# pro-bureaux-pourquoi unsplash.com/photos/-9gPKrsbGmc · pro-locaux-hero pexels.com/photo/4940756 · pro-textile-hero unsplash.com/photos/QLhqloXuSQw
+PROS_ETAPES = [
+    ("Nous visitons vos locaux","Nous regardons les surfaces, les accès et ce que vous attendez. La visite ne vous engage à rien."),
+    ("Vous recevez un devis gratuit","Le prix annoncé est celui que vous payez. Passage ponctuel ou régulier : vous choisissez le rythme."),
+    ("Nous intervenons","Avant l'ouverture ou après la fermeture, entre 7 h et 22 h 30, tous les jours sauf le vendredi."),
+    ("Vous recevez la facture","Un passage ponctuel se règle à réception de la facture. Un contrat régulier donne une facture par mois."),
+]
+PRO_PAGES = [
+ dict(path="nettoyage-vitres-vitrines-toulouse.html", label="Vitres et vitrines", crumb="Nettoyage de vitres et vitrines",
+      wa="le nettoyage de nos vitres et vitrines", stype="Nettoyage de vitres",
+      hero_img="pro-vitres-hero", hero_alt="Illustration : vitrine de commerce à encadrement en bois, vue depuis le trottoir",
+      title="Nettoyage de vitres et vitrines à Toulouse | Nadifa Propreté",
+      desc="Nettoyage de vitrines, portes vitrées et baies de bureaux à Toulouse, côté rue et côté intérieur, en hauteur à la perche. Devis gratuit après visite.",
+      h1="Nettoyage de vitres et vitrines à Toulouse",
+      lead="Vitrines de commerce, portes vitrées, baies et cloisons de bureaux : nous les nettoyons des deux côtés, avant l'ouverture ou après la fermeture. Devis gratuit après visite de vos locaux.",
+      card="Vitrines, portes vitrées, baies et cloisons, côté rue et côté intérieur, en hauteur à la perche.",
+      pourquoi_titre="Pourquoi faire nettoyer vos vitrines",
+      pourquoi=[("spark","La première chose que voit un client","Une vitrine nette donne envie d'entrer. Des traces de pluie ou de doigts donnent l'impression inverse, avant même que le client pousse la porte."),
+                ("window","Plus de lumière dans vos locaux","Des vitres sales retiennent une partie de la lumière du jour. Propres, elles éclairent mieux la boutique, le cabinet ou le bureau."),
+                ("clock","Du temps rendu à votre équipe","Plus besoin de sortir l'escabeau et le seau entre deux clients. Nous passons à un rythme fixé avec vous.")],
+      included=["Vitrines et portes vitrées, côté rue et côté intérieur","Baies vitrées, fenêtres et cloisons vitrées des bureaux","Vitres en hauteur, nettoyées à la perche depuis le sol","Encadrements et rebords essuyés","Traces de doigts autour des poignées","Passage ponctuel ou régulier, à un rythme fixé avec vous"],
+      a_savoir=["Nous n'avons pas de nacelle pour l'instant. Une vitre que la perche n'atteint pas depuis le sol n'est pas nettoyée côté extérieur : nous vous le disons dès la visite.",
+                "Le nettoyage n'efface ni une rayure, ni un verre piqué.",
+                "Des traces de peinture, de plâtre ou de ciment laissées par des travaux se regardent à la visite : c'est un autre travail qu'un nettoyage courant."],
+      faq=[("Nettoyez-vous l'extérieur comme l'intérieur ?","Oui, les deux faces des vitrines, des portes vitrées et des fenêtres que nous pouvons atteindre. Côté rue, nous travaillons depuis le trottoir, en laissant le passage libre."),
+           ("Jusqu'à quelle hauteur intervenez-vous ?","Jusqu'où la perche atteint depuis le sol. Nous n'utilisons pas de nacelle pour l'instant : à la visite, nous vous disons quelles vitres nous pouvons faire."),
+           ("Faut-il fermer la boutique pendant le nettoyage ?","Non. Nous venons avant l'ouverture ou après la fermeture, entre 7 h et 22 h 30, tous les jours sauf le vendredi."),
+           ("À quel rythme nettoyer une vitrine ?","Cela dépend de votre rue, du passage et de la météo. Une vitrine sur une rue passante se salit plus vite qu'une fenêtre à l'étage. À la visite, nous vous proposons un rythme, que vous pourrez changer ensuite."),
+           ("Combien coûte le nettoyage des vitres ?","Le prix dépend du nombre de vitres, de leur taille, de la hauteur et du rythme des passages. Il est fixé dans le devis gratuit remis après la visite, et c'est celui que vous payez.")]),
+ dict(path="menage-bureaux-toulouse.html", label="Ménage de bureaux", crumb="Ménage de bureaux",
+      wa="le ménage de nos bureaux", stype="Nettoyage de bureaux",
+      hero_img="pro-bureaux-hero", hero_alt="Illustration : bureaux lumineux avec cloisons vitrées et parquet clair",
+      pourquoi_img=("pro-bureaux-pourquoi","Illustration : mains gantées qui nettoient un bureau avec un chiffon et un vaporisateur"),
+      title="Ménage et nettoyage de bureaux à Toulouse | Nadifa Propreté",
+      desc="Ménage de bureaux à Toulouse et communes proches : sols, poussière, coin café, sanitaires et poubelles, en dehors de vos horaires. Devis gratuit après visite.",
+      h1="Ménage et nettoyage de bureaux à Toulouse",
+      lead="Sols, poussière, coin café, sanitaires et poubelles : vos bureaux sont entretenus à un rythme fixé avec vous, en dehors de vos horaires de travail. Devis gratuit après visite.",
+      card="Sols, poussière, coin café, sanitaires et poubelles, à un rythme fixé avec vous.",
+      pourquoi_titre="Pourquoi confier le ménage de vos bureaux",
+      pourquoi=[("spark","L'image donnée à vos visiteurs","Un client ou un candidat se fait vite un avis. Un accueil net et une salle de réunion propre montrent une entreprise bien tenue."),
+                ("check","Le confort de vos salariés","Bureaux dépoussiérés, coin café et sanitaires propres, poubelles vidées : on travaille mieux dans un lieu propre."),
+                ("clock","Du temps gagné","Le ménage ne repose plus sur vos salariés entre deux tâches, ni sur le dernier parti le soir.")],
+      included=["Dépoussiérage des bureaux, des meubles et des rebords","Aspiration et lavage des sols","Poubelles vidées","Coin café ou cuisine : plan de travail, évier, extérieur des appareils","Sanitaires : lavabos, toilettes et miroirs","Poignées de porte et interrupteurs essuyés","Passage ponctuel ou régulier, à un rythme fixé avec vous"],
+      a_savoir=["Vos dossiers, vos écrans et vos papiers restent tels quels : nous nettoyons autour, sans rien déplacer ni lire.",
+                "Nous n'avons pas de grosse machine de lavage des sols. Pour une très grande surface, nous regardons à la visite ce qui est possible.",
+                "Le nettoyage des chaises et de la moquette est un service à part : <a href=\"nettoyage-sieges-moquette-bureaux-toulouse.html\">voir sièges et moquette</a>."],
+      faq=[("Faut-il être présent pendant le ménage ?","Pas forcément. Nous intervenons avant l'ouverture ou après la fermeture. L'accès (clé, badge, code) se convient ensemble à la visite."),
+           ("Quel rythme choisir ?","Il dépend du nombre de personnes et de la surface. Nous vous conseillons un rythme à la visite, et il peut changer ensuite."),
+           ("Venez-vous avec le matériel et les produits ?","Oui, nous venons avec notre matériel et nos produits d'entretien."),
+           ("Faut-il signer un contrat ?","Pour un passage régulier, oui : un contrat écrit fixe le rythme, les tâches et le prix, avec une facture par mois. Pour un passage ponctuel, le devis suffit."),
+           ("Combien coûte le ménage de bureaux ?","Le prix dépend de la surface, du nombre de pièces et du rythme des passages. Il est fixé dans le devis gratuit remis après la visite, et c'est celui que vous payez.")]),
+ dict(path="nettoyage-locaux-commerciaux-toulouse.html", label="Locaux commerciaux", crumb="Nettoyage de locaux commerciaux",
+      wa="le nettoyage de notre local commercial", stype="Nettoyage de locaux commerciaux",
+      hero_img="pro-locaux-hero", hero_alt="Illustration : allée d'une boutique de vêtements au parquet sombre",
+      title="Nettoyage de locaux commerciaux à Toulouse | Nadifa Propreté",
+      desc="Nettoyage de boutiques, salons et salles d'accueil à Toulouse : sols, comptoir, cabines, sanitaires, avant l'ouverture ou après la fermeture. Devis gratuit.",
+      h1="Nettoyage de locaux commerciaux à Toulouse",
+      lead="Boutiques, salons, salles d'accueil : votre local est propre avant l'arrivée du premier client. Nous intervenons avant l'ouverture ou après la fermeture, sur devis gratuit après visite.",
+      card="Boutiques, salons et salles d'accueil, propres avant l'arrivée de vos clients.",
+      pourquoi_titre="Pourquoi faire nettoyer votre local",
+      pourquoi=[("spark","Vos clients le remarquent","Un sol net, un comptoir sans traces et des cabines propres : le client regarde vos produits, pas la poussière."),
+                ("shield","Des surfaces qui durent","Le sable et la poussière rayent les sols et ternissent les surfaces. Un entretien régulier les garde en bon état plus longtemps."),
+                ("clock","Vous ouvrez sans y penser","Plus de serpillière à passer avant le premier client : votre local est prêt quand vous arrivez.")],
+      included=["Sols aspirés et lavés, entrée et tapis d'accueil compris","Comptoir, caisse et présentoirs dépoussiérés","Cabines d'essayage et miroirs","Vitrine et porte d'entrée, côté intérieur","Sanitaires et espace du personnel","Poubelles vidées"],
+      a_savoir=["Votre marchandise reste en place : nous nettoyons autour. Un grand nettoyage des rayons se prévoit avec vous.",
+                "Pas de grosse machine de lavage des sols pour l'instant : pour une grande surface de vente, nous voyons à la visite ce qui est faisable.",
+                "Pour la vitrine côté rue, voir aussi le <a href=\"nettoyage-vitres-vitrines-toulouse.html\">nettoyage de vitres et vitrines</a>."],
+      faq=[("Quels commerces nettoyez-vous ?","Boutiques, salons de coiffure, instituts de beauté, opticiens, auto-écoles, salles d'attente… Pour un autre type de local, écrivez-nous."),
+           ("Pouvez-vous venir avant l'ouverture ?","Oui. Nous intervenons avant l'ouverture ou après la fermeture, entre 7 h et 22 h 30, tous les jours sauf le vendredi, dimanche compris."),
+           ("Pouvez-vous venir une seule fois ?","Oui, par exemple avant une ouverture, un événement ou un changement de collection. Un passage ponctuel se règle à réception de la facture ; un contrat régulier donne une facture par mois."),
+           ("Combien coûte le nettoyage d'un local commercial ?","Le prix dépend de la surface, du type de sol, de vos horaires et du rythme des passages. Il est fixé dans le devis gratuit remis après la visite, et c'est celui que vous payez.")]),
+ dict(path="nettoyage-sieges-moquette-bureaux-toulouse.html", label="Sièges et moquette", crumb="Nettoyage de sièges et moquette de bureaux",
+      wa="le nettoyage de nos sièges ou de notre moquette", stype="Nettoyage de sièges et de moquettes",
+      hero_img="pro-textile-hero", hero_alt="Illustration : chaises de réunion en tissu posées sur une moquette grise",
+      title="Nettoyage sièges et moquette de bureaux à Toulouse | Nadifa Propreté",
+      desc="Chaises de bureau, fauteuils et canapés d'accueil, moquette : nettoyés sur place par injection-extraction à Toulouse, secs en quelques heures. Devis gratuit.",
+      h1="Nettoyage de sièges et de moquette de bureaux à Toulouse",
+      lead="Chaises de bureau, fauteuils et canapés d'accueil, moquette : le textile de vos locaux est nettoyé sur place, en profondeur, sans rien emporter. Devis gratuit après visite.",
+      card="Chaises de bureau, fauteuils et canapés d'accueil, moquette, nettoyés sur place en profondeur.",
+      pourquoi_titre="Pourquoi faire nettoyer vos sièges et votre moquette",
+      pourquoi=[("sofa","Des sièges qui font propre","Sur une chaise de réunion ou un fauteuil d'accueil, une trace de café ou une assise ternie se voit tout de suite."),
+                ("wind","Moins d'odeurs","Le tissu et la moquette gardent les odeurs de repas, de café et de passage. L'injection-extraction va les chercher dans la fibre, là où l'aspirateur ne va pas."),
+                ("tag","Avant de remplacer","Changer des chaises ou une moquette coûte cher. Un nettoyage en profondeur leur redonne souvent un bel aspect.")],
+      included=["Chaises de bureau et de réunion en tissu","Fauteuils et canapés d'accueil, en tissu ou en cuir","Moquette des bureaux, des salles de réunion et des couloirs","Aspiration puis pré-traitement des taches","Injection-extraction : le produit est injecté dans la fibre puis aspiré avec la saleté","Séchage en quelques heures"],
+      a_savoir=["Certaines taches anciennes (encre, teinture) peuvent rester atténuées. Nous vous le disons franchement à la visite.",
+                "Le nettoyage ne répare ni l'usure, ni une brûlure, ni un tissu décoloré.",
+                "Moquette : pour une grande surface, nous regardons à la visite ce qui est possible."],
+      faq=[("Combien de temps faut-il pour que ça sèche ?","Quelques heures. En intervenant le soir, les sièges et la moquette sont en général secs le lendemain matin."),
+           ("Nettoyez-vous les sièges en cuir ou en simili ?","Oui, à la main, avec un produit adapté et une brosse souple, sans injection d'eau."),
+           ("Faut-il vider les bureaux pour la moquette ?","Non. Il suffit de libérer le sol des objets posés dessus (cartons, sacs, corbeilles). Les bureaux et les armoires restent en place : nous nettoyons autour."),
+           ("Combien coûte le nettoyage des sièges et de la moquette ?","Le prix dépend du nombre de sièges, de la surface de moquette et de leur état. Il est fixé dans le devis gratuit remis après la visite, et c'est celui que vous payez.")]),
+]
+
+def page_pro(d):
+    wa_lien = wa(f"Bonjour Nadifa Propreté, je représente une entreprise et je souhaite un devis pour {d['wa']}. ")
+    h = head(d["title"], d["desc"], d["path"], extra=breadcrumb3(d["crumb"], d["path"], ("Professionnels", PROS_PATH)) + ld_service(d["crumb"], d["stype"], d["desc"], d["path"]))
+    if "pourquoi_img" in d:  # photo carrée à côté des trois raisons
+        img, alt = d["pourquoi_img"]
+        raisons = "".join(f'<li><span class="icon">{ICON[i]}</span><div><h3>{t}</h3><p>{x}</p></div></li>' for i, t, x in d["pourquoi"])
+        pourquoi = f'''<div class="wrap service-block">
+    <div class="service-media">{picture(img, alt, sizes="(max-width: 900px) 100vw, 40vw", w=1400, h=1400)}</div>
+    <div class="service-text">
+      <h2>{d["pourquoi_titre"]}</h2>
+      <ul class="raisons">{raisons}</ul>
+    </div>
+  </div>'''
+    else:
+        raisons = "".join(f'<div class="feature"><span class="icon">{ICON[i]}</span><h3>{t}</h3><p>{x}</p></div>' for i, t, x in d["pourquoi"])
+        pourquoi = f'''<div class="wrap">
+    <div class="section-head"><h2>{d["pourquoi_titre"]}</h2></div>
+    <div class="grid-3 features features-light">{raisons}</div>
+  </div>'''
+    included = "".join(f'<li>{ICON["check"]} {x}</li>' for x in d["included"])
+    a_savoir = "".join(f"<li>{x}</li>" for x in d["a_savoir"])
+    etapes = "".join(f'<li><span class="step-num">{n}</span><h3>{t}</h3><p>{x}</p></li>' for n, (t, x) in enumerate(PROS_ETAPES, 1))
+    faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in d["faq"])
+    autres = "".join(f'<a class="btn btn-secondary" href="{o["path"]}">{o["label"]}</a>' for o in PRO_PAGES if o is not d)
+    body = f'''
+<section class="page-hero">
+  {picture(d["hero_img"], d["hero_alt"], sizes="100vw", cls="page-hero-img", eager=True, w=1400, h=700)}
+  <div class="wrap">
+    <div class="page-hero-texte">
+      <p class="eyebrow"><a href="{PROS_PATH}">Professionnels</a> · {d["label"]}</p>
+      <h1>{d["h1"]}</h1>
+      <p class="lead">{d["lead"]}</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="{wa_lien}" target="_blank" rel="noopener">{ICON["wa"]} Devis gratuit sur WhatsApp</a>
+        <a class="btn btn-ghost" href="tel:{PHONE_T}">{ICON["phone"]} {PHONE_H}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  {pourquoi}
+</section>
+
+<section class="section section-alt">
+  <div class="wrap grid-2">
+    <div>
+      <h2>Ce qui est compris</h2>
+      <ul class="checklist">{included}</ul>
+    </div>
+    <div>
+      <h2>À savoir</h2>
+      <ul class="a-savoir">{a_savoir}</ul>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><h2>Comment ça se passe</h2></div>
+    <ol class="steps">{etapes}</ol>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap narrow">
+    <div class="section-head"><h2>Questions fréquentes</h2></div>
+    {faq}
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap narrow">
+    <h2>Zone d'intervention</h2>
+    <p>Nous intervenons à Toulouse (tous quartiers) et dans les communes proches : {ZONES_TXT}. <a href="contact.html#zone">Voir la zone d'intervention</a>.</p>
+    <h2>Nos autres services aux professionnels</h2>
+    <div class="hero-actions">{autres}<a class="btn btn-ghost" href="{PROS_PATH}">Tous nos services aux professionnels</a></div>
+    <p>Vous êtes un particulier ? <a href="services.html">Voir nos prestations pour les particuliers</a>.</p>
+  </div>
+</section>
+{cta_band("Parlons de vos locaux", "Écrivez-nous sur WhatsApp ou appelez-nous pour fixer la visite de vos locaux.", wa_lien, "Devis gratuit")}
+'''
+    return h + header(PROS_PATH) + body + footer()
+
 def page_pros():
     titre = "Nettoyage pour professionnels à Toulouse | Nadifa Propreté"
-    desc = "Nadifa Propreté nettoie les vitres, vitrines, bureaux et locaux commerciaux des professionnels à Toulouse et communes proches. Devis gratuit après visite."
-    h = head(titre, desc, PROS_PATH, extra=breadcrumb("Professionnels", PROS_PATH) + ld_service("Nettoyage pour professionnels", "Nettoyage de vitres, de bureaux et de locaux commerciaux", desc, PROS_PATH))
+    desc = "Nettoyage pour professionnels à Toulouse et communes proches : vitres et vitrines, bureaux, locaux commerciaux, sièges et moquette. Devis gratuit après visite."
+    h = head(titre, desc, PROS_PATH, extra=breadcrumb("Professionnels", PROS_PATH) + ld_service("Nettoyage pour professionnels", "Nettoyage de vitres, de bureaux, de locaux commerciaux, de sièges et de moquettes", desc, PROS_PATH))
     faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in PROS_FAQ)
-    services = [
-        ("Vitres et vitrines", "Commerces, cabinets et bureaux : vitrines et baies vitrées propres, à l'intérieur comme à l'extérieur.", None),
-        ("Ménage de bureaux", "Bureaux, salles de réunion et espaces communs entretenus à un rythme fixé avec vous.", None),
-        ("Locaux commerciaux", "Boutiques, salles d'accueil et locaux ouverts au public.", None),
-        ("Fauteuils, chaises et moquette", "Le textile de vos locaux est nettoyé sur place par injection-extraction.", "nettoyage-tapis-moquette-toulouse.html"),
-        ("Intérieur des véhicules de société", "Utilitaires, véhicules d'artisans ou de VTC : nous venons là où ils sont garés.", "nettoyage-interieur-voiture-toulouse.html"),
-    ]
-    cartes = "".join(
-        f'<li>{ICON["check"]} <strong>{t}</strong> : {d}' + (f' <a href="{u}">Voir la prestation</a>' if u else "") + "</li>"
-        for t, d, u in services)
+    cartes = "".join(f'''<a class="card service-card" href="{d["path"]}">
+      <div class="card-media">{picture(d["hero_img"], d["hero_alt"], sizes="(max-width: 520px) 100vw, (max-width: 980px) 50vw, 25vw", w=1400, h=700)}</div>
+      <div class="card-body">
+        <h3>{d["label"]}</h3>
+        <p>{d["card"]}</p>
+        <span class="link-more">Voir la prestation</span>
+      </div>
+    </a>''' for d in PRO_PAGES)
     actions = f'''<div class="hero-actions">
       <a class="btn btn-primary" href="{PROS_WA}" target="_blank" rel="noopener">{ICON["wa"]} Devis gratuit sur WhatsApp</a>
       <a class="btn btn-ghost" href="tel:{PHONE_T}">{ICON["phone"]} {PHONE_H}</a>
@@ -1095,9 +1281,9 @@ def page_pros():
 </section>
 
 <section class="section">
-  <div class="wrap narrow">
-    <h2>Ce que nous nettoyons</h2>
-    <ul class="checklist">{cartes}</ul>
+  <div class="wrap">
+    <div class="section-head"><h2>Ce que nous nettoyons</h2></div>
+    <div class="grid-4">{cartes}</div>
   </div>
 </section>
 
@@ -1479,6 +1665,13 @@ details p{margin:0 0 1.1rem;color:var(--muted)}
   .mat-texte{padding:.8rem .9rem}
 }
 
+/* pages Professionnels : trois raisons à côté d'une photo, limites du service */
+.raisons{list-style:none;padding:0;margin:1.2rem 0 0;display:grid;gap:1.2rem}
+.raisons li{display:grid;grid-template-columns:46px 1fr;gap:1rem;align-items:start}
+.raisons h3{margin:.3rem 0}
+.raisons p{margin:0;color:var(--muted)}
+.a-savoir{margin:0;padding-left:1.2rem;display:grid;gap:.5rem}
+
 /* services page */
 .service-block{display:grid;grid-template-columns:.9fr 1.1fr;gap:3rem;align-items:center}
 .service-block.reverse .service-media{order:2}
@@ -1528,13 +1721,15 @@ input[aria-invalid="true"],select[aria-invalid="true"]{border-color:#d9534f}
 
 /* footer */
 .site-footer{background:var(--navy);color:#c6d3df;padding:3.5rem 0 1.5rem;margin-bottom:64px}
-.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2.5rem}
+.footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.3fr;gap:2.5rem}
+.footer-mail{white-space:nowrap}
 .footer-title{color:#fff;font-size:1rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
 .footer-links{list-style:none;padding:0;margin:0;display:grid;gap:.5rem}
 .footer-links a{color:#e6eef5;text-decoration:none}
 .footer-links a:hover{color:var(--accent)}
 .site-footer .muted{color:#9fb1c2}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:2.5rem;padding-top:1.2rem;font-size:.85rem;color:#8fa2b5}
+@media (max-width:1100px){.footer-grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:760px){.footer-grid{grid-template-columns:1fr;gap:2rem}}
 @media (min-width:961px){.site-footer{margin-bottom:0}}
 
@@ -1660,11 +1855,12 @@ ROBOTS = f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap.xml\n"
 today = datetime.date.today().isoformat()
 SITEMAP = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
     f'  <url><loc>{BASE}/{p}</loc><lastmod>{today}</lastmod><changefreq>{f}</changefreq><priority>{pr}</priority></url>\n'
-    for p,f,pr in [("","weekly","1.0"),("services.html","monthly","0.9")] + [(d["path"],"monthly","0.9") for d in SVC_PAGES] + [("reservation.html","monthly","0.8"),("nettoyage-professionnels-toulouse.html","monthly","0.8"),("contact.html","monthly","0.7")]) + "</urlset>\n"
+    for p,f,pr in [("","weekly","1.0"),("services.html","monthly","0.9")] + [(d["path"],"monthly","0.9") for d in SVC_PAGES] + [("reservation.html","monthly","0.8"),("nettoyage-professionnels-toulouse.html","monthly","0.8")] + [(d["path"],"monthly","0.8") for d in PRO_PAGES] + [("contact.html","monthly","0.7")]) + "</urlset>\n"
 
 ASSET_V = hashlib.md5((CSS+JS).encode()).hexdigest()[:8]
 pages = {"index.html":page_index(),"services.html":page_services(),"reservation.html":page_reservation(),"contact.html":page_contact(),"mentions-legales.html":page_mentions(),"politique-confidentialite.html":page_confidentialite(),"404.html":page_404(),PROS_PATH:page_pros()}
 pages.update({d["path"]:page_service(d) for d in SVC_PAGES})
+pages.update({d["path"]:page_pro(d) for d in PRO_PAGES})
 for name,content in pages.items():
     open(os.path.join(OUT,name),"w",encoding="utf-8").write(content)
 open(os.path.join(OUT,"assets/css/style.css"),"w").write(CSS.strip()+"\n")
