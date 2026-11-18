@@ -778,7 +778,7 @@ def page_contact():
   <div class="wrap narrow">
     <p class="eyebrow">Professionnels</p>
     <h2>Commerces, bureaux et locaux d'entreprise</h2>
-    <p>Vitres et vitrines, bureaux, locaux commerciaux : nous intervenons chez les professionnels de Toulouse et des communes proches, sur devis gratuit après visite de vos locaux.</p>
+    <p>Vitres et vitrines, bureaux, locaux commerciaux, fin de chantier : nous intervenons chez les professionnels de Toulouse et des communes proches, sur devis gratuit après visite de vos locaux.</p>
     <p><a class="btn btn-secondary" href="nettoyage-professionnels-toulouse.html">Voir l'offre pour les professionnels</a></p>
   </div>
 </section>
@@ -1068,7 +1068,7 @@ PROS_FAQ = [
     ("Combien coûte l'intervention ?","Pour vos locaux, nous ne publions pas de prix : chaque local est différent. Après la visite, nous vous remettons un devis, et le prix annoncé est celui que vous payez."),
     ("Faut-il vous voir sur place avant ?","Pour vos locaux, oui : nous venons les visiter avant de chiffrer, pour voir les surfaces, les accès et l'état des lieux."),
     ("Une seule intervention ou un passage régulier ?","Les deux : un passage ponctuel, ou un contrat avec un rythme fixé ensemble, par exemple chaque mois. Vous recevez une facture."),
-    ("Quels locaux nettoyez-vous ?","Commerces à vitrine, bureaux et locaux commerciaux, à Toulouse et dans les communes proches. Écrivez-nous pour un autre type de local."),
+    ("Quels locaux nettoyez-vous ?","Commerces à vitrine, bureaux et locaux commerciaux, et les lieux qui sortent de travaux, à Toulouse et dans les communes proches. Écrivez-nous pour un autre type de local."),
 ]
 
 # ---------- PAGES PROFESSIONNELS, UNE PAR SERVICE ----------
@@ -1078,7 +1078,7 @@ PROS_FAQ = [
 # Sources : pro-vitres-hero unsplash.com/photos/x2SdB_gN6wo · pro-bureaux-hero unsplash.com/photos/wlHBYkK2y4k ·
 # pro-bureaux-pourquoi unsplash.com/photos/-9gPKrsbGmc · pro-locaux-hero pexels.com/photo/4940756 · pro-textile-hero unsplash.com/photos/QLhqloXuSQw ·
 # pro-vitres-pourquoi unsplash.com/photos/0plphpzQBJc · pro-textile-pourquoi unsplash.com/photos/cqXw-PNlEAM (recadrée) ·
-# pro-locaux-pourquoi unsplash.com/photos/pt0nGH-NvoA (recadrée)
+# pro-locaux-pourquoi unsplash.com/photos/pt0nGH-NvoA (recadrée) · pro-chantier-hero unsplash.com/photos/biRt6RXejuk (recadrée)
 PROS_ETAPES = [
     ("Nous visitons vos locaux","Nous regardons les surfaces, les accès et ce que vous attendez. La visite ne vous engage à rien."),
     ("Vous recevez un devis gratuit","Le prix annoncé est celui que vous payez. Passage ponctuel ou régulier : vous choisissez le rythme."),
@@ -1101,7 +1101,7 @@ PRO_PAGES = [
                 ("clock","Du temps rendu à votre équipe","Plus besoin de sortir l'escabeau et le seau entre deux clients. Nous passons à un rythme fixé avec vous.")],
       included=["Vitrines et portes vitrées, côté rue et côté intérieur","Baies vitrées, fenêtres et cloisons vitrées des bureaux","Vitres en hauteur","Encadrements et rebords essuyés","Traces de doigts autour des poignées","Passage ponctuel ou régulier, à un rythme fixé avec vous"],
       a_savoir=["Le nettoyage n'efface ni une rayure, ni un verre piqué.",
-                "Des traces de peinture, de plâtre ou de ciment laissées par des travaux se regardent à la visite : c'est un autre travail qu'un nettoyage courant."],
+                "Des traces de peinture, de plâtre ou de ciment laissées par des travaux se regardent à la visite : c'est un <a href=\"nettoyage-fin-de-chantier-toulouse.html\">nettoyage de fin de chantier</a>, un autre travail qu'un nettoyage courant."],
       faq=[("Nettoyez-vous l'extérieur comme l'intérieur ?","Oui, les deux faces des vitrines, des portes vitrées et des fenêtres que nous pouvons atteindre. Côté rue, nous travaillons depuis le trottoir, en laissant le passage libre."),
            ("Faut-il fermer la boutique pendant le nettoyage ?","Non. Nous venons en dehors de vos heures d'ouverture : avant l'ouverture ou après la fermeture, entre 7 h et 22 h 30, tous les jours sauf le vendredi."),
            ("À quel rythme nettoyer une vitrine ?","Cela dépend de votre rue, du passage et de la météo. Une vitrine sur une rue passante se salit plus vite qu'une fenêtre à l'étage. À la visite, nous vous proposons un rythme, que vous pourrez changer ensuite."),
@@ -1171,6 +1171,30 @@ PRO_PAGES = [
            ("Faut-il vider les bureaux pour la moquette ?","Non. Il suffit de libérer le sol des objets posés dessus (cartons, sacs, corbeilles). Les bureaux et les armoires restent en place : nous nettoyons autour."),
            ("Venez-vous avec le matériel ?","Oui, nous venons avec notre matériel et nos produits. Vous n'avez rien à prévoir, sauf de libérer le sol."),
            ("Combien coûte le nettoyage des sièges et de la moquette ?","Le prix dépend du nombre de sièges, de la surface de moquette et de leur état. Il est fixé dans le devis gratuit remis après la visite, et c'est celui que vous payez.")]),
+ dict(path="nettoyage-fin-de-chantier-toulouse.html", label="Fin de chantier", crumb="Nettoyage de fin de chantier",
+      sujet_wa="un nettoyage de fin de chantier", stype="Nettoyage de fin de chantier",
+      # Ouverte aussi aux particuliers : message WhatsApp sans « je représente une entreprise », et phrase du bas adaptée.
+      wa_texte="Bonjour Nadifa Propreté, je souhaite un devis pour un nettoyage de fin de chantier. ", particuliers=True,
+      hero_img="pro-chantier-hero", hero_alt="Illustration : pièce en travaux avec des étais, des gravats et des outils au sol",
+      title="Nettoyage de fin de chantier à Toulouse | Nadifa Propreté",
+      desc="Nettoyage de fin de chantier à Toulouse : poussière, laitance, traces de plâtre et de peinture. Professionnels et particuliers. Devis gratuit après visite.",
+      h1="Nettoyage de fin de chantier à Toulouse",
+      lead="Les travaux sont finis, il reste la poussière, la laitance et les traces de plâtre ou de peinture. Nous rendons vos locaux ou votre logement prêts à livrer ou à habiter, pour les professionnels comme pour les particuliers. Devis gratuit après visite.",
+      card="Poussière, laitance, traces de plâtre et de peinture : des lieux prêts à livrer ou à habiter.",
+      pourquoi_titre="Pourquoi faire appel à un professionnel",
+      pourquoi=[("spark","La laitance demande une machine","Le voile de ciment laissé sur le carrelage ne part pas à la serpillière. Nous l'enlevons avec une monobrosse, une machine professionnelle à disque qui frotte le sol."),
+                ("wind","La poussière fine revient","Après des travaux, une poussière très fine se dépose partout et se soulève au moindre passage. Un aspirateur professionnel la retire des sols, des rebords et des recoins."),
+                ("clock","Des lieux prêts plus vite","Comptez en général une journée. Vous livrez le chantier, ouvrez votre commerce ou emménagez sans y passer vos soirées.")],
+      included=["Dépoussiérage complet : murs, plinthes, rebords, prises et radiateurs","Sols : retrait de la laitance de ciment et des traces de plâtre, de peinture et de colle, puis lavage","Vitres et menuiseries : traces de peinture, étiquettes et films de protection retirés","Cuisine et sanitaires : traces de joint, de silicone et de plâtre","Aspiration de la poussière fine, recoins compris","Pour les professionnels comme pour les particuliers"],
+      a_savoir=["L'évacuation des gravats et des déchets de chantier n'est pas comprise : les lieux doivent en être libérés avant notre passage.",
+                "Le nettoyage ne répare rien : un carrelage rayé ou un joint abîmé pendant les travaux le restent.",
+                "Sur un carrelage tout juste posé, nous regardons à la visite si les joints sont assez secs pour être nettoyés."],
+      faq=[("Quand faut-il nous appeler ?","Dès que la date de fin des travaux est connue. Nous passons juste après le départ des artisans, avant l'emménagement, l'ouverture ou la remise des clés. Plus on attend, plus la laitance et le plâtre durcissent, et plus la poussière se redépose partout."),
+           ("Combien de temps dure le nettoyage ?","En général une journée. La durée exacte dépend de la surface et de l'état des lieux : elle est annoncée dans le devis."),
+           ("Je suis un particulier, intervenez-vous aussi ?","Oui. Après des travaux chez vous, le déroulé est le même : nous visitons, nous vous remettons un devis gratuit, puis nous intervenons. Pour un particulier, le paiement se fait le jour de l'intervention, à la fin, en espèces ou par virement."),
+           ("Avec quel matériel travaillez-vous ?","Nous venons avec notre matériel professionnel : une monobrosse pour les sols, un aspirateur pour la poussière fine et les produits adaptés aux traces de chantier. Vous n'avez rien à prévoir."),
+           ("Enlevez-vous les gravats ?","Non. L'évacuation des gravats et des déchets n'est pas comprise. Les lieux doivent en être libérés avant notre passage."),
+           ("Combien coûte un nettoyage de fin de chantier ?","Le prix dépend de la surface, de l'état des lieux et des traces à retirer. Il est fixé dans le devis gratuit remis après la visite, et c'est celui que vous payez.")]),
 ]
 
 def etapes_pros():
@@ -1178,7 +1202,11 @@ def etapes_pros():
     return "".join(f'<li><span class="step-num">{n}</span><h3>{t}</h3><p>{x}</p></li>' for n, (t, x) in enumerate(PROS_ETAPES, 1))
 
 def page_pro(d):
-    wa_lien = wa(f"Bonjour Nadifa Propreté, je représente une entreprise et je souhaite un devis pour {d['sujet_wa']}. ")
+    wa_lien = wa(d.get("wa_texte") or f"Bonjour Nadifa Propreté, je représente une entreprise et je souhaite un devis pour {d['sujet_wa']}. ")
+    if d.get("particuliers"):
+        particulier = 'Vous êtes un particulier ? Cette prestation vous concerne aussi. Pour vos canapés, matelas, tapis et voiture, <a href="services.html">voir nos prestations pour les particuliers</a>.'
+    else:
+        particulier = 'Vous êtes un particulier ? <a href="services.html">Voir nos prestations pour les particuliers</a>.'
     h = head(d["title"], d["desc"], d["path"], extra=breadcrumb3(d["crumb"], d["path"], ("Professionnels", PROS_PATH)) + ld_service(d["crumb"], d["stype"], d["desc"], d["path"]))
     if "pourquoi_img" in d:  # photo carrée à côté des trois raisons
         raisons = "".join(f'<li><span class="icon">{ICON[i]}</span><div><h3>{t}</h3><p>{x}</p></div></li>' for i, t, x in d["pourquoi"])
@@ -1252,7 +1280,7 @@ def page_pro(d):
     <p>Nous intervenons à Toulouse (tous quartiers) et dans les communes proches : {ZONES_TXT}. <a href="contact.html#zone">Voir la zone d'intervention</a>.</p>
     <h2>Nos autres services aux professionnels</h2>
     <div class="hero-actions">{autres}<a class="btn btn-ghost" href="{PROS_PATH}">Tous nos services aux professionnels</a></div>
-    <p>Vous êtes un particulier ? <a href="services.html">Voir nos prestations pour les particuliers</a>.</p>
+    <p>{particulier}</p>
   </div>
 </section>
 {cta_band("Parlons de vos locaux", "Écrivez-nous sur WhatsApp ou appelez-nous pour fixer la visite de vos locaux.", wa_lien, "Devis gratuit")}
@@ -1261,8 +1289,8 @@ def page_pro(d):
 
 def page_pros():
     titre = "Nettoyage pour professionnels à Toulouse | Nadifa Propreté"
-    desc = "Nettoyage pour professionnels à Toulouse et communes proches : vitres et vitrines, bureaux, locaux commerciaux, sièges et moquette. Devis gratuit après visite."
-    h = head(titre, desc, PROS_PATH, extra=breadcrumb("Professionnels", PROS_PATH) + ld_service("Nettoyage pour professionnels", "Nettoyage de vitres, de bureaux, de locaux commerciaux, de sièges et de moquettes", desc, PROS_PATH))
+    desc = "Nettoyage pour professionnels à Toulouse : vitres et vitrines, bureaux, locaux commerciaux, sièges et moquette, fin de chantier. Devis gratuit après visite."
+    h = head(titre, desc, PROS_PATH, extra=breadcrumb("Professionnels", PROS_PATH) + ld_service("Nettoyage pour professionnels", "Nettoyage de vitres, de bureaux, de locaux commerciaux, de sièges et de moquettes, et de fin de chantier", desc, PROS_PATH))
     faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in PROS_FAQ)
     cartes = "".join(f'''<a class="card service-card" href="{d["path"]}">
       <div class="card-media">{picture(d["hero_img"], d["hero_alt"], sizes="(max-width: 520px) 100vw, (max-width: 980px) 50vw, 25vw", w=1400, h=700)}</div>
@@ -1281,7 +1309,7 @@ def page_pros():
   <div class="wrap">
     <p class="eyebrow">Professionnels</p>
     <h1>Nettoyage de vitres, de bureaux et de locaux à Toulouse</h1>
-    <p class="lead">Commerces, cabinets, bureaux : nous nettoyons vos locaux et vos vitrines, avec un devis gratuit établi après visite.</p>
+    <p class="lead">Commerces, cabinets, bureaux, fin de chantier : nous nettoyons vos locaux et vos vitrines, avec un devis gratuit établi après visite.</p>
     {actions}
   </div>
 </section>
@@ -1289,7 +1317,7 @@ def page_pros():
 <section class="section">
   <div class="wrap">
     <div class="section-head"><h2>Ce que nous nettoyons</h2></div>
-    <div class="grid-4">{cartes}</div>
+    <div class="grid-3">{cartes}</div>
   </div>
 </section>
 
