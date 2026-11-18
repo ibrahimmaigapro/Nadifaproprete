@@ -97,6 +97,9 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 @media (max-width:980px){.grid-4{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:760px){.grid-2,.grid-3{grid-template-columns:1fr}}
 @media (max-width:520px){.grid-4{grid-template-columns:1fr}}
+/* cartes de la page Professionnels : 3 par ligne, 2 sur tablette, 1 sur téléphone */
+@media (max-width:980px){.grid-3.cartes-pros{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.grid-3.cartes-pros{grid-template-columns:1fr}}
 
 /* cards */
 .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}

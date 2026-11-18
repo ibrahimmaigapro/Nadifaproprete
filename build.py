@@ -1173,8 +1173,14 @@ PRO_PAGES = [
            ("Combien coûte le nettoyage des sièges et de la moquette ?","Le prix dépend du nombre de sièges, de la surface de moquette et de leur état. Il est fixé dans le devis gratuit remis après la visite, et c'est celui que vous payez.")]),
  dict(path="nettoyage-fin-de-chantier-toulouse.html", label="Fin de chantier", crumb="Nettoyage de fin de chantier",
       sujet_wa="un nettoyage de fin de chantier", stype="Nettoyage de fin de chantier",
-      # Ouverte aussi aux particuliers : message WhatsApp sans « je représente une entreprise », et phrase du bas adaptée.
-      wa_texte="Bonjour Nadifa Propreté, je souhaite un devis pour un nettoyage de fin de chantier. ", particuliers=True,
+      # Ouverte aussi aux particuliers (décision d'Ibrahim du 18/11/2026) : message WhatsApp sans « je représente une entreprise »,
+      # étapes et bandeau du bas propres à cette page, phrase du bas adaptée.
+      particuliers=True,
+      etapes=[("Nous visitons les lieux","Nous regardons la surface, l'état des lieux et les traces à retirer. La visite ne vous engage à rien."),
+              ("Vous recevez un devis gratuit","Le prix annoncé est celui que vous payez. Le devis indique aussi la durée prévue."),
+              ("Nous intervenons","Juste après le départ des artisans, entre 7 h et 22 h 30, tous les jours sauf le vendredi."),
+              ("Vous réglez","Un particulier paie le jour de l'intervention, à la fin, en espèces ou par virement. Une entreprise règle à réception de la facture.")],
+      cta=("Parlons de vos travaux", "Écrivez-nous sur WhatsApp ou appelez-nous pour fixer la visite des lieux."),
       hero_img="pro-chantier-hero", hero_alt="Illustration : pièce en travaux avec des étais, des gravats et des outils au sol",
       title="Nettoyage de fin de chantier à Toulouse | Nadifa Propreté",
       desc="Nettoyage de fin de chantier à Toulouse : poussière, laitance, traces de plâtre et de peinture. Professionnels et particuliers. Devis gratuit après visite.",
@@ -1184,29 +1190,31 @@ PRO_PAGES = [
       pourquoi_titre="Pourquoi faire appel à un professionnel",
       pourquoi=[("spark","La laitance demande une machine","Le voile de ciment laissé sur le carrelage ne part pas à la serpillière. Nous l'enlevons avec une monobrosse, une machine professionnelle à disque qui frotte le sol."),
                 ("wind","La poussière fine revient","Après des travaux, une poussière très fine se dépose partout et se soulève au moindre passage. Un aspirateur professionnel la retire des sols, des rebords et des recoins."),
-                ("clock","Des lieux prêts plus vite","Comptez en général une journée. Vous livrez le chantier, ouvrez votre commerce ou emménagez sans y passer vos soirées.")],
-      included=["Dépoussiérage complet : murs, plinthes, rebords, prises et radiateurs","Sols : retrait de la laitance de ciment et des traces de plâtre, de peinture et de colle, puis lavage","Vitres et menuiseries : traces de peinture, étiquettes et films de protection retirés","Cuisine et sanitaires : traces de joint, de silicone et de plâtre","Aspiration de la poussière fine, recoins compris","Pour les professionnels comme pour les particuliers"],
+                ("clock","Appelez dès la fin des travaux","Plus on attend, plus la laitance et le plâtre durcissent. Réservez dès que la date de fin est connue : comptez en général une journée de nettoyage.")],
+      included=["Dépoussiérage complet : murs, plinthes, rebords, prises et radiateurs","Sols : retrait de la laitance de ciment et des traces de plâtre, de peinture et de colle, puis lavage","Vitres et menuiseries : traces de peinture, étiquettes et films de protection retirés","Cuisine et sanitaires : traces de joint, de silicone et de plâtre","Aspiration de la poussière fine, recoins compris"],
       a_savoir=["L'évacuation des gravats et des déchets de chantier n'est pas comprise : les lieux doivent en être libérés avant notre passage.",
                 "Le nettoyage ne répare rien : un carrelage rayé ou un joint abîmé pendant les travaux le restent.",
                 "Sur un carrelage tout juste posé, nous regardons à la visite si les joints sont assez secs pour être nettoyés."],
       faq=[("Quand faut-il nous appeler ?","Dès que la date de fin des travaux est connue. Nous passons juste après le départ des artisans, avant l'emménagement, l'ouverture ou la remise des clés. Plus on attend, plus la laitance et le plâtre durcissent, et plus la poussière se redépose partout."),
            ("Combien de temps dure le nettoyage ?","En général une journée. La durée exacte dépend de la surface et de l'état des lieux : elle est annoncée dans le devis."),
            ("Je suis un particulier, intervenez-vous aussi ?","Oui. Après des travaux chez vous, le déroulé est le même : nous visitons, nous vous remettons un devis gratuit, puis nous intervenons. Pour un particulier, le paiement se fait le jour de l'intervention, à la fin, en espèces ou par virement."),
-           ("Avec quel matériel travaillez-vous ?","Nous venons avec notre matériel professionnel : une monobrosse pour les sols, un aspirateur pour la poussière fine et les produits adaptés aux traces de chantier. Vous n'avez rien à prévoir."),
+           ("Avec quel matériel travaillez-vous ?","Nous venons avec notre matériel professionnel : une monobrosse pour les sols, un aspirateur pour la poussière fine et les produits adaptés aux traces de chantier. Vous n'avez aucun matériel à prévoir."),
            ("Enlevez-vous les gravats ?","Non. L'évacuation des gravats et des déchets n'est pas comprise. Les lieux doivent en être libérés avant notre passage."),
            ("Combien coûte un nettoyage de fin de chantier ?","Le prix dépend de la surface, de l'état des lieux et des traces à retirer. Il est fixé dans le devis gratuit remis après la visite, et c'est celui que vous payez.")]),
 ]
 
-def etapes_pros():
-    """Le déroulé pour les professionnels, identique sur la page Professionnels et sur chaque page de service."""
-    return "".join(f'<li><span class="step-num">{n}</span><h3>{t}</h3><p>{x}</p></li>' for n, (t, x) in enumerate(PROS_ETAPES, 1))
+def etapes_pros(etapes=PROS_ETAPES):
+    """Le déroulé pour les professionnels : le même partout, sauf pour une page qui a ses propres étapes."""
+    return "".join(f'<li><span class="step-num">{n}</span><h3>{t}</h3><p>{x}</p></li>' for n, (t, x) in enumerate(etapes, 1))
 
 def page_pro(d):
-    wa_lien = wa(d.get("wa_texte") or f"Bonjour Nadifa Propreté, je représente une entreprise et je souhaite un devis pour {d['sujet_wa']}. ")
-    if d.get("particuliers"):
-        particulier = 'Vous êtes un particulier ? Cette prestation vous concerne aussi. Pour vos canapés, matelas, tapis et voiture, <a href="services.html">voir nos prestations pour les particuliers</a>.'
+    if d.get("particuliers"):  # page ouverte aussi aux particuliers
+        wa_lien = wa(f"Bonjour Nadifa Propreté, je souhaite un devis pour {d['sujet_wa']}. ")
+        phrase_particulier = 'Vous êtes un particulier ? Cette prestation vous concerne aussi. Pour vos canapés, matelas, tapis et voiture, <a href="services.html">voir nos prestations pour les particuliers</a>.'
     else:
-        particulier = 'Vous êtes un particulier ? <a href="services.html">Voir nos prestations pour les particuliers</a>.'
+        wa_lien = wa(f"Bonjour Nadifa Propreté, je représente une entreprise et je souhaite un devis pour {d['sujet_wa']}. ")
+        phrase_particulier = 'Vous êtes un particulier ? <a href="services.html">Voir nos prestations pour les particuliers</a>.'
+    cta_titre, cta_texte = d.get("cta", ("Parlons de vos locaux", "Écrivez-nous sur WhatsApp ou appelez-nous pour fixer la visite de vos locaux."))
     h = head(d["title"], d["desc"], d["path"], extra=breadcrumb3(d["crumb"], d["path"], ("Professionnels", PROS_PATH)) + ld_service(d["crumb"], d["stype"], d["desc"], d["path"]))
     if "pourquoi_img" in d:  # photo carrée à côté des trois raisons
         raisons = "".join(f'<li><span class="icon">{ICON[i]}</span><div><h3>{t}</h3><p>{x}</p></div></li>' for i, t, x in d["pourquoi"])
@@ -1263,7 +1271,7 @@ def page_pro(d):
 <section class="section">
   <div class="wrap">
     <div class="section-head"><h2>Comment ça se passe</h2></div>
-    <ol class="steps">{etapes_pros()}</ol>
+    <ol class="steps">{etapes_pros(d.get("etapes", PROS_ETAPES))}</ol>
   </div>
 </section>
 
@@ -1280,10 +1288,10 @@ def page_pro(d):
     <p>Nous intervenons à Toulouse (tous quartiers) et dans les communes proches : {ZONES_TXT}. <a href="contact.html#zone">Voir la zone d'intervention</a>.</p>
     <h2>Nos autres services aux professionnels</h2>
     <div class="hero-actions">{autres}<a class="btn btn-ghost" href="{PROS_PATH}">Tous nos services aux professionnels</a></div>
-    <p>{particulier}</p>
+    <p>{phrase_particulier}</p>
   </div>
 </section>
-{cta_band("Parlons de vos locaux", "Écrivez-nous sur WhatsApp ou appelez-nous pour fixer la visite de vos locaux.", wa_lien, "Devis gratuit")}
+{cta_band(cta_titre, cta_texte, wa_lien, "Devis gratuit")}
 '''
     return h + header(PROS_PATH) + body + footer()
 
@@ -1293,7 +1301,7 @@ def page_pros():
     h = head(titre, desc, PROS_PATH, extra=breadcrumb("Professionnels", PROS_PATH) + ld_service("Nettoyage pour professionnels", "Nettoyage de vitres, de bureaux, de locaux commerciaux, de sièges et de moquettes, et de fin de chantier", desc, PROS_PATH))
     faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in PROS_FAQ)
     cartes = "".join(f'''<a class="card service-card" href="{d["path"]}">
-      <div class="card-media">{picture(d["hero_img"], d["hero_alt"], sizes="(max-width: 520px) 100vw, (max-width: 980px) 50vw, 25vw", w=1400, h=700)}</div>
+      <div class="card-media">{picture(d["hero_img"], d["hero_alt"], sizes="(max-width: 520px) 100vw, (max-width: 980px) 50vw, 33vw", w=1400, h=700)}</div>
       <div class="card-body">
         <h3>{d["label"]}</h3>
         <p>{d["card"]}</p>
@@ -1317,7 +1325,7 @@ def page_pros():
 <section class="section">
   <div class="wrap">
     <div class="section-head"><h2>Ce que nous nettoyons</h2></div>
-    <div class="grid-3">{cartes}</div>
+    <div class="grid-3 cartes-pros">{cartes}</div>
   </div>
 </section>
 
@@ -1541,6 +1549,9 @@ svg{width:1.2em;height:1.2em;vertical-align:-.25em;flex:none}
 @media (max-width:980px){.grid-4{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:760px){.grid-2,.grid-3{grid-template-columns:1fr}}
 @media (max-width:520px){.grid-4{grid-template-columns:1fr}}
+/* cartes de la page Professionnels : 3 par ligne, 2 sur tablette, 1 sur téléphone */
+@media (max-width:980px){.grid-3.cartes-pros{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.grid-3.cartes-pros{grid-template-columns:1fr}}
 
 /* cards */
 .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
